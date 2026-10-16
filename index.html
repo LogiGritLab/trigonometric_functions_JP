@@ -738,7 +738,7 @@ function generateAreaProblem() {
 
   return {
     type: 'svg', qKey: `area_${ang.A}_${b}_${c}_${Math.random()}`, 
-    prompt: "次の図形の面積 $S$ を求めよ。", questionTex: `\\triangle \\mathrm{ABC} において、b=${b}, c=${c}, A=${ang.A}^\\circ のとき`, targetTex: "S", svgHtml: svg,
+    prompt: "次の図形の面積 $S を求めよ。", questionTex: `\\triangle \\mathrm{ABC} において、b=${b}, c=${c}, A=${ang.A}^\\circ のとき`, targetTex: "S", svgHtml: svg,
     options, correctIndex: options.indexOf(areaVal), 
     steps: [
       "面積の公式 $S = \\dfrac{1}{2}bc \\sin A$ を用います。",
