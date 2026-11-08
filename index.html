@@ -1,12 +1,15 @@
---- START OF FILE ai_studio_code (70).html ---
-
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="三角比・三角関数の練習サイト（高校生向け）">
-<title>三角比・三角関数 計算練習</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="description" content="高校生向けの数学I・数学II「三角比・三角関数」無料計算練習Webアプリ。スマホ対応・単位円や図形のビジュアル解説・公式チートシート付き。">
+<meta property="og:title" content="三角比・三角関数 計算練習ノート">
+<meta property="og:description" content="高校数学（三角比・相互関係・正弦余弦定理・加法定理・2倍角・半角・合成・積和・和積）をスマホでサクサク演習できる無料学習サイト">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#fdf8f4">
+<title>三角比・三角関数 計算練習ノート</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23d97736%22/><path d=%22M20 78 L80 78 L80 22 Z%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%228%22 stroke-linejoin=%22round%22/><rect x=%2266%22 y=%2264%22 width=%2214%22 height=%2214%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%224%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
@@ -14,215 +17,601 @@
 <style>
   :root {
     --paper: #fdf8f4;
-    --paper-edge: #f5ede6;
-    --grid: rgba(217, 119, 54, 0.15);
-    --line: #ebd6c8;
-    --line-strong: #d4ae96;
-    --ink: #1a1512;
-    --muted: #7d6559;
+    --paper-edge: #f4ebe2;
+    --card-bg: #ffffff;
+    --grid-dot: #e6d2c4;
+    --line: #ead6c7;
+    --line-strong: #d2ad95;
+    --ink: #231b16;
+    --muted: #786054;
     --main-pen: #d97736;
-    --teal: #4b6b9e;
+    --main-pen-soft: rgba(217, 119, 54, 0.12);
+    --teal: #3b6e9c;
+    --teal-soft: rgba(59, 110, 156, 0.12);
     --red-pen: #c73c52;
-    --ok: #2a8a50;
-    --ok-soft: #ebf7ef;
+    --ok: #238649;
+    --ok-soft: #eaf6ee;
+    --ok-border: #8ad1a4;
     --ng: #c73c52;
-    --ng-soft: #fce9ec;
-    --gold: #c2872f;
-    --shadow: 0 1px 2px rgba(58, 42, 34, 0.05), 0 14px 30px rgba(58, 42, 34, 0.08);
-    --font-hand: "Zen Maru Gothic", sans-serif;
+    --ng-soft: #fdedf0;
+    --ng-border: #eb9aa8;
+    --gold: #c9831d;
+    --shadow-sm: 0 2px 6px rgba(58, 42, 34, 0.06);
+    --shadow: 0 4px 20px rgba(58, 42, 34, 0.08);
+    --font-hand: "Zen Maru Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  [data-theme="dark"] {
+    --paper: #1b221e;
+    --paper-edge: #242e28;
+    --card-bg: #222b26;
+    --grid-dot: #2f3d35;
+    --line: #34443b;
+    --line-strong: #4b6154;
+    --ink: #eef3ef;
+    --muted: #a3b5aa;
+    --main-pen: #f09252;
+    --main-pen-soft: rgba(240, 146, 82, 0.18);
+    --teal: #69a7df;
+    --teal-soft: rgba(105, 167, 223, 0.18);
+    --red-pen: #f26d82;
+    --ok: #46bd73;
+    --ok-soft: rgba(70, 189, 115, 0.16);
+    --ok-border: #3a8c59;
+    --ng: #f26d82;
+    --ng-soft: rgba(242, 109, 130, 0.16);
+    --ng-border: #9e4352;
+    --gold: #f5b349;
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.25);
+    --shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; min-height: 100%; }
-  body { font-family: var(--font-hand); font-weight: 700; color: var(--ink); background: var(--paper); padding: 20px 12px 60px; overflow-x: hidden; }
+  body {
+    font-family: var(--font-hand);
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 10px 10px 92px;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.2s, color 0.2s;
+  }
 
   .bg-pattern {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-color: #fdf8f4;
-    background-image: radial-gradient(#ebd6c8 2.5px, transparent 2.5px), radial-gradient(#ebd6c8 2.5px, transparent 2.5px);
-    background-size: 36px 36px; background-position: 0 0, 18px 18px;
+    background-color: var(--paper);
+    background-image: radial-gradient(var(--grid-dot) 2px, transparent 2px);
+    background-size: 26px 26px;
   }
 
   button { font-family: inherit; }
-  .app { position: relative; z-index: 1; width: 100%; max-width: 900px; margin: 0 auto; }
+  .app { position: relative; z-index: 1; width: 100%; max-width: 820px; margin: 0 auto; }
 
-  .header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
-  .header h1 { margin: 0; font-size: 1.5rem; font-weight: 900; line-height: 1.3; color: var(--ink); }
-  .btn-ghost { padding: 6px 12px; border: 1.5px dashed var(--line-strong); border-radius: 999px; background: rgba(255,255,255,0.9); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.15s; }
-  .btn-ghost:hover { background: var(--paper-edge); border-color: var(--main-pen); }
-
-  .controls { margin-bottom: 16px; }
-  .control-label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 900; color: var(--muted); }
-  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { appearance: none; cursor: pointer; transition: 0.1s; border: 2px solid var(--line-strong); background: rgba(255,255,255,0.95); color: var(--muted); border-radius: 8px; padding: 10px 16px; font-size: 1.1rem; font-weight: 900; box-shadow: 0 2px 0 var(--line-strong); }
-  .chip:hover:not(.active) { border-color: var(--main-pen); color: var(--ink); transform: translateY(1px); box-shadow: 0 1px 0 var(--main-pen); }
-  .chip.active { background: var(--main-pen); border-color: var(--main-pen); color: #fff; box-shadow: 0 2px 6px rgba(217,119,54,0.3); transform: translateY(1px); }
-
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
-  .stat { background: rgba(255,255,255,0.95); border: 2px dashed var(--line-strong); border-radius: 12px; padding: 8px; text-align: center; }
-  .stat-label { display: block; font-size: 0.75rem; font-weight: 900; color: var(--muted); margin-bottom: 2px; }
-  .stat-value { font-size: 1.6rem; font-weight: 900; color: var(--ink); line-height: 1; }
-  .stat-value.ok { color: var(--ok); }
-  .stat-value.ng { color: var(--ng); }
-  .stat-value.streak { color: var(--gold); }
-
-  .card { background: #fff; border: 2px solid var(--line); border-radius: 18px; padding: 20px; box-shadow: var(--shadow); }
-
-  .question-header { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 12px; margin-bottom: 20px; }
-  .question-prompt { text-align: center; font-size: 1.1rem; font-weight: 900; margin: 0; color: var(--ink); }
-  .question-target { font-size: 1.5rem; font-weight: 900; color: var(--ink); background: var(--paper-edge); padding: 12px 24px; border-radius: 12px; border: 2px dashed var(--line-strong); text-align: center; width: 100%; overflow-x: auto; scrollbar-width: none; }
-  .question-target::-webkit-scrollbar { display: none; }
-  
-  .svg-container { width: 100%; max-width: 280px; margin: 0 auto; display: none; overflow: visible; }
-  .svg-container.is-active { display: block; margin-bottom: 20px; }
-  .svg-container svg { width: 100%; height: auto; display: block; overflow: visible; }
-  
-  .svg-line { stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: rgba(217, 119, 54, 0.05); }
-  .svg-axis { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 4; }
-  .svg-right-angle { stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round; fill: rgba(217, 119, 54, 0.1); }
-  .svg-text { font-family: var(--font-hand); font-weight: 900; font-size: 18px; fill: var(--ink); text-anchor: middle; dominant-baseline: middle; }
-  .svg-vertex { font-family: 'Times New Roman', serif; font-style: normal; font-weight: bold; font-size: 22px; fill: var(--main-pen); text-anchor: middle; dominant-baseline: middle; }
-
-  .choices { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; }
-  .choice-btn {
-    appearance: none; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 10px;
-    flex: 1 1 calc(33.333% - 8px); min-width: 100px;
-    padding: 24px 10px; border: 2px solid var(--line-strong); border-radius: 12px; background: #fff;
-    color: var(--ink); font-family: var(--font-hand); font-size: 1.2rem; font-weight: 900; cursor: pointer;
-    box-shadow: 0 3px 0 var(--line-strong); transition: 0.1s; line-height: 1.2;
+  /* ======== Top Header & Compact Stats ======== */
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 8px; margin-bottom: 10px; flex-wrap: wrap;
   }
-  .choice-btn:hover:not(:disabled) { background: var(--paper-edge); border-color: var(--ink); }
-  .choice-btn:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
+  .brand { display: flex; align-items: center; gap: 8px; }
+  .brand-icon {
+    width: 32px; height: 32px; border-radius: 9px; background: var(--main-pen);
+    display: inline-flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(217,119,54,0.3);
+  }
+  .brand h1 { margin: 0; font-size: 1.15rem; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); }
+
+  .toolbar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .btn-tool {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 5px 10px; border: 1.5px solid var(--line-strong); border-radius: 999px;
+    background: var(--card-bg); color: var(--ink); font-size: 0.78rem; font-weight: 900;
+    cursor: pointer; transition: 0.15s; box-shadow: var(--shadow-sm);
+  }
+  .btn-tool:hover { border-color: var(--main-pen); background: var(--paper-edge); }
+  .btn-tool.active-mode { border-color: var(--teal); background: var(--teal-soft); color: var(--teal); }
+
+  /* ======== Score & Settings Strip ======== */
+  .status-strip {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    background: var(--card-bg); border: 1.5px dashed var(--line-strong);
+    border-radius: 12px; padding: 6px 12px; margin-bottom: 10px; box-shadow: var(--shadow-sm);
+  }
+  .stats-inline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .stat-item { display: inline-flex; align-items: baseline; gap: 4px; font-size: 0.78rem; color: var(--muted); }
+  .stat-num { font-size: 1.08rem; font-weight: 900; color: var(--ink); }
+  .stat-num.ok { color: var(--ok); }
+  .stat-num.ng { color: var(--ng); }
+  .stat-num.streak { color: var(--gold); }
+
+  .angle-unit-toggle {
+    display: inline-flex; background: var(--paper-edge); border-radius: 8px; padding: 2px;
+    border: 1px solid var(--line);
+  }
+  .unit-btn {
+    appearance: none; border: none; background: transparent; color: var(--muted);
+    font-size: 0.72rem; font-weight: 900; padding: 3px 7px; border-radius: 6px; cursor: pointer;
+    transition: 0.15s;
+  }
+  .unit-btn.active { background: var(--card-bg); color: var(--main-pen); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+  /* ======== Compact Category & Theme Selector ======== */
+  .nav-box {
+    background: var(--card-bg); border: 1.5px solid var(--line); border-radius: 14px;
+    padding: 8px 10px; margin-bottom: 10px; box-shadow: var(--shadow-sm);
+  }
+  .cat-tabs {
+    display: flex; gap: 4px; margin-bottom: 8px; border-bottom: 1.5px solid var(--line); padding-bottom: 6px;
+    align-items: center; justify-content: space-between;
+  }
+  .cat-group { display: flex; gap: 4px; flex-wrap: wrap; }
+  .cat-tab {
+    appearance: none; border: none; background: transparent; color: var(--muted);
+    font-size: 0.8rem; font-weight: 900; padding: 4px 10px; border-radius: 8px; cursor: pointer;
+    transition: 0.15s;
+  }
+  .cat-tab:hover { color: var(--ink); background: var(--paper-edge); }
+  .cat-tab.active { background: var(--main-pen-soft); color: var(--main-pen); }
+
+  .chip-scroll-wrap {
+    position: relative; width: 100%;
+  }
+  .chip-row {
+    display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto;
+    padding-bottom: 2px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .chip-row::-webkit-scrollbar { display: none; }
+  .chip {
+    appearance: none; cursor: pointer; flex-shrink: 0;
+    border: 1.5px solid var(--line-strong); background: var(--paper); color: var(--muted);
+    border-radius: 8px; padding: 6px 11px; font-size: 0.86rem; font-weight: 900;
+    box-shadow: 0 2px 0 var(--line-strong); transition: 0.12s; white-space: nowrap;
+  }
+  .chip:hover:not(.active) { border-color: var(--main-pen); color: var(--ink); }
+  .chip.active {
+    background: var(--main-pen); border-color: var(--main-pen); color: #fff;
+    box-shadow: 0 2px 5px rgba(217,119,54,0.3); transform: translateY(1px);
+  }
+
+  /* ======== Main Problem Card ======== */
+  .card {
+    background: var(--card-bg); border: 2px solid var(--line); border-radius: 18px;
+    padding: 14px 14px 16px; box-shadow: var(--shadow); position: relative;
+  }
+
+  .question-meta {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    margin-bottom: 6px;
+  }
+  .theme-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.74rem; font-weight: 900; color: var(--main-pen);
+    background: var(--main-pen-soft); padding: 2px 9px; border-radius: 999px;
+  }
+  .question-prompt {
+    font-size: 0.92rem; font-weight: 900; margin: 0; color: var(--muted);
+  }
+
+  /* Compact layout for Question + SVG side by side on wide or compact on mobile */
+  .problem-stage {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    margin-bottom: 12px; width: 100%;
+  }
+  .problem-stage.has-svg {
+    flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap;
+  }
+
+  .question-target {
+    font-size: 1.25rem; font-weight: 900; color: var(--ink);
+    background: var(--paper); padding: 10px 14px; border-radius: 12px;
+    border: 1.5px dashed var(--line-strong); text-align: center;
+    width: 100%; overflow-x: auto; scrollbar-width: none;
+    line-height: 1.45;
+  }
+  .problem-stage.has-svg .question-target {
+    flex: 1 1 240px;
+  }
+  .question-target::-webkit-scrollbar { display: none; }
+
+  .svg-container {
+    width: 100%; max-width: 210px; margin: 0 auto; display: none; overflow: visible;
+    flex-shrink: 0;
+  }
+  .svg-container.is-active { display: block; }
+  .svg-container svg { width: 100%; max-height: 145px; height: auto; display: block; overflow: visible; }
+
+  .svg-line { stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: var(--main-pen-soft); }
+  .svg-axis { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 4; }
+  .svg-right-angle { stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round; fill: var(--main-pen-soft); }
+  .svg-text { font-family: var(--font-hand); font-weight: 900; font-size: 17px; fill: var(--ink); text-anchor: middle; dominant-baseline: middle; }
+  .svg-vertex { font-family: 'Times New Roman', serif; font-weight: bold; font-size: 20px; fill: var(--main-pen); text-anchor: middle; dominant-baseline: middle; }
+
+  /* ======== Choices Grid (Responsive & Never Truncated) ======== */
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+  @media (min-width: 600px) {
+    .choices:not(.is-formula-grid) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    body { padding: 18px 16px 80px; }
+    .brand h1 { font-size: 1.35rem; }
+    .card { padding: 20px; }
+    .question-target { font-size: 1.4rem; padding: 14px 20px; }
+    .svg-container { max-width: 240px; }
+    .svg-container svg { max-height: 170px; }
+    .chip-row { flex-wrap: wrap; }
+  }
+
+  .choice-btn {
+    appearance: none;
+    display: flex; flex-direction: row; align-items: center; justify-content: space-between;
+    gap: 10px; width: 100%; min-height: 58px;
+    padding: 10px 14px; border: 2px solid var(--line-strong); border-radius: 12px;
+    background: var(--card-bg); color: var(--ink); font-family: var(--font-hand);
+    font-size: 1.12rem; font-weight: 900; cursor: pointer;
+    box-shadow: 0 3px 0 var(--line-strong); transition: transform 0.08s, background-color 0.12s, border-color 0.12s;
+    line-height: 1.2; text-align: center;
+  }
+  .choice-btn:hover:not(:disabled) { background: var(--paper-edge); border-color: var(--main-pen); }
+  .choice-btn:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 var(--line-strong); }
   .choice-btn:disabled { cursor: default; opacity: 1; }
 
-  .choice-letter { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--paper-edge); border: 1.5px solid var(--line-strong); font-size: 0.9rem; color: var(--muted); }
-  .choice-content { overflow-x: auto; white-space: nowrap; scrollbar-width: none; padding: 5px 0; }
-  .choice-content::-webkit-scrollbar { display: none; }
+  .choice-letter {
+    flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+    width: 1.7em; height: 1.7em; border-radius: 50%;
+    background: var(--paper-edge); border: 1.5px solid var(--line-strong);
+    font-size: 0.85rem; color: var(--muted); font-weight: 900;
+  }
+  .choice-content {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    overflow-x: auto; white-space: nowrap; scrollbar-width: none; padding: 3px 2px;
+    touch-action: pan-y; /* ← 追加：縦スクロールを邪魔しないようにする */
+  }
+    .choice-btn:disabled .choice-content {
+    pointer-events: none; /* 選択後は枠内のタッチ判定を消し、ページ全体のスクロールに回す */
+  }
   
-  .choice-btn.is-correct { border-color: var(--ok); background: #e5f5ec; box-shadow: 0 3px 0 var(--ok); }
+  .choice-content::-webkit-scrollbar { display: none; }
+  .choice-mark {
+    flex-shrink: 0; width: 1.4em; text-align: center; font-size: 1rem; font-weight: 900;
+  }
+
+  .choice-btn.is-correct { border-color: var(--ok); background: var(--ok-soft); box-shadow: 0 3px 0 var(--ok); }
   .choice-btn.is-correct .choice-letter { background: var(--ok); border-color: var(--ok); color: #fff; }
-  .choice-btn.is-wrong { border-color: var(--ng); background: #fae8e6; box-shadow: 0 3px 0 var(--ng); }
+  .choice-btn.is-correct .choice-mark { color: var(--ok); }
+
+  .choice-btn.is-wrong { border-color: var(--ng); background: var(--ng-soft); box-shadow: 0 3px 0 var(--ng); }
   .choice-btn.is-wrong .choice-letter { background: var(--ng); border-color: var(--ng); color: #fff; }
+  .choice-btn.is-wrong .choice-mark { color: var(--ng); }
+
   .choice-btn.is-dimmed { opacity: 0.45; }
 
-  /* 加法定理用のスタイル（縦並びにしてサイズを確保） */
-  .choice-btn.is-formula { flex: 1 1 100%; font-size: 1.2rem; }
+  /* ======== Quick Action Bar & Explanation ======== */
+  .quick-next-wrap {
+    margin-top: 12px; display: flex; justify-content: center;
+  }
+  .quick-next-wrap[hidden] { display: none !important; }
 
-  /* 参考公式表示ボックス用スタイル */
-  .ref-formula-box { margin-top: 20px; padding: 16px; background: var(--paper); border: 1px solid var(--line-strong); border-radius: 8px; }
-  .ref-formula-title { margin: 0 0 12px; font-weight: 900; color: var(--muted); font-size: 0.95rem; }
-  .ref-formula-content { font-size: 0.95rem; line-height: 1.6; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .btn-next-primary {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; max-width: 340px;
+    font-family: inherit; font-size: 1.05rem; font-weight: 900;
+    color: #fff; background: var(--main-pen); border: 2px solid var(--main-pen);
+    border-radius: 999px; padding: 11px 24px; cursor: pointer;
+    box-shadow: 0 3px 10px rgba(217, 119, 54, 0.35); transition: 0.12s;
+  }
+  .btn-next-primary:hover { filter: brightness(1.06); }
+  .btn-next-primary:active { transform: translateY(2px); }
+
+  .explanation { margin-top: 14px; animation: fadeIn 0.2s ease-out; }
+  .explanation[hidden] { display: none !important; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .exp-box { border-radius: 14px; overflow: hidden; padding: 14px 16px; }
+  .exp-box.correct { background-color: var(--ok-soft); border: 2px solid var(--ok-border); }
+  .exp-box.wrong { background-color: var(--ng-soft); border: 2px solid var(--ng-border); }
+
+  .exp-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    margin-bottom: 10px;
+  }
+  .exp-title { margin: 0; font-size: 1.08rem; font-weight: 900; }
+  .exp-box.correct .exp-title { color: var(--ok); }
+  .exp-box.wrong .exp-title { color: var(--ng); }
+
+  .exp-body { font-size: 0.96rem; line-height: 1.75; font-weight: 700; color: var(--ink); }
+  .exp-steps { margin: 6px 0 0; padding-left: 0; list-style-type: none; }
+  .exp-steps li {
+    margin-bottom: 10px; padding-left: 12px; border-left: 3px solid var(--line-strong);
+    overflow-x: auto; scrollbar-width: none;
+    padding-top: 4px;    /* ← 追加 */
+    padding-bottom: 4px; /* ← 追加 */
+  }
+  .exp-steps li::-webkit-scrollbar { display: none; }
+
+  .ref-formula-box {
+    margin-top: 14px; padding: 12px; background: var(--card-bg);
+    border: 1.5px solid var(--line-strong); border-radius: 10px;
+  }
+  .ref-formula-title { margin: 0 0 8px; font-weight: 900; color: var(--muted); font-size: 0.85rem; }
+  .ref-formula-content { font-size: 0.9rem; line-height: 1.65; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
   .ref-formula-content::-webkit-scrollbar { display: none; }
 
-  .explanation { margin-top: 20px; }
-  .explanation[hidden] { display: none !important; }
-  .exp-box { border-radius: 14px; overflow: hidden; padding: 16px; }
-  .exp-box.correct { background-color: var(--ok-soft); border: 2px solid rgba(40,140,87,0.15); }
-  .exp-box.wrong { background-color: var(--ng-soft); border: 2px solid rgba(199,60,82,0.15); }
-  .exp-title { margin: 0 0 12px; font-size: 1.15rem; font-weight: 900; }
-  .exp-box.correct .exp-title { color: #166534; }
-  .exp-box.wrong .exp-title { color: #991b1b; }
-  
-  .exp-body { font-size: 1.05rem; line-height: 1.7; font-weight: 500; }
-  .exp-steps { margin: 8px 0 0; padding-left: 0; list-style-type: none; }
-  .exp-steps li { margin-bottom: 12px; }
-
-  .table-wrapper { width: 100%; overflow-x: auto; margin-top: 12px; background: #fff; border-radius: 8px; border: 1px solid var(--line-strong); }
-  table { width: 100%; border-collapse: collapse; text-align: center; font-size: 1.1rem; }
-  th, td { border: 1px solid var(--line); padding: 8px; white-space: nowrap; }
+  .table-wrapper {
+    width: 100%; overflow-x: auto; margin-top: 10px;
+    background: var(--card-bg); border-radius: 8px; border: 1px solid var(--line-strong);
+  }
+  table { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95rem; }
+  th, td { border: 1px solid var(--line); padding: 6px 8px; white-space: nowrap; }
   th { background: var(--paper-edge); color: var(--muted); font-weight: 900; }
-  
-  .exp-svg-wrap { width: 100%; max-width: 220px; margin: 16px auto; display: block; }
+
+  .exp-svg-wrap {
+    width: 100%; max-width: 210px; margin: 10px auto; display: block;
+    background: var(--card-bg); padding: 10px; border-radius: 12px; border: 1px solid var(--line);
+  }
   .exp-svg-wrap svg { width: 100%; height: auto; overflow: visible; }
 
-  .btn-next { display: block; margin: 20px auto 0; font-family: inherit; font-size: 1.05rem; font-weight: 900; color: var(--main-pen); background: #fff; border: 2px solid var(--main-pen); border-radius: 999px; padding: 10px 32px; cursor: pointer; box-shadow: 0 3px 0 var(--main-pen); transition: 0.1s;}
-  .btn-next:active { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
-  .footer-note { margin: 24px 0 0; text-align: center; font-size: 0.85rem; color: var(--muted); }
+  .footer-note {
+    margin: 16px 0 0; text-align: center; font-size: 0.78rem; color: var(--muted);
+  }
+
+  /* ======== Sticky Bottom Next Bar on Mobile ======== */
+  .sticky-next-bar {
+    position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+    z-index: 40; width: calc(100% - 24px); max-width: 420px;
+    pointer-events: none; opacity: 0; transition: opacity 0.18s, transform 0.18s;
+  }
+  .sticky-next-bar.is-visible {
+    pointer-events: auto; opacity: 1; transform: translateX(-50%) translateY(0);
+  }
+  .sticky-next-bar .btn-next-primary {
+    max-width: 100%;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  }
+
+  /* ======== Modal (Formula Cheat Sheet & Reset Confirmation) ======== */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(20, 15, 12, 0.55); backdrop-filter: blur(2px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  .modal-backdrop[hidden] { display: none !important; }
+  .modal-card {
+    background: var(--card-bg); color: var(--ink);
+    border: 2px solid var(--line-strong); border-radius: 18px;
+    width: 100%; max-width: 680px; max-height: 85vh;
+    display: flex; flex-direction: column; box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; background: var(--paper-edge); border-bottom: 1.5px solid var(--line);
+  }
+  .modal-header h2 { margin: 0; font-size: 1.05rem; font-weight: 900; }
+  .btn-close {
+    appearance: none; border: none; background: var(--card-bg); color: var(--ink);
+    width: 30px; height: 30px; border-radius: 50%; font-weight: 900; cursor: pointer;
+    border: 1px solid var(--line-strong);
+  }
+  .modal-body {
+    padding: 16px; overflow-y: auto; font-size: 0.92rem; line-height: 1.7;
+  }
+  .formula-sec { margin-bottom: 18px; }
+  .formula-sec h3 {
+    margin: 0 0 8px; font-size: 0.92rem; color: var(--main-pen);
+    border-left: 4px solid var(--main-pen); padding-left: 8px;
+  }
+  .formula-grid {
+    display: grid; grid-template-columns: 1fr; gap: 8px;
+  }
+  .formula-item {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 10px; padding: 10px 12px; overflow-x: auto; scrollbar-width: none;
+  }
+  .formula-item::-webkit-scrollbar { display: none; }
 </style>
 </head>
 <body>
   <div class="bg-pattern" aria-hidden="true"></div>
 
   <div class="app">
-    <header class="header">
-      <h1>三角比・三角関数 計算練習</h1>
-      <button type="button" id="resetBtn" class="btn-ghost">リセット</button>
+    <!-- Top Header -->
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 20h18L21 4 3 20z"/>
+          </svg>
+        </span>
+        <h1>三角比・三角関数 計算練習</h1>
+      </div>
+      <div class="toolbar">
+        <button type="button" id="formulaModalBtn" class="btn-tool" title="公式まとめシートを開く">
+          <span>📖 公式表</span>
+        </button>
+        <button type="button" id="themeToggleBtn" class="btn-tool" title="ライト/ダーク表示切替">
+          <span id="themeIcon">🌙</span>
+        </button>
+        <button type="button" id="resetBtn" class="btn-tool" title="スコアをリセット">
+          <span>↺ リセット</span>
+        </button>
+      </div>
     </header>
 
-    <section class="controls">
-      <span class="control-label">出題テーマ</span>
-      <div class="chip-row" id="themeMenu">
-        <button type="button" class="chip active" data-theme="def">三角比</button>
-        <button type="button" class="chip" data-theme="mut">相互関係</button>
-        <button type="button" class="chip" data-theme="famous">有名角</button>
-        <button type="button" class="chip" data-theme="eq">方程式</button>
-        <button type="button" class="chip" data-theme="theorem">正弦・余弦定理</button>
-        <button type="button" class="chip" data-theme="area">三角形の面積</button>
-        <button type="button" class="chip" data-theme="formula">加法定理</button>
-        <button type="button" class="chip" data-theme="formula23">2倍角・3倍角</button>
-        <button type="button" class="chip" data-theme="product">積和</button>
-        <button type="button" class="chip" data-theme="sum_prod">和積</button>
-        <button type="button" class="chip" data-theme="minor">マイナー角</button>
+    <!-- Compact Stats & Angle Unit Toggle -->
+    <section class="status-strip" aria-label="学習ステータス">
+      <div class="stats-inline">
+        <div class="stat-item">正解 <span class="stat-num ok" id="correctCount">0</span></div>
+        <div class="stat-item">ミス <span class="stat-num ng" id="wrongCount">0</span></div>
+        <div class="stat-item">正答率 <span class="stat-num" id="accuracyRate">-</span></div>
+        <div class="stat-item">連続🔥 <span class="stat-num streak" id="streakCount">0</span></div>
+      </div>
+      <div class="angle-unit-toggle" role="group" aria-label="角度の単位設定">
+        <button type="button" class="unit-btn active" data-unit="deg">度数法 °</button>
+        <button type="button" class="unit-btn" data-unit="rad">弧度法 π</button>
+        <button type="button" class="unit-btn" data-unit="mix">両方</button>
       </div>
     </section>
 
-    <section class="stats">
-      <div class="stat"><span class="stat-label">正解</span><span class="stat-value ok" id="correctCount">0</span></div>
-      <div class="stat"><span class="stat-label">不正解</span><span class="stat-value ng" id="wrongCount">0</span></div>
-      <div class="stat"><span class="stat-label">連続</span><span class="stat-value streak" id="streakCount">0</span></div>
-    </section>
+    <!-- Category & Theme Selector -->
+    <nav class="nav-box" aria-label="出題テーマ選択">
+      <div class="cat-tabs" id="catTabs">
+        <div class="cat-group">
+          <button type="button" class="cat-tab active" data-cat="all">すべて</button>
+          <button type="button" class="cat-tab" data-cat="math1">数学I（三角比）</button>
+          <button type="button" class="cat-tab" data-cat="math2">数学II（三角関数）</button>
+        </div>
+      </div>
+      <div class="chip-scroll-wrap">
+        <div class="chip-row" id="themeMenu">
+          <button type="button" class="chip active" data-theme="def" data-cat="math1">直角三角形</button>
+          <button type="button" class="chip" data-theme="famous" data-cat="math1">有名角</button>
+          <button type="button" class="chip" data-theme="mut" data-cat="math1">相互関係</button>
+          <button type="button" class="chip" data-theme="eq" data-cat="math1">方程式・不等式</button>
+          <button type="button" class="chip" data-theme="theorem" data-cat="math1">正弦・余弦定理</button>
+          <button type="button" class="chip" data-theme="area" data-cat="math1">三角形の面積</button>
+          <button type="button" class="chip" data-theme="formula" data-cat="math2">加法定理</button>
+          <button type="button" class="chip" data-theme="formula23" data-cat="math2">2倍角・3倍角</button>
+          <button type="button" class="chip" data-theme="half" data-cat="math2">半角の公式</button>
+          <button type="button" class="chip" data-theme="synth" data-cat="math2">三角関数の合成</button>
+          <button type="button" class="chip" data-theme="product" data-cat="math2">積和の公式</button>
+          <button type="button" class="chip" data-theme="sum_prod" data-cat="math2">和積の公式</button>
+          <button type="button" class="chip" data-theme="minor" data-cat="math2">マイナー角(15°/18°)</button>
+          <button type="button" class="chip" data-theme="random" data-cat="all">🎲 総合ランダム</button>
+        </div>
+      </div>
+    </nav>
 
+    <!-- Main Question Card -->
     <main class="card">
-      <div class="question-header">
+      <div class="question-meta">
+        <span class="theme-badge" id="currentThemeBadge">直角三角形</span>
         <p class="question-prompt" id="questionPrompt"></p>
+      </div>
+
+      <div class="problem-stage" id="problemStage">
+        <div class="svg-container" id="svgContainer"></div>
         <div class="question-target" id="questionTarget"></div>
       </div>
-      <div class="svg-container" id="svgContainer"></div>
+
       <div class="choices" id="choicesGroup"></div>
+
+      <!-- Inline Next Button right below choices -->
+      <div class="quick-next-wrap" id="quickNextWrap" hidden>
+        <button type="button" class="btn-next-primary" id="inlineNextBtn">
+          <span>次の問題へ進む</span>
+          <span style="font-size:0.8rem; opacity:0.85;">(Enter)</span>
+        </button>
+      </div>
+
       <div class="explanation" id="explanation" hidden></div>
     </main>
-    <p class="footer-note">✎ Enterキーでいつでも次の問題へ進めます。</p>
+
+    <p class="footer-note">✎ キーボード操作：<strong>1 / 2 / 3</strong>（または A / B / C）キーで解答、<strong>Enter / Space</strong>キーで次の問題へ</p>
+  </div>
+
+  <!-- Floating Sticky Bottom Bar for Mobile Convenience -->
+  <div class="sticky-next-bar" id="stickyNextBar">
+    <button type="button" class="btn-next-primary" id="stickyNextBtn">
+      <span>次の問題へ進む ▶</span>
+    </button>
+  </div>
+
+  <!-- Formula Cheat Sheet Modal -->
+  <div class="modal-backdrop" id="formulaModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="formulaModalTitle">
+      <div class="modal-header">
+        <h2 id="formulaModalTitle">📖 三角比・三角関数 公式チートシート</h2>
+        <button type="button" class="btn-close" id="closeFormulaModal" aria-label="閉じる">✕</button>
+      </div>
+      <div class="modal-body" id="formulaModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Reset Confirmation Modal (No native confirm() used) -->
+  <div class="modal-backdrop" id="resetModal" hidden>
+    <div class="modal-card" style="max-width: 360px;" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2>スコアのリセット</h2>
+        <button type="button" class="btn-close" id="closeResetModal" aria-label="閉じる">✕</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <p style="margin: 4px 0 18px;">これまでの正解数・連続記録をリセットしますか？</p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button type="button" class="btn-tool" id="cancelResetBtn" style="padding: 8px 20px;">キャンセル</button>
+          <button type="button" class="btn-tool" id="confirmResetBtn" style="padding: 8px 20px; background: var(--ng); color: #fff; border-color: var(--ng);">リセットする</button>
+        </div>
+      </div>
+    </div>
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script>
 /**
- * 三角比・三角関数練習ロジック
+ * 三角比・三角関数 計算練習ノート
+ * - スマホファーストのUI & 選択肢重複防止アルゴリズム搭載
  */
 
+const THEME_LABELS = {
+  def: '直角三角形の定義',
+  famous: '有名角の三角比',
+  mut: '三角比の相互関係',
+  eq: '三角方程式・不等式',
+  theorem: '正弦定理・余弦定理',
+  area: '三角形の面積',
+  formula: '加法定理',
+  formula23: '2倍角・3倍角の公式',
+  half: '半角の公式',
+  synth: '三角関数の合成',
+  product: '積和の公式',
+  sum_prod: '和積の公式',
+  minor: '15°・18°系の三角比',
+  random: '総合ランダム演習'
+};
+
 const FAMOUS_VALS = {
-  '0':   { sin: '0', cos: '1', tan: '0' },
-  '30':  { sin: '\\dfrac{1}{2}', cos: '\\dfrac{\\sqrt{3}}{2}', tan: '\\dfrac{1}{\\sqrt{3}}' },
-  '45':  { sin: '\\dfrac{1}{\\sqrt{2}}', cos: '\\dfrac{1}{\\sqrt{2}}', tan: '1' },
-  '60':  { sin: '\\dfrac{\\sqrt{3}}{2}', cos: '\\dfrac{1}{2}', tan: '\\sqrt{3}' },
-  '90':  { sin: '1', cos: '0', tan: '\\text{なし}' },
-  '120': { sin: '\\dfrac{\\sqrt{3}}{2}', cos: '-\\dfrac{1}{2}', tan: '-\\sqrt{3}' },
-  '135': { sin: '\\dfrac{1}{\\sqrt{2}}', cos: '-\\dfrac{1}{\\sqrt{2}}', tan: '-1' },
-  '150': { sin: '\\dfrac{1}{2}', cos: '-\\dfrac{\\sqrt{3}}{2}', tan: '-\\dfrac{1}{\\sqrt{3}}' },
-  '180': { sin: '0', cos: '-1', tan: '0' },
-  '210': { sin: '-\\dfrac{1}{2}', cos: '-\\dfrac{\\sqrt{3}}{2}', tan: '\\dfrac{1}{\\sqrt{3}}' },
-  '225': { sin: '-\\dfrac{1}{\\sqrt{2}}', cos: '-\\dfrac{1}{\\sqrt{2}}', tan: '1' },
-  '240': { sin: '-\\dfrac{\\sqrt{3}}{2}', cos: '-\\dfrac{1}{2}', tan: '\\sqrt{3}' },
-  '270': { sin: '-1', cos: '0', tan: '\\text{なし}' },
-  '300': { sin: '-\\dfrac{\\sqrt{3}}{2}', cos: '\\dfrac{1}{2}', tan: '-\\sqrt{3}' },
-  '315': { sin: '-\\dfrac{1}{\\sqrt{2}}', cos: '\\dfrac{1}{\\sqrt{2}}', tan: '-1' },
-  '330': { sin: '-\\dfrac{1}{2}', cos: '\\dfrac{\\sqrt{3}}{2}', tan: '-\\dfrac{1}{\\sqrt{3}}' },
-  '360': { sin: '0', cos: '1', tan: '0' }
+  '0':   { rad: '0', sin: '0', cos: '1', tan: '0' },
+  '30':  { rad: '\\dfrac{\\pi}{6}', sin: '\\dfrac{1}{2}', cos: '\\dfrac{\\sqrt{3}}{2}', tan: '\\dfrac{1}{\\sqrt{3}}' },
+  '45':  { rad: '\\dfrac{\\pi}{4}', sin: '\\dfrac{1}{\\sqrt{2}}', cos: '\\dfrac{1}{\\sqrt{2}}', tan: '1' },
+  '60':  { rad: '\\dfrac{\\pi}{3}', sin: '\\dfrac{\\sqrt{3}}{2}', cos: '\\dfrac{1}{2}', tan: '\\sqrt{3}' },
+  '90':  { rad: '\\dfrac{\\pi}{2}', sin: '1', cos: '0', tan: '\\text{なし}' },
+  '120': { rad: '\\dfrac{2}{3}\\pi', sin: '\\dfrac{\\sqrt{3}}{2}', cos: '-\\dfrac{1}{2}', tan: '-\\sqrt{3}' },
+  '135': { rad: '\\dfrac{3}{4}\\pi', sin: '\\dfrac{1}{\\sqrt{2}}', cos: '-\\dfrac{1}{\\sqrt{2}}', tan: '-1' },
+  '150': { rad: '\\dfrac{5}{6}\\pi', sin: '\\dfrac{1}{2}', cos: '-\\dfrac{\\sqrt{3}}{2}', tan: '-\\dfrac{1}{\\sqrt{3}}' },
+  '180': { rad: '\\pi', sin: '0', cos: '-1', tan: '0' },
+  '210': { rad: '\\dfrac{7}{6}\\pi', sin: '-\\dfrac{1}{2}', cos: '-\\dfrac{\\sqrt{3}}{2}', tan: '\\dfrac{1}{\\sqrt{3}}' },
+  '225': { rad: '\\dfrac{5}{4}\\pi', sin: '-\\dfrac{1}{\\sqrt{2}}', cos: '-\\dfrac{1}{\\sqrt{2}}', tan: '1' },
+  '240': { rad: '\\dfrac{4}{3}\\pi', sin: '-\\dfrac{\\sqrt{3}}{2}', cos: '-\\dfrac{1}{2}', tan: '\\sqrt{3}' },
+  '270': { rad: '\\dfrac{3}{2}\\pi', sin: '-1', cos: '0', tan: '\\text{なし}' },
+  '300': { rad: '\\dfrac{5}{3}\\pi', sin: '-\\dfrac{\\sqrt{3}}{2}', cos: '\\dfrac{1}{2}', tan: '-\\sqrt{3}' },
+  '315': { rad: '\\dfrac{7}{4}\\pi', sin: '-\\dfrac{1}{\\sqrt{2}}', cos: '\\dfrac{1}{\\sqrt{2}}', tan: '-1' },
+  '330': { rad: '\\dfrac{11}{6}\\pi', sin: '-\\dfrac{1}{2}', cos: '\\dfrac{\\sqrt{3}}{2}', tan: '-\\dfrac{1}{\\sqrt{3}}' },
+  '360': { rad: '2\\pi', sin: '0', cos: '1', tan: '0' }
 };
 const FAMOUS_ANGLES = Object.keys(FAMOUS_VALS);
 
 const MINOR_VALS = {
-  '15': { sin: '\\dfrac{\\sqrt{6}-\\sqrt{2}}{4}', cos: '\\dfrac{\\sqrt{6}+\\sqrt{2}}{4}', tan: '2-\\sqrt{3}' },
-  '18': { sin: '\\dfrac{\\sqrt{5}-1}{4}', cos: '\\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}', tan: '\\dfrac{\\sqrt{25-10\\sqrt{5}}}{5}' },
-  '36': { sin: '\\dfrac{\\sqrt{10-2\\sqrt{5}}}{4}', cos: '\\dfrac{\\sqrt{5}+1}{4}', tan: '\\sqrt{5-2\\sqrt{5}}' },
-  '54': { sin: '\\dfrac{\\sqrt{5}+1}{4}', cos: '\\dfrac{\\sqrt{10-2\\sqrt{5}}}{4}', tan: '\\dfrac{\\sqrt{25+10\\sqrt{5}}}{5}' },
-  '72': { sin: '\\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}', cos: '\\dfrac{\\sqrt{5}-1}{4}', tan: '\\sqrt{5+2\\sqrt{5}}' },
-  '75': { sin: '\\dfrac{\\sqrt{6}+\\sqrt{2}}{4}', cos: '\\dfrac{\\sqrt{6}-\\sqrt{2}}{4}', tan: '2+\\sqrt{3}' },
-  '108': { sin: '\\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}', cos: '-\\dfrac{\\sqrt{5}-1}{4}', tan: '-\\sqrt{5+2\\sqrt{5}}' }
+  '15':  { rad: '\\dfrac{\\pi}{12}', sin: '\\dfrac{\\sqrt{6}-\\sqrt{2}}{4}', cos: '\\dfrac{\\sqrt{6}+\\sqrt{2}}{4}', tan: '2-\\sqrt{3}' },
+  '18':  { rad: '\\dfrac{\\pi}{10}', sin: '\\dfrac{\\sqrt{5}-1}{4}', cos: '\\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}', tan: '\\dfrac{\\sqrt{25-10\\sqrt{5}}}{5}' },
+  '36':  { rad: '\\dfrac{\\pi}{5}', sin: '\\dfrac{\\sqrt{10-2\\sqrt{5}}}{4}', cos: '\\dfrac{\\sqrt{5}+1}{4}', tan: '\\sqrt{5-2\\sqrt{5}}' },
+  '54':  { rad: '\\dfrac{3}{10}\\pi', sin: '\\dfrac{\\sqrt{5}+1}{4}', cos: '\\dfrac{\\sqrt{10-2\\sqrt{5}}}{4}', tan: '\\dfrac{\\sqrt{25+10\\sqrt{5}}}{5}' },
+  '72':  { rad: '\\dfrac{2}{5}\\pi', sin: '\\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}', cos: '\\dfrac{\\sqrt{5}-1}{4}', tan: '\\sqrt{5+2\\sqrt{5}}' },
+  '75':  { rad: '\\dfrac{5}{12}\\pi', sin: '\\dfrac{\\sqrt{6}+\\sqrt{2}}{4}', cos: '\\dfrac{\\sqrt{6}-\\sqrt{2}}{4}', tan: '2+\\sqrt{3}' },
+  '105': { rad: '\\dfrac{7}{12}\\pi', sin: '\\dfrac{\\sqrt{6}+\\sqrt{2}}{4}', cos: '-\\dfrac{\\sqrt{6}-\\sqrt{2}}{4}', tan: '-2-\\sqrt{3}' },
+  '108': { rad: '\\dfrac{3}{5}\\pi', sin: '\\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}', cos: '-\\dfrac{\\sqrt{5}-1}{4}', tan: '-\\sqrt{5+2\\sqrt{5}}' },
+  '165': { rad: '\\dfrac{11}{12}\\pi', sin: '\\dfrac{\\sqrt{6}-\\sqrt{2}}{4}', cos: '-\\dfrac{\\sqrt{6}+\\sqrt{2}}{4}', tan: '\\sqrt{3}-2' }
 };
 const MINOR_ANGLES = Object.keys(MINOR_VALS);
 
-// 小数から文字列表現を探すためのリスト（積和・和積のために全パターンを網羅）
 const VAL_STR = [
   { v: 0, s: "0" }, { v: 1, s: "1" }, { v: -1, s: "-1" },
   { v: 0.5, s: "\\dfrac{1}{2}" }, { v: -0.5, s: "-\\dfrac{1}{2}" },
@@ -244,16 +633,12 @@ const VAL_STR = [
   { v: Math.sqrt(2), s: "\\sqrt{2}" }, { v: -Math.sqrt(2), s: "-\\sqrt{2}" },
   { v: Math.sqrt(3), s: "\\sqrt{3}" }, { v: -Math.sqrt(3), s: "-\\sqrt{3}" },
   { v: Math.sqrt(6)/2, s: "\\dfrac{\\sqrt{6}}{2}" }, { v: -Math.sqrt(6)/2, s: "-\\dfrac{\\sqrt{6}}{2}" },
-  
-  // 積和用追加リスト
   { v: (2+Math.sqrt(2))/4, s: "\\dfrac{2+\\sqrt{2}}{4}" }, { v: -(2+Math.sqrt(2))/4, s: "-\\dfrac{2+\\sqrt{2}}{4}" },
   { v: (2-Math.sqrt(2))/4, s: "\\dfrac{2-\\sqrt{2}}{4}" }, { v: -(2-Math.sqrt(2))/4, s: "\\dfrac{\\sqrt{2}-2}{4}" },
   { v: (1+Math.sqrt(2))/4, s: "\\dfrac{1+\\sqrt{2}}{4}" }, { v: -(1+Math.sqrt(2))/4, s: "-\\dfrac{1+\\sqrt{2}}{4}" },
   { v: (1-Math.sqrt(2))/4, s: "\\dfrac{1-\\sqrt{2}}{4}" }, { v: -(1-Math.sqrt(2))/4, s: "\\dfrac{\\sqrt{2}-1}{4}" },
   { v: (Math.sqrt(3)+Math.sqrt(2))/4, s: "\\dfrac{\\sqrt{3}+\\sqrt{2}}{4}" }, { v: -(Math.sqrt(3)+Math.sqrt(2))/4, s: "-\\dfrac{\\sqrt{3}+\\sqrt{2}}{4}" },
   { v: (Math.sqrt(3)-Math.sqrt(2))/4, s: "\\dfrac{\\sqrt{3}-\\sqrt{2}}{4}" }, { v: -(Math.sqrt(3)-Math.sqrt(2))/4, s: "\\dfrac{\\sqrt{2}-\\sqrt{3}}{4}" },
-  
-  // 和積用追加リスト
   { v: (Math.sqrt(3)+1)/2, s: "\\dfrac{\\sqrt{3}+1}{2}" }, { v: -(Math.sqrt(3)+1)/2, s: "-\\dfrac{\\sqrt{3}+1}{2}" },
   { v: (Math.sqrt(3)-1)/2, s: "\\dfrac{\\sqrt{3}-1}{2}" }, { v: -(Math.sqrt(3)-1)/2, s: "\\dfrac{1-\\sqrt{3}}{2}" },
   { v: (3*Math.sqrt(2)+Math.sqrt(6))/4, s: "\\dfrac{3\\sqrt{2}+\\sqrt{6}}{4}" }, { v: -(3*Math.sqrt(2)+Math.sqrt(6))/4, s: "-\\dfrac{3\\sqrt{2}+\\sqrt{6}}{4}" },
@@ -265,7 +650,7 @@ const VAL_STR = [
 function findValStr(val) {
   let best = VAL_STR[0];
   let minDiff = Math.abs(val - best.v);
-  for (let i=1; i<VAL_STR.length; i++) {
+  for (let i = 1; i < VAL_STR.length; i++) {
     let diff = Math.abs(val - VAL_STR[i].v);
     if (diff < minDiff) {
       minDiff = diff;
@@ -281,69 +666,200 @@ const THEOREM_DB = [
     steps: ["正弦定理 $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$ を用います。", "$\\dfrac{4}{\\sin 45^\\circ} = \\dfrac{b}{\\sin 60^\\circ}$", "$b = 4 \\times \\dfrac{\\sin 60^\\circ}{\\sin 45^\\circ} = 4 \\times \\dfrac{\\left(\\dfrac{\\sqrt{3}}{2}\\right)}{\\left(\\dfrac{1}{\\sqrt{2}}\\right)} = 2\\sqrt{6}$"] },
   { t: 'sin', q: "\\triangle \\mathrm{ABC} において、A=30^\\circ, B=45^\\circ, b=2\\sqrt{2} のとき", target: "a", a: "2", d: ["\\sqrt{2}", "4"],
     lbl: {A: "30°", B: "45°", b: "2\\sqrt{2}", a: "a"},
-    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$ を用います。", "$\\dfrac{a}{\\sin 30^\\circ} = \\dfrac{2\\sqrt{2}}{\\sin 45^\\circ}$", "$a = 2\\sqrt{2} \\times \\dfrac{\\sin 30^\\circ}{\\sin 45^\\circ} = 2\\sqrt{2} \\times \\dfrac{\\left(\\dfrac{1}{2}\\right)}{\\left(\\dfrac{1}{\\sqrt{2}}\\right)} = 2$"] },
+    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$ を用います。", "$\\dfrac{a}{\\sin 30^\\circ} = \\dfrac{2\\sqrt{2}}{\\sin 45^\\circ}$", "$a = 2\\sqrt{2} \\times \\dfrac{\\sin 30^\\circ}{\\sin 45^\\circ} = 2$"] },
   { t: 'sin', q: "\\triangle \\mathrm{ABC} において、A=60^\\circ, B=45^\\circ, a=3 のとき", target: "b", a: "\\sqrt{6}", d: ["\\sqrt{3}", "2\\sqrt{2}"],
     lbl: {A: "60°", B: "45°", a: "3", b: "b"},
-    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$ を用います。", "$\\dfrac{3}{\\sin 60^\\circ} = \\dfrac{b}{\\sin 45^\\circ}$", "$b = 3 \\times \\dfrac{\\sin 45^\\circ}{\\sin 60^\\circ} = 3 \\times \\dfrac{\\left(\\dfrac{1}{\\sqrt{2}}\\right)}{\\left(\\dfrac{\\sqrt{3}}{2}\\right)} = \\dfrac{6}{\\sqrt{6}} = \\sqrt{6}$"] },
+    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$ を用います。", "$\\dfrac{3}{\\sin 60^\\circ} = \\dfrac{b}{\\sin 45^\\circ}$", "$b = 3 \\times \\dfrac{\\sin 45^\\circ}{\\sin 60^\\circ} = \\sqrt{6}$"] },
   { t: 'sin', q: "\\triangle \\mathrm{ABC} において、A=120^\\circ, B=30^\\circ, b=2 のとき", target: "a", a: "2\\sqrt{3}", d: ["2\\sqrt{2}", "4"],
     lbl: {A: "120°", B: "30°", b: "2", a: "a"},
-    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$ を用います。", "$\\dfrac{a}{\\sin 120^\\circ} = \\dfrac{2}{\\sin 30^\\circ}$", "$a = 2 \\times \\dfrac{\\sin 120^\\circ}{\\sin 30^\\circ} = 2 \\times \\dfrac{\\left(\\dfrac{\\sqrt{3}}{2}\\right)}{\\left(\\dfrac{1}{2}\\right)} = 2\\sqrt{3}$"] },
-  { t: 'sin', q: "\\triangle \\mathrm{ABC} において、A=135^\\circ, B=30^\\circ, a=2 のとき", target: "b", a: "\\sqrt{2}", d: ["2", "2\\sqrt{2}"],
-    lbl: {A: "135°", B: "30°", a: "2", b: "b"},
-    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$ を用います。", "$\\dfrac{2}{\\sin 135^\\circ} = \\dfrac{b}{\\sin 30^\\circ}$", "$b = 2 \\times \\dfrac{\\sin 30^\\circ}{\\sin 135^\\circ} = 2 \\times \\dfrac{\\left(\\dfrac{1}{2}\\right)}{\\left(\\dfrac{1}{\\sqrt{2}}\\right)} = \\sqrt{2}$"] },
+    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$ を用います。", "$\\dfrac{a}{\\sin 120^\\circ} = \\dfrac{2}{\\sin 30^\\circ}$", "$a = 2 \\times \\dfrac{\\sin 120^\\circ}{\\sin 30^\\circ} = 2\\sqrt{3}$"] },
+  { t: 'sinR', q: "\\triangle \\mathrm{ABC} において、A=30^\\circ, a=5 のとき、外接円の半径", target: "R", a: "5", d: ["\\dfrac{5}{2}", "10"],
+    lbl: {A: "30°", a: "5"},
+    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = 2R$ を用います。", "$2R = \\dfrac{5}{\\sin 30^\\circ} = \\dfrac{5}{\\left(\\dfrac{1}{2}\\right)} = 10$", "両辺を $2$ で割って、$R = 5$"] },
+  { t: 'sinR', q: "\\triangle \\mathrm{ABC} において、A=60^\\circ, a=6 のとき、外接円の半径", target: "R", a: "2\\sqrt{3}", d: ["3\\sqrt{3}", "4\\sqrt{3}"],
+    lbl: {A: "60°", a: "6"},
+    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = 2R$ を用います。", "$2R = \\dfrac{6}{\\sin 60^\\circ} = \\dfrac{6}{\\left(\\dfrac{\\sqrt{3}}{2}\\right)} = 4\\sqrt{3}$", "両辺を $2$ で割って、$R = 2\\sqrt{3}$"] },
+  { t: 'sinR', q: "\\triangle \\mathrm{ABC} において、A=45^\\circ, a=4 のとき、外接円の半径", target: "R", a: "2\\sqrt{2}", d: ["4\\sqrt{2}", "\\sqrt{2}"],
+    lbl: {A: "45°", a: "4"},
+    steps: ["正弦定理 $\\dfrac{a}{\\sin A} = 2R$ を用います。", "$2R = \\dfrac{4}{\\sin 45^\\circ} = 4\\sqrt{2}$", "よって $R = 2\\sqrt{2}$"] },
   { t: 'cos', q: "\\triangle \\mathrm{ABC} において、b=3, c=5, A=120^\\circ のとき", target: "a", a: "7", d: ["\\sqrt{19}", "8"],
     lbl: {b: "3", c: "5", A: "120°", a: "a"},
-    steps: ["余弦定理 $a^2 = b^2 + c^2 - 2bc \\cos A$ を用います。", "$a^2 = 3^2 + 5^2 - 2 \\cdot 3 \\cdot 5 \\cos 120^\\circ$", "$a^2 = 9 + 25 - 30 \\cdot \\left(-\\dfrac{1}{2}\\right) = 34 + 15 = 49$", "$a > 0$ より $a = 7$"] },
+    steps: ["余弦定理 $a^2 = b^2 + c^2 - 2bc \\cos A$ を用います。", "$a^2 = 3^2 + 5^2 - 2 \\cdot 3 \\cdot 5 \\cos 120^\\circ = 9 + 25 + 15 = 49$", "$a > 0$ より $a = 7$"] },
   { t: 'cos', q: "\\triangle \\mathrm{ABC} において、b=2, c=\\sqrt{3}-1, A=30^\\circ のとき", target: "a", a: "\\sqrt{2}", d: ["2", "\\sqrt{3}"],
     lbl: {b: "2", c: "\\sqrt{3}-1", A: "30°", a: "a"},
-    steps: ["余弦定理 $a^2 = b^2 + c^2 - 2bc \\cos A$ を用います。", "$a^2 = 2^2 + (\\sqrt{3}-1)^2 - 2 \\cdot 2 \\cdot (\\sqrt{3}-1) \\cos 30^\\circ$", "$a^2 = 4 + (4-2\\sqrt{3}) - 4(\\sqrt{3}-1) \\cdot \\dfrac{\\sqrt{3}}{2}$", "$a^2 = 8 - 2\\sqrt{3} - (6 - 2\\sqrt{3}) = 2$", "$a > 0$ より $a = \\sqrt{2}$"] },
+    steps: ["余弦定理 $a^2 = b^2 + c^2 - 2bc \\cos A$ を用います。", "$a^2 = 2^2 + (\\sqrt{3}-1)^2 - 2 \\cdot 2 \\cdot (\\sqrt{3}-1) \\cos 30^\\circ = 2$", "$a > 0$ より $a = \\sqrt{2}$"] },
   { t: 'cos', q: "\\triangle \\mathrm{ABC} において、b=5, c=8, A=60^\\circ のとき", target: "a", a: "7", d: ["\\sqrt{39}", "9"],
     lbl: {b: "5", c: "8", A: "60°", a: "a"},
-    steps: ["余弦定理 $a^2 = b^2 + c^2 - 2bc \\cos A$ を用います。", "$a^2 = 5^2 + 8^2 - 2 \\cdot 5 \\cdot 8 \\cos 60^\\circ$", "$a^2 = 25 + 64 - 80 \\cdot \\left(\\dfrac{1}{2}\\right) = 89 - 40 = 49$", "$a > 0$ より $a = 7$"] },
-  { t: 'cos', q: "\\triangle \\mathrm{ABC} において、b=4, c=5, A=60^\\circ のとき", target: "a", a: "\\sqrt{21}", d: ["\\sqrt{41}", "7"],
+    steps: ["余弦定理 $a^2 = b^2 + c^2 - 2bc \\cos A$ を用います。", "$a^2 = 5^2 + 8^2 - 2 \\cdot 5 \\cdot 8 \\cos 60^\\circ = 89 - 40 = 49$", "$a > 0$ より $a = 7$"] },
+  { t: 'cos', q: "\\triangle \\mathrm{ABC} において、b=4, c=5, A=60^\\circ のとき", target: "a", a: "\\sqrt{21}", d: ["\\sqrt{41}", "6"],
     lbl: {b: "4", c: "5", A: "60°", a: "a"},
-    steps: ["余弦定理 $a^2 = b^2 + c^2 - 2bc \\cos A$ を用います。", "$a^2 = 4^2 + 5^2 - 2 \\cdot 4 \\cdot 5 \\cos 60^\\circ$", "$a^2 = 16 + 25 - 40 \\cdot \\left(\\dfrac{1}{2}\\right) = 41 - 20 = 21$", "$a > 0$ より $a = \\sqrt{21}$"] },
+    steps: ["余弦定理 $a^2 = b^2 + c^2 - 2bc \\cos A$ を用います。", "$a^2 = 16 + 25 - 20 = 21$", "$a > 0$ より $a = \\sqrt{21}$"] },
   { t: 'cos', q: "\\triangle \\mathrm{ABC} において、a=7, b=5, c=3 のとき", target: "\\cos A", a: "-\\dfrac{1}{2}", d: ["\\dfrac{1}{2}", "-\\dfrac{\\sqrt{3}}{2}"],
     lbl: {a: "7", b: "5", c: "3"},
-    steps: ["余弦定理 $\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$ を用います。", "$\\cos A = \\dfrac{5^2 + 3^2 - 7^2}{2 \\cdot 5 \\cdot 3}$", "$\\cos A = \\dfrac{25 + 9 - 49}{30} = \\dfrac{-15}{30} = -\\dfrac{1}{2}$"] },
-  { t: 'cos', q: "\\triangle \\mathrm{ABC} において、a=13, b=15, c=7 のとき", target: "\\cos A", a: "\\dfrac{1}{2}", d: ["-\\dfrac{1}{2}", "\\dfrac{\\sqrt{3}}{2}"],
-    lbl: {a: "13", b: "15", c: "7"},
-    steps: ["余弦定理 $\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$ を用います。", "$\\cos A = \\dfrac{15^2 + 7^2 - 13^2}{2 \\cdot 15 \\cdot 7}$", "$\\cos A = \\dfrac{225 + 49 - 169}{210} = \\dfrac{105}{210} = \\dfrac{1}{2}$"] },
-  { t: 'cos', q: "\\triangle \\mathrm{ABC} において、a=7, b=8, c=5 のとき", target: "\\cos A", a: "\\dfrac{1}{2}", d: ["-\\dfrac{1}{2}", "\\dfrac{1}{\\sqrt{2}}"],
-    lbl: {a: "7", b: "8", c: "5"},
-    steps: ["余弦定理 $\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$ を用います。", "$\\cos A = \\dfrac{8^2 + 5^2 - 7^2}{2 \\cdot 8 \\cdot 5}$", "$\\cos A = \\dfrac{64 + 25 - 49}{80} = \\dfrac{40}{80} = \\dfrac{1}{2}$"] },
+    steps: ["余弦定理 $\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$ を用います。", "$\\cos A = \\dfrac{25 + 9 - 49}{30} = -\\dfrac{1}{2}$"] },
+  { t: 'cos', q: "\\triangle \\mathrm{ABC} において、a=7, b=8, c=5 のとき", target: "A", a: "60^\\circ", d: ["30^\\circ", "120^\\circ"],
+    lbl: {a: "7", b: "8", c: "5", A: "A"},
+    steps: ["余弦定理 $\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$ を用います。", "$\\cos A = \\dfrac{64 + 25 - 49}{80} = \\dfrac{1}{2}$", "$0^\\circ < A < 180^\\circ$ より、$A = 60^\\circ$"] },
   { t: 'cos', q: "\\triangle \\mathrm{ABC} において、a=\\sqrt{7}, b=2, c=3 のとき", target: "\\cos A", a: "\\dfrac{1}{2}", d: ["-\\dfrac{1}{2}", "\\dfrac{\\sqrt{3}}{2}"],
     lbl: {a: "\\sqrt{7}", b: "2", c: "3"},
-    steps: ["余弦定理 $\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$ を用います。", "$\\cos A = \\dfrac{2^2 + 3^2 - (\\sqrt{7})^2}{2 \\cdot 2 \\cdot 3}$", "$\\cos A = \\dfrac{4 + 9 - 7}{12} = \\dfrac{6}{12} = \\dfrac{1}{2}$"] }
+    steps: ["余弦定理 $\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$ を用います。", "$\\cos A = \\dfrac{4 + 9 - 7}{12} = \\dfrac{1}{2}$"] }
 ];
 
-let state = { theme: 'def', correct: 0, wrong: 0, streak: 0, locked: false, lastQKey: null, currentProblem: null };
+/* ==============================================
+   アプリケーション状態管理 (LocalStorage永続化)
+============================================== */
+let state = {
+  theme: 'def',
+  category: 'all',
+  angleUnit: 'deg', // 'deg' | 'rad' | 'mix'
+  correct: 0,
+  wrong: 0,
+  streak: 0,
+  locked: false,
+  lastQKey: null,
+  currentProblem: null
+};
+
+try {
+  const saved = JSON.parse(localStorage.getItem('trig_note_state_v2') || '{}');
+  if (typeof saved.correct === 'number') state.correct = saved.correct;
+  if (typeof saved.wrong === 'number') state.wrong = saved.wrong;
+  if (typeof saved.streak === 'number') state.streak = saved.streak;
+  if (saved.angleUnit) state.angleUnit = saved.angleUnit;
+  if (saved.darkMode) document.documentElement.setAttribute('data-theme', 'dark');
+} catch (e) {}
+
+function saveState() {
+  try {
+    localStorage.setItem('trig_note_state_v2', JSON.stringify({
+      correct: state.correct,
+      wrong: state.wrong,
+      streak: state.streak,
+      angleUnit: state.angleUnit,
+      darkMode: document.documentElement.getAttribute('data-theme') === 'dark'
+    }));
+  } catch (e) {}
+}
 
 const UI = {
   explanation: document.getElementById('explanation'),
   questionPrompt: document.getElementById('questionPrompt'),
   questionTarget: document.getElementById('questionTarget'),
+  problemStage: document.getElementById('problemStage'),
   svgContainer: document.getElementById('svgContainer'),
   choicesGroup: document.getElementById('choicesGroup'),
   correctCount: document.getElementById('correctCount'),
   wrongCount: document.getElementById('wrongCount'),
+  accuracyRate: document.getElementById('accuracyRate'),
   streakCount: document.getElementById('streakCount'),
   themeMenu: document.getElementById('themeMenu'),
-  resetBtn: document.getElementById('resetBtn')
+  catTabs: document.getElementById('catTabs'),
+  currentThemeBadge: document.getElementById('currentThemeBadge'),
+  quickNextWrap: document.getElementById('quickNextWrap'),
+  inlineNextBtn: document.getElementById('inlineNextBtn'),
+  stickyNextBar: document.getElementById('stickyNextBar'),
+  stickyNextBtn: document.getElementById('stickyNextBtn'),
+  resetBtn: document.getElementById('resetBtn'),
+  resetModal: document.getElementById('resetModal'),
+  closeResetModal: document.getElementById('closeResetModal'),
+  cancelResetBtn: document.getElementById('cancelResetBtn'),
+  confirmResetBtn: document.getElementById('confirmResetBtn'),
+  formulaModalBtn: document.getElementById('formulaModalBtn'),
+  formulaModal: document.getElementById('formulaModal'),
+  closeFormulaModal: document.getElementById('closeFormulaModal'),
+  formulaModalBody: document.getElementById('formulaModalBody'),
+  themeToggleBtn: document.getElementById('themeToggleBtn'),
+  themeIcon: document.getElementById('themeIcon')
 };
 
+/* ==============================================
+   共通ユーティリティ & 重複ゼロ選択肢保証関数
+============================================== */
 function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 function pick(arr) { return arr[randInt(0, arr.length - 1)]; }
-function shuffle(arr) { return arr.slice().sort(() => Math.random() - 0.5); }
+function shuffle(arr) {
+  let a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 function gcd(a, b) { return b ? gcd(b, a % b) : Math.abs(a); }
+
 function simplifyFraction(n, d) {
   if (n === 0) return "0";
   let g = gcd(n, d);
   n /= g; d /= g;
-  if (d === 1) return `${n}`;
   if (d < 0) { n = -n; d = -d; }
+  if (d === 1) return `${n}`;
   if (n < 0) return `-\\dfrac{${-n}}{${d}}`;
   return `\\dfrac{${n}}{${d}}`;
+}
+
+/**
+ * 正解と重複しない3つの選択肢を確実に生成するヘルパー
+ */
+function makeUniqueChoices(correct, candidates = [], fallbackPool = []) {
+  const unique = [];
+  const seen = new Set([correct.trim()]);
+
+  const flipSign = (s) => {
+    if (!s || s === '0' || s === '\\text{なし}') return null;
+    return s.startsWith('-') ? s.slice(1) : '-' + s;
+  };
+
+  const allCandidates = [...candidates];
+  const flipped = flipSign(correct);
+  if (flipped) allCandidates.push(flipped);
+
+  for (const c of allCandidates) {
+    if (!c) continue;
+    const norm = c.trim();
+    if (!seen.has(norm)) {
+      seen.add(norm);
+      unique.push(norm);
+      if (unique.length === 2) break;
+    }
+  }
+
+  const defaultPool = fallbackPool.length > 0 ? fallbackPool : [
+    "\\dfrac{1}{2}", "-\\dfrac{1}{2}", "\\dfrac{\\sqrt{3}}{2}", "-\\dfrac{\\sqrt{3}}{2}",
+    "\\dfrac{1}{\\sqrt{2}}", "-\\dfrac{1}{\\sqrt{2}}", "1", "-1", "0", "\\sqrt{3}", "-\\sqrt{3}"
+  ];
+
+  let safety = 0;
+  while (unique.length < 2 && safety < 50) {
+    const cand = pick(defaultPool).trim();
+    if (!seen.has(cand)) {
+      seen.add(cand);
+      unique.push(cand);
+    }
+    safety++;
+  }
+
+  return shuffle([correct.trim(), unique[0], unique[1]]);
+}
+
+function shouldUseRadian() {
+  if (state.angleUnit === 'rad') return true;
+  if (state.angleUnit === 'deg') return false;
+  return Math.random() < 0.5;
+}
+
+function formatAngleTex(degStrOrNum, useRad) {
+  const key = String(degStrOrNum);
+  if (useRad) {
+    if (FAMOUS_VALS[key] && FAMOUS_VALS[key].rad) return FAMOUS_VALS[key].rad;
+    if (MINOR_VALS[key] && MINOR_VALS[key].rad) return MINOR_VALS[key].rad;
+    const n = parseInt(key, 10);
+    const g = gcd(n, 180);
+    const num = n / g;
+    const den = 180 / g;
+    if (den === 1) return num === 1 ? "\\pi" : `${num}\\pi`;
+    return `\\dfrac{${num === 1 ? '' : num}\\pi}{${den}}`;
+  }
+  return `${key}^\\circ`;
 }
 
 function formatSvgText(text) {
@@ -367,7 +883,7 @@ function makeArc(cx, cy, v1x, v1y, v2x, v2y, r) {
   if (a2 - a1 > Math.PI) { a2 -= 2 * Math.PI; let t = a1; a1 = a2; a2 = t; }
   let sx = cx + r * Math.cos(a1); let sy = cy + r * Math.sin(a1);
   let ex = cx + r * Math.cos(a2); let ey = cy + r * Math.sin(a2);
-  return `<path d="M ${sx} ${sy} A ${r} ${r} 0 0 1 ${ex} ${ey}" fill="none" stroke="var(--main-pen)" stroke-width="1.5" />`;
+  return `<path d="M ${sx} ${sy} A ${r} ${r} 0 0 1 ${ex} ${ey}" fill="none" stroke="var(--main-pen)" stroke-width="1.8" />`;
 }
 
 function makeSweepArc(cx, cy, r, startDeg, endDeg, color = "var(--main-pen)") {
@@ -378,67 +894,133 @@ function makeSweepArc(cx, cy, r, startDeg, endDeg, color = "var(--main-pen)") {
     let radMid = (startDeg + 180) * Math.PI / 180;
     let x1 = cx + r * Math.cos(rad1); let y1 = cy - r * Math.sin(rad1);
     let xMid = cx + r * Math.cos(radMid); let yMid = cy - r * Math.sin(radMid);
-    return `<path d="M ${x1} ${y1} A ${r} ${r} 0 1 0 ${xMid} ${yMid} A ${r} ${r} 0 1 0 ${x1} ${y1}" fill="none" stroke="${color}" stroke-width="1.5" />`;
+    return `<path d="M ${x1} ${y1} A ${r} ${r} 0 1 0 ${xMid} ${yMid} A ${r} ${r} 0 1 0 ${x1} ${y1}" fill="none" stroke="${color}" stroke-width="1.8" />`;
   }
   let rad1 = startDeg * Math.PI / 180;
   let rad2 = endDeg * Math.PI / 180;
   let x1 = cx + r * Math.cos(rad1); let y1 = cy - r * Math.sin(rad1);
   let x2 = cx + r * Math.cos(rad2); let y2 = cy - r * Math.sin(rad2);
   let largeArc = diff > 180 ? 1 : 0;
-  return `<path d="M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 0 ${x2} ${y2}" fill="none" stroke="${color}" stroke-width="1.5" />`;
+  return `<path d="M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 0 ${x2} ${y2}" fill="none" stroke="${color}" stroke-width="1.8" />`;
 }
 
 /* ==============================================
-   問題生成ロジック
+   1. 直角三角形の定義 (無理数辺・向きバリエーション拡充)
 ============================================== */
-
 function generateRightTriangleSVG() {
-  const TRIPLES = [{w:3,h:4,hyp:5}, {w:5,h:12,hyp:13}, {w:8,h:15,hyp:17}];
+  const TRIPLES = [
+    {w: '3', h: '4', hyp: '5'},
+    {w: '5', h: '12', hyp: '13'},
+    {w: '8', h: '15', hyp: '17'},
+    {w: '1', h: '\\sqrt{3}', hyp: '2'},
+    {w: '1', h: '1', hyp: '\\sqrt{2}'},
+    {w: '1', h: '2', hyp: '\\sqrt{5}'},
+    {w: '2', h: '3', hyp: '\\sqrt{13}'}
+  ];
   const t = pick(TRIPLES);
   let w = t.w, h = t.h, hyp = t.hyp;
-  if(Math.random() < 0.5) [w, h] = [h, w]; 
-  
-  let targetAngle = pick(['A', 'B']); 
-  let topLabel = 'A'; let leftLabel = 'B'; let rightLabel = 'C';
-  let opp = targetAngle === 'B' ? w : h; 
-  let adj = targetAngle === 'B' ? h : w; 
+  if (Math.random() < 0.5) [w, h] = [h, w];
+
+  let targetAngle = pick(['A', 'B']);
+  let opp = targetAngle === 'B' ? w : h;
+  let adj = targetAngle === 'B' ? h : w;
   let func = pick(['sin', 'cos', 'tan']);
-  
-  let correct = func === 'sin' ? `\\dfrac{${opp}}{${hyp}}` : func === 'cos' ? `\\dfrac{${adj}}{${hyp}}` : `\\dfrac{${opp}}{${adj}}`;
+
+  let correct = func === 'sin' ? `\\dfrac{${opp}}{${hyp}}` : func === 'cos' ? `\\dfrac{${adj}}{${hyp}}` : (adj === '1' ? opp : `\\dfrac{${opp}}{${adj}}`);
   let targetTex = `\\${func} \\mathrm{${targetAngle}}`;
-  let distractors = [`\\dfrac{${opp}}{${hyp}}`, `\\dfrac{${adj}}{${hyp}}`, `\\dfrac{${opp}}{${adj}}`, `\\dfrac{${adj}}{${opp}}`];
-  let options = shuffle([...new Set(distractors)].filter(d => d !== correct).slice(0,2).concat(correct));
+  let candidates = [
+    `\\dfrac{${opp}}{${hyp}}`, `\\dfrac{${adj}}{${hyp}}`,
+    adj === '1' ? opp : `\\dfrac{${opp}}{${adj}}`,
+    opp === '1' ? adj : `\\dfrac{${adj}}{${opp}}`,
+    `\\dfrac{${hyp}}{${opp}}`, `\\dfrac{${hyp}}{${adj}}`
+  ];
+  let options = makeUniqueChoices(correct, candidates);
 
-  let arcHtml = targetAngle === 'B' ? makeArc(20, 140, 150, 0, 150, -120, 18) : makeArc(170, 20, 0, 120, -150, 120, 18);
-
-  const SVG_W = 200, SVG_H = 170;
-  let svg = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg">
-    <path class="svg-right-angle" d="M 170,140 L 158,140 L 158,128 L 170,128 Z" />
-    <path class="svg-line" d="M 20,140 L 170,140 L 170,20 Z" />
-    ${arcHtml}
-    <text class="svg-vertex" x="170" y="10">${topLabel}</text>
-    <text class="svg-vertex" x="12" y="158">${leftLabel}</text>
-    <text class="svg-vertex" x="185" y="158">${rightLabel}</text>
-    <text class="svg-text" x="95" y="158">${h}</text>
-    <text class="svg-text" x="185" y="80">${w}</text>
-    <text class="svg-text" x="85" y="70">${hyp}</text>
-  </svg>`;
+  let flipHoriz = Math.random() < 0.4;
+  const SVG_W = 200, SVG_H = 155;
+  let svg = '';
+  if (!flipHoriz) {
+    let arcHtml = targetAngle === 'B' ? makeArc(24, 132, 142, 0, 142, -108, 18) : makeArc(166, 24, 0, 108, -142, 108, 18);
+    svg = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg">
+      <path class="svg-right-angle" d="M 166,132 L 154,132 L 154,120 L 166,120 Z" />
+      <path class="svg-line" d="M 24,132 L 166,132 L 166,24 Z" />
+      ${arcHtml}
+      <text class="svg-vertex" x="166" y="12">A</text>
+      <text class="svg-vertex" x="12" y="146">B</text>
+      <text class="svg-vertex" x="182" y="146">C</text>
+      <text class="svg-text" x="95" y="148">${formatSvgText(h)}</text>
+      <text class="svg-text" x="184" y="78">${formatSvgText(w)}</text>
+      <text class="svg-text" x="82" y="66">${formatSvgText(hyp)}</text>
+    </svg>`;
+  } else {
+    let arcHtml = targetAngle === 'B' ? makeArc(176, 132, -142, 0, -142, -108, 18) : makeArc(34, 24, 0, 108, 142, 108, 18);
+    svg = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg">
+      <path class="svg-right-angle" d="M 34,132 L 46,132 L 46,120 L 34,120 Z" />
+      <path class="svg-line" d="M 176,132 L 34,132 L 34,24 Z" />
+      ${arcHtml}
+      <text class="svg-vertex" x="34" y="12">A</text>
+      <text class="svg-vertex" x="188" y="146">B</text>
+      <text class="svg-vertex" x="18" y="146">C</text>
+      <text class="svg-text" x="105" y="148">${formatSvgText(h)}</text>
+      <text class="svg-text" x="16" y="78">${formatSvgText(w)}</text>
+      <text class="svg-text" x="118" y="66">${formatSvgText(hyp)}</text>
+    </svg>`;
+  }
 
   let explRatio = func === 'sin' ? '\\dfrac{\\text{対辺}}{\\text{斜辺}}' : func === 'cos' ? '\\dfrac{\\text{底辺}}{\\text{斜辺}}' : '\\dfrac{\\text{対辺}}{\\text{底辺}}';
   return {
-    type: 'svg', qKey: targetTex+w+h, prompt: "次の図について、指定された三角比の値を求めよ。", targetTex, svgHtml: svg,
+    type: 'svg', qKey: `def_${targetTex}_${w}_${h}_${flipHoriz}`,
+    prompt: "図の直角三角形において、次の値を求めよ。", targetTex, svgHtml: svg,
     options, correctIndex: options.indexOf(correct),
-    steps: [`直角三角形において、$\\${func}$ は $${explRatio}$ で求められます。`, `頂点 $\\mathrm{${targetAngle}}$ から見て、対辺は ${opp}、底辺は ${adj}、斜辺は ${hyp} となります。`, `よって、$\\${func} \\mathrm{${targetAngle}} = ${correct}$`]
+    steps: [
+      `直角三角形において、$\\${func}$ の定義は $${explRatio}$ です。`,
+      `角 $\\mathrm{${targetAngle}}$ を基準にすると、向かい合う<strong>対辺</strong>は $${opp}$、隣り合う<strong>底辺</strong>は $${adj}$、<strong>斜辺</strong>は $${hyp}$ です。`,
+      `したがって、$\\${func} \\mathrm{${targetAngle}} = ${correct}$`
+    ]
   };
 }
 
+/* ==============================================
+   2. 相互関係 (基本3公式 + sinθ+cosθ対称式問題)
+============================================== */
 function generateMutProblem() {
-  const TRIPLES = [{a:3, b:4, c:5}, {a:5, b:12, c:13}, {a:8, b:15, c:17}, {a:7, b:24, c:25}];
-  const tr = pick(TRIPLES);
+  // 25%の確率で対称式 (sinθ ± cosθ = k から sinθcosθ を求める定番問題)
+  if (Math.random() < 0.25) {
+    const cases = [
+      { sign: '+', val: '\\dfrac{1}{2}', sq: '\\dfrac{1}{4}', ans: '-\\dfrac{3}{8}', d: ['\\dfrac{3}{8}', '-\\dfrac{1}{4}', '\\dfrac{1}{8}'] },
+      { sign: '-', val: '\\dfrac{1}{2}', sq: '\\dfrac{1}{4}', ans: '\\dfrac{3}{8}', d: ['-\\dfrac{3}{8}', '\\dfrac{1}{4}', '\\dfrac{1}{8}'] },
+      { sign: '+', val: '\\dfrac{\\sqrt{2}}{2}', sq: '\\dfrac{1}{2}', ans: '-\\dfrac{1}{4}', d: ['\\dfrac{1}{4}', '-\\dfrac{1}{2}', '\\dfrac{1}{2}'] },
+      { sign: '+', val: '\\dfrac{4}{3}', sq: '\\dfrac{16}{9}', ans: '\\dfrac{7}{18}', d: ['-\\dfrac{7}{18}', '\\dfrac{7}{9}', '\\dfrac{5}{18}'] },
+      { sign: '+', val: '\\dfrac{1}{3}', sq: '\\dfrac{1}{9}', ans: '-\\dfrac{4}{9}', d: ['\\dfrac{4}{9}', '-\\dfrac{8}{9}', '-\\dfrac{2}{9}'] }
+    ];
+    const c = pick(cases);
+    const options = makeUniqueChoices(c.ans, c.d);
+    const op = c.sign === '+' ? '+' : '-';
+    return {
+      type: 'text',
+      qKey: `mut_sym_${c.sign}_${c.val}`,
+      prompt: "次の条件のとき、式の値を求めよ。",
+      questionTex: `\\sin\\theta ${c.sign} \\cos\\theta = ${c.val} \\,\\text{のとき}`,
+      targetTex: `\\sin\\theta\\cos\\theta`,
+      options,
+      correctIndex: options.indexOf(c.ans),
+      steps: [
+        `与えられた式 $\\sin\\theta ${c.sign} \\cos\\theta = ${c.val}$ の両辺を2乗します。`,
+        `$(\\sin\\theta ${c.sign} \\cos\\theta)^2 = (\\sin^2\\theta + \\cos^2\\theta) ${op} 2\\sin\\theta\\cos\\theta = ${c.sq}$`,
+        `相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ を代入すると、$1 ${op} 2\\sin\\theta\\cos\\theta = ${c.sq}$`,
+        `これを解いて、$\\sin\\theta\\cos\\theta = ${c.ans}$`
+      ]
+    };
+  }
+
+  const TRIPLES = [{a:3, b:4, c:5}, {a:5, b:12, c:13}, {a:8, b:15, c:17}, {a:1, b:2, c:'\\sqrt{5}', sqA:1, sqB:4, sqC:5}];
+  const tr = pick(TRIPLES.slice(0, 3));
   const qType = pick(['sin2cos', 'cos2sin', 'sin2tan', 'tan2sin', 'cos2tan', 'tan2cos']);
   const quadrant = randInt(1, 4);
-  const ranges = ["0^\\circ < \\theta < 90^\\circ", "90^\\circ < \\theta < 180^\\circ", "180^\\circ < \\theta < 270^\\circ", "270^\\circ < \\theta < 360^\\circ"];
-  const rangeTex = ranges[quadrant - 1];
+  const useRad = shouldUseRadian();
+  const rangesDeg = ["0^\\circ < \\theta < 90^\\circ", "90^\\circ < \\theta < 180^\\circ", "180^\\circ < \\theta < 270^\\circ", "270^\\circ < \\theta < 360^\\circ"];
+  const rangesRad = ["0 < \\theta < \\dfrac{\\pi}{2}", "\\dfrac{\\pi}{2} < \\theta < \\pi", "\\pi < \\theta < \\dfrac{3}{2}\\pi", "\\dfrac{3}{2}\\pi < \\theta < 2\\pi"];
+  const rangeTex = useRad ? rangesRad[quadrant - 1] : rangesDeg[quadrant - 1];
   const svgQuadrant = quadrant === 1 ? [0,90] : quadrant === 2 ? [90,180] : quadrant === 3 ? [180,270] : [270,360];
 
   const sSign = (quadrant === 1 || quadrant === 2) ? 1 : -1;
@@ -479,8 +1061,7 @@ function generateMutProblem() {
         "相互関係 $1 + \\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ を用います。",
         `$\\dfrac{1}{\\cos^2\\theta} = 1 + \\left(${givenVal}\\right)^2 = 1 + ${givenSqr} = \\dfrac{${tr.c * tr.c}}{${tr.b * tr.b}}$`,
         `逆数をとって、$\\cos^2\\theta = \\dfrac{${tr.b * tr.b}}{${tr.c * tr.c}}$`,
-        `$${rangeTex}$ （第${quadrant}象限）では $\\cos\\theta ${cSign > 0 ? '>' : '<'} 0$ となります。`,
-        `よって、$\\cos \\theta = ${correctVal}$`
+        `$${rangeTex}$ （第${quadrant}象限）では $\\cos\\theta ${cSign > 0 ? '>' : '<'} 0$ より、$\\cos \\theta = ${correctVal}$`
       ];
     }
   } else if (qType === 'cos2sin' || qType === 'tan2sin') {
@@ -496,12 +1077,9 @@ function generateMutProblem() {
       ];
     } else {
       steps = [
-        "相互関係 $1 + \\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ からまず $\\cos\\theta$ を求めます。",
-        `$\\dfrac{1}{\\cos^2\\theta} = 1 + \\left(${givenVal}\\right)^2 = 1 + ${givenSqr} = \\dfrac{${tr.c * tr.c}}{${tr.b * tr.b}}$`,
-        `逆数をとって、$\\cos^2\\theta = \\dfrac{${tr.b * tr.b}}{${tr.c * tr.c}}$`,
-        `さらに $\\sin^2\\theta = 1 - \\cos^2\\theta = 1 - \\dfrac{${tr.b * tr.b}}{${tr.c * tr.c}} = \\dfrac{${tr.a * tr.a}}{${tr.c * tr.c}}$`,
-        `$${rangeTex}$ （第${quadrant}象限）では $\\sin\\theta ${sSign > 0 ? '>' : '<'} 0$ となります。`,
-        `よって、$\\sin \\theta = ${correctVal}$`
+        "相互関係 $1 + \\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ からまず $\\cos^2\\theta = \\dfrac{${tr.b * tr.b}}{${tr.c * tr.c}}$ を求めます。",
+        `さらに $\\sin^2\\theta = 1 - \\cos^2\\theta = \\dfrac{${tr.a * tr.a}}{${tr.c * tr.c}}$`,
+        `$${rangeTex}$ （第${quadrant}象限）では $\\sin\\theta ${sSign > 0 ? '>' : '<'} 0$ より、$\\sin \\theta = ${correctVal}$`
       ];
     }
   } else {
@@ -510,37 +1088,33 @@ function generateMutProblem() {
     correctVal = (num < 0 ? "-" : "") + `\\dfrac{${Math.abs(num)}}{${den}}`;
     if (qType === 'sin2tan') {
       steps = [
-        "相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ を用いて $\\cos\\theta$ を求めます。",
-        `$\\cos^2\\theta = 1 - \\left(${givenVal}\\right)^2 = 1 - ${givenSqr} = \\dfrac{${tr.b * tr.b}}{${tr.c * tr.c}}$`,
-        `$${rangeTex}$ （第${quadrant}象限）では $\\cos\\theta ${cSign > 0 ? '>' : '<'} 0$ より、$\\cos\\theta = ${cSign > 0 ? "" : "-"}\\dfrac{${tr.b}}{${tr.c}}$`,
-        `$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta}$ に代入して計算します。`,
-        `$\\tan\\theta = \\dfrac{\\left(${givenVal}\\right)}{\\left(${cSign > 0 ? "" : "-"}\\dfrac{${tr.b}}{${tr.c}}\\right)} = ${correctVal}$`
+        "相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ より $\\cos\\theta = ${cSign > 0 ? '' : '-'}\\dfrac{${tr.b}}{${tr.c}}$ を求めます。",
+        `$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta} = \\dfrac{\\left(${givenVal}\\right)}{\\left(${cSign > 0 ? "" : "-"}\\dfrac{${tr.b}}{${tr.c}}\\right)} = ${correctVal}$`
       ];
     } else {
       steps = [
-        "相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ を用いて $\\sin\\theta$ を求めます。",
-        `$\\sin^2\\theta = 1 - \\left(${givenVal}\\right)^2 = 1 - ${givenSqr} = \\dfrac{${tr.a * tr.a}}{${tr.c * tr.c}}$`,
-        `$${rangeTex}$ （第${quadrant}象限）では $\\sin\\theta ${sSign > 0 ? '>' : '<'} 0$ より、$\\sin\\theta = ${sSign > 0 ? "" : "-"}\\dfrac{${tr.a}}{${tr.c}}$`,
-        `$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta}$ に代入して計算します。`,
-        `$\\tan\\theta = \\dfrac{\\left(${sSign > 0 ? "" : "-"}\\dfrac{${tr.a}}{${tr.c}}\\right)}{\\left(${givenVal}\\right)} = ${correctVal}$`
+        "相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ より $\\sin\\theta = ${sSign > 0 ? '' : '-'}\\dfrac{${tr.a}}{${tr.c}}$ を求めます。",
+        `$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta} = \\dfrac{\\left(${sSign > 0 ? "" : "-"}\\dfrac{${tr.a}}{${tr.c}}\\right)}{\\left(${givenVal}\\right)} = ${correctVal}$`
       ];
     }
   }
 
-  let d1 = (correctVal.startsWith("-") ? correctVal.substring(1) : "-" + correctVal);
-  let wNum = tr.b; let wDen = tr.a; 
-  if(target === "\\sin \\theta") { wNum = tr.b; wDen = tr.c; } else if(target === "\\cos \\theta") { wNum = tr.a; wDen = tr.c; }
-  let d2 = (wNum * (Math.random() < 0.5 ? 1 : -1) < 0 ? "-" : "") + `\\dfrac{${Math.abs(wNum)}}{${wDen}}`;
-  if (d2 === correctVal || d2 === d1) d2 = (wDen * (Math.random() < 0.5 ? 1 : -1) < 0 ? "-" : "") + `\\dfrac{${Math.abs(wDen)}}{${wNum}}`;
+  let d1 = correctVal.startsWith("-") ? correctVal.substring(1) : "-" + correctVal;
+  let d2 = `\\dfrac{${tr.b}}{${tr.a}}`;
+  if (target === "\\sin \\theta") d2 = `\\dfrac{${tr.b}}{${tr.c}}`;
+  if (target === "\\cos \\theta") d2 = `\\dfrac{${tr.a}}{${tr.c}}`;
+  let d3 = "-" + d2;
 
-  let options = shuffle([correctVal, d1, d2]);
   let p = {
-    q: `${rangeTex}, \\quad ${givenTex}`, target: target, a: correctVal, d: [d1, d2],
+    q: `${rangeTex}, \\quad ${givenTex}`, target: target, a: correctVal, d: [d1, d2, d3],
     steps: steps, svgQuadrant: svgQuadrant
   };
   return generateFromDB([p]);
 }
 
+/* ==============================================
+   3. 積和・和積の公式
+============================================== */
 function generateProductProblem() {
   const pairs = [
     [75, 15], [105, 15], [165, 15], [105, 75], [165, 75], [165, 105],
@@ -548,14 +1122,14 @@ function generateProductProblem() {
   ];
   let [A, B] = pick(pairs);
   if (Math.random() < 0.5) [A, B] = [B, A];
-  
+
   let type = pick(['sin*cos', 'cos*sin', 'cos*cos', 'sin*sin']);
   let rA = A * Math.PI / 180; let rB = B * Math.PI / 180;
   let val = 0; let target = ""; let formula = ""; let calcStep = "";
-  
+
   let sumAB = A + B; let diffAB = A - B;
   let diffStr = diffAB < 0 ? `(${diffAB}^\\circ)` : `${diffAB}^\\circ`;
-  
+
   if (type === 'sin*cos') {
     val = Math.sin(rA) * Math.cos(rB); target = `\\sin ${A}^\\circ \\cos ${B}^\\circ`;
     formula = `$\\sin \\alpha \\cos \\beta = \\dfrac{1}{2}\\{\\sin(\\alpha+\\beta) + \\sin(\\alpha-\\beta)\\}$`;
@@ -573,24 +1147,20 @@ function generateProductProblem() {
     formula = `$\\sin \\alpha \\sin \\beta = -\\dfrac{1}{2}\\{\\cos(\\alpha+\\beta) - \\cos(\\alpha-\\beta)\\}$`;
     calcStep = `$= -\\dfrac{1}{2}(\\cos ${sumAB}^\\circ - \\cos ${diffStr})$`;
   }
-  
+
   let ansStr = findValStr(val);
-  let distractors = [];
-  while(distractors.length < 2) {
-    let cand = pick(VAL_STR).s;
-    if (cand !== ansStr && !distractors.includes(cand)) distractors.push(cand);
-  }
-  let options = shuffle([ansStr, distractors[0], distractors[1]]);
-  
+  let altVal1 = findValStr(-val);
+  let pool = VAL_STR.map(x => x.s);
+  let options = makeUniqueChoices(ansStr, [altVal1], pool);
+
   let stepsHtml = `<ul class="exp-steps">` + ["積和の公式を用います。", formula, calcStep, `$= ${ansStr}$`].map(s => `<li>${parseTeX(s)}</li>`).join('') + `</ul>`;
-  
   let refHtml = `
     <div class="ref-formula-box">
       <p class="ref-formula-title">（参考）積和の公式</p>
       <div class="ref-formula-content">
-        <div style="margin-bottom: 16px;">${parseTeX(`$\\sin \\alpha \\cos \\beta = \\dfrac{1}{2}\\{\\sin(\\alpha+\\beta) + \\sin(\\alpha-\\beta)\\}$`)}</div>
-        <div style="margin-bottom: 16px;">${parseTeX(`$\\cos \\alpha \\sin \\beta = \\dfrac{1}{2}\\{\\sin(\\alpha+\\beta) - \\sin(\\alpha-\\beta)\\}$`)}</div>
-        <div style="margin-bottom: 16px;">${parseTeX(`$\\cos \\alpha \\cos \\beta = \\dfrac{1}{2}\\{\\cos(\\alpha+\\beta) + \\cos(\\alpha-\\beta)\\}$`)}</div>
+        <div style="margin-bottom: 10px;">${parseTeX(`$\\sin \\alpha \\cos \\beta = \\dfrac{1}{2}\\{\\sin(\\alpha+\\beta) + \\sin(\\alpha-\\beta)\\}$`)}</div>
+        <div style="margin-bottom: 10px;">${parseTeX(`$\\cos \\alpha \\sin \\beta = \\dfrac{1}{2}\\{\\sin(\\alpha+\\beta) - \\sin(\\alpha-\\beta)\\}$`)}</div>
+        <div style="margin-bottom: 10px;">${parseTeX(`$\\cos \\alpha \\cos \\beta = \\dfrac{1}{2}\\{\\cos(\\alpha+\\beta) + \\cos(\\alpha-\\beta)\\}$`)}</div>
         <div>${parseTeX(`$\\sin \\alpha \\sin \\beta = -\\dfrac{1}{2}\\{\\cos(\\alpha+\\beta) - \\cos(\\alpha-\\beta)\\}$`)}</div>
       </div>
     </div>
@@ -608,15 +1178,15 @@ function generateSumProdProblem() {
     [135, 15], [135, 45], [135, 75], [135, 105]
   ];
   let [A, B] = pick(pairs);
-  if (Math.random() < 0.5) [A, B] = [B, A]; 
-  
+  if (Math.random() < 0.5) [A, B] = [B, A];
+
   let type = pick(['sin+sin', 'sin-sin', 'cos+cos', 'cos-cos']);
   let rA = A * Math.PI / 180; let rB = B * Math.PI / 180;
   let val = 0; let target = ""; let formula = ""; let calcStep = "";
-  
+
   let halfSum = (A + B) / 2; let halfDiff = (A - B) / 2;
   let halfDiffStr = halfDiff < 0 ? `(${halfDiff}^\\circ)` : `${halfDiff}^\\circ`;
-  
+
   if (type === 'sin+sin') {
     val = Math.sin(rA) + Math.sin(rB); target = `\\sin ${A}^\\circ + \\sin ${B}^\\circ`;
     formula = `$\\sin A + \\sin B = 2\\sin\\left(\\dfrac{A+B}{2}\\right)\\cos\\left(\\dfrac{A-B}{2}\\right)$`;
@@ -634,24 +1204,19 @@ function generateSumProdProblem() {
     formula = `$\\cos A - \\cos B = -2\\sin\\left(\\dfrac{A+B}{2}\\right)\\sin\\left(\\dfrac{A-B}{2}\\right)$`;
     calcStep = `$= -2\\sin ${halfSum}^\\circ \\sin ${halfDiffStr}$`;
   }
-  
+
   let ansStr = findValStr(val);
-  let distractors = [];
-  while(distractors.length < 2) {
-    let cand = pick(VAL_STR).s;
-    if (cand !== ansStr && !distractors.includes(cand)) distractors.push(cand);
-  }
-  let options = shuffle([ansStr, distractors[0], distractors[1]]);
-  
+  let pool = VAL_STR.map(x => x.s);
+  let options = makeUniqueChoices(ansStr, [findValStr(-val)], pool);
+
   let stepsHtml = `<ul class="exp-steps">` + ["和積の公式を用います。", formula, calcStep, `$= ${ansStr}$`].map(s => `<li>${parseTeX(s)}</li>`).join('') + `</ul>`;
-  
   let refHtml = `
     <div class="ref-formula-box">
       <p class="ref-formula-title">（参考）和積の公式</p>
       <div class="ref-formula-content">
-        <div style="margin-bottom: 16px;">${parseTeX(`$\\sin A + \\sin B = 2\\sin\\left(\\dfrac{A+B}{2}\\right)\\cos\\left(\\dfrac{A-B}{2}\\right)$`)}</div>
-        <div style="margin-bottom: 16px;">${parseTeX(`$\\sin A - \\sin B = 2\\cos\\left(\\dfrac{A+B}{2}\\right)\\sin\\left(\\dfrac{A-B}{2}\\right)$`)}</div>
-        <div style="margin-bottom: 16px;">${parseTeX(`$\\cos A + \\cos B = 2\\cos\\left(\\dfrac{A+B}{2}\\right)\\cos\\left(\\dfrac{A-B}{2}\\right)$`)}</div>
+        <div style="margin-bottom: 10px;">${parseTeX(`$\\sin A + \\sin B = 2\\sin\\left(\\dfrac{A+B}{2}\\right)\\cos\\left(\\dfrac{A-B}{2}\\right)$`)}</div>
+        <div style="margin-bottom: 10px;">${parseTeX(`$\\sin A - \\sin B = 2\\cos\\left(\\dfrac{A+B}{2}\\right)\\sin\\left(\\dfrac{A-B}{2}\\right)$`)}</div>
+        <div style="margin-bottom: 10px;">${parseTeX(`$\\cos A + \\cos B = 2\\cos\\left(\\dfrac{A+B}{2}\\right)\\cos\\left(\\dfrac{A-B}{2}\\right)$`)}</div>
         <div>${parseTeX(`$\\cos A - \\cos B = -2\\sin\\left(\\dfrac{A+B}{2}\\right)\\sin\\left(\\dfrac{A-B}{2}\\right)$`)}</div>
       </div>
     </div>
@@ -663,39 +1228,91 @@ function generateSumProdProblem() {
   };
 }
 
+/* ==============================================
+   4. 正弦・余弦定理 & 三角形の面積 (ヘロン・内接円含む)
+============================================== */
 function generateArbitraryTriangleSVG() {
   let p = pick(THEOREM_DB);
-  let options = shuffle([p.a, p.d[0], p.d[1]]);
-  
-  const SVG_W = 240, SVG_H = 190;
-  let svg = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg">`;
-  svg += `<path class="svg-line" d="M 120,40 L 40,150 L 200,150 Z" />`;
-  
-  if (p.lbl.A) svg += makeArc(120, 40, -80, 110, 80, 110, 18);
-  if (p.lbl.B) svg += makeArc(40, 150, 160, 0, 80, -110, 18);
-  if (p.lbl.C) svg += makeArc(200, 150, -160, 0, -80, -110, 18);
+  let options = makeUniqueChoices(p.a, p.d);
 
-  svg += `<text class="svg-vertex" x="120" y="15">A</text>`;
-  svg += `<text class="svg-vertex" x="15" y="165">B</text>`;
-  svg += `<text class="svg-vertex" x="225" y="165">C</text>`;
-  
-  if(p.lbl.a) svg += `<text class="svg-text" x="120" y="175">${formatSvgText(p.lbl.a)}</text>`;
-  if(p.lbl.b) svg += `<text class="svg-text" x="190" y="85">${formatSvgText(p.lbl.b)}</text>`;
-  if(p.lbl.c) svg += `<text class="svg-text" x="50" y="85">${formatSvgText(p.lbl.c)}</text>`;
-  
-  if(p.lbl.A) svg += `<text class="svg-text" x="120" y="70">${formatSvgText(p.lbl.A)}</text>`;
-  if(p.lbl.B) svg += `<text class="svg-text" x="75" y="142">${formatSvgText(p.lbl.B)}</text>`;
-  if(p.lbl.C) svg += `<text class="svg-text" x="165" y="142">${formatSvgText(p.lbl.C)}</text>`;
-  
+  const SVG_W = 230, SVG_H = 165;
+  let svg = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg">`;
+  svg += `<path class="svg-line" d="M 115,32 L 35,136 L 195,136 Z" />`;
+
+  if (p.lbl.A) svg += makeArc(115, 32, -80, 104, 80, 104, 18);
+  if (p.lbl.B) svg += makeArc(35, 136, 160, 0, 80, -104, 18);
+  if (p.lbl.C) svg += makeArc(195, 136, -160, 0, -80, -104, 18);
+
+  svg += `<text class="svg-vertex" x="115" y="14">A</text>`;
+  svg += `<text class="svg-vertex" x="14" y="150">B</text>`;
+  svg += `<text class="svg-vertex" x="216" y="150">C</text>`;
+
+  if (p.lbl.a) svg += `<text class="svg-text" x="115" y="154">${formatSvgText(p.lbl.a)}</text>`;
+  if (p.lbl.b) svg += `<text class="svg-text" x="180" y="78">${formatSvgText(p.lbl.b)}</text>`;
+  if (p.lbl.c) svg += `<text class="svg-text" x="50" y="78">${formatSvgText(p.lbl.c)}</text>`;
+
+  if (p.lbl.A) svg += `<text class="svg-text" x="115" y="60">${formatSvgText(p.lbl.A)}</text>`;
+  if (p.lbl.B) svg += `<text class="svg-text" x="72" y="124">${formatSvgText(p.lbl.B)}</text>`;
+  if (p.lbl.C) svg += `<text class="svg-text" x="158" y="124">${formatSvgText(p.lbl.C)}</text>`;
+
   svg += `</svg>`;
 
   return {
-    type: 'svg', qKey: p.q+p.target+Math.random(), prompt: "次の条件において、指定された値を求めよ。", questionTex: p.q, targetTex: p.target, svgHtml: svg,
+    type: 'svg', qKey: p.q + p.target, prompt: "次の条件において、指定された値を求めよ。", questionTex: p.q, targetTex: p.target, svgHtml: svg,
     options, correctIndex: options.indexOf(p.a), steps: p.steps
   };
 }
 
 function generateAreaProblem() {
+  // 25%の確率で3辺から面積 or 内接円半径を求める問題
+  if (Math.random() < 0.25) {
+    const special = [
+      {
+        q: "\\triangle \\mathrm{ABC} において、a=5, b=6, c=7 のとき、面積",
+        target: "S", ans: "6\\sqrt{6}", d: ["12\\sqrt{6}", "6\\sqrt{3}", "15"],
+        lbl: {a: "5", b: "6", c: "7"},
+        steps: [
+          "余弦定理より $\\cos A = \\dfrac{6^2+7^2-5^2}{2\\cdot 6\\cdot 7} = \\dfrac{60}{84} = \\dfrac{5}{7}$",
+          "$\\sin A = \\sqrt{1 - \\left(\\dfrac{5}{7}\\right)^2} = \\dfrac{2\\sqrt{6}}{7}$",
+          "$S = \\dfrac{1}{2}bc\\sin A = \\dfrac{1}{2}\\cdot 6\\cdot 7\\cdot \\dfrac{2\\sqrt{6}}{7} = 6\\sqrt{6}$",
+          "<strong>【別解：ヘロンの公式】</strong> $s = \\dfrac{5+6+7}{2} = 9$ より $S = \\sqrt{9(9-5)(9-6)(9-7)} = \\sqrt{9\\cdot 4\\cdot 3\\cdot 2} = 6\\sqrt{6}$"
+        ]
+      },
+      {
+        q: "\\triangle \\mathrm{ABC} において、a=13, b=14, c=15 のとき、面積",
+        target: "S", ans: "84", d: ["42", "96", "72"],
+        lbl: {a: "13", b: "14", c: "15"},
+        steps: [
+          "ヘロンの公式 $s = \\dfrac{13+14+15}{2} = 21$ を用いると計算が簡単です。",
+          "$S = \\sqrt{21(21-13)(21-14)(21-15)} = \\sqrt{21 \\cdot 8 \\cdot 7 \\cdot 6} = 84$"
+        ]
+      },
+      {
+        q: "\\triangle \\mathrm{ABC} の3辺が a=3, b=4, c=5 で面積が S=6 のとき、内接円の半径",
+        target: "r", ans: "1", d: ["\\dfrac{3}{2}", "2", "\\dfrac{1}{2}"],
+        lbl: {a: "3", b: "4", c: "5"},
+        steps: [
+          "内接円の半径 $r$ と面積 $S$ の関係式 $S = \\dfrac{1}{2}r(a+b+c)$ を用います。",
+          "$6 = \\dfrac{1}{2}r(3+4+5) = 6r$ より、$r = 1$"
+        ]
+      }
+    ];
+    const sp = pick(special);
+    const options = makeUniqueChoices(sp.ans, sp.d);
+    const SVG_W = 230, SVG_H = 165;
+    let svg = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg">
+      <path class="svg-line" d="M 115,32 L 35,136 L 195,136 Z" />
+      <text class="svg-vertex" x="115" y="14">A</text><text class="svg-vertex" x="14" y="150">B</text><text class="svg-vertex" x="216" y="150">C</text>
+      <text class="svg-text" x="115" y="154">${sp.lbl.a}</text>
+      <text class="svg-text" x="176" y="78">${sp.lbl.b}</text>
+      <text class="svg-text" x="54" y="78">${sp.lbl.c}</text>
+    </svg>`;
+    return {
+      type: 'svg', qKey: sp.q, prompt: "次の図形の値を求めよ。", questionTex: sp.q, targetTex: sp.target, svgHtml: svg,
+      options, correctIndex: options.indexOf(sp.ans), steps: sp.steps
+    };
+  }
+
   const angles = [
     { A: 30, sinVal: "\\dfrac{1}{2}", mathSin: 0.5 }, { A: 45, sinVal: "\\dfrac{1}{\\sqrt{2}}", mathSin: "sqrt2" },
     { A: 60, sinVal: "\\dfrac{\\sqrt{3}}{2}", mathSin: "sqrt3" }, { A: 120, sinVal: "\\dfrac{\\sqrt{3}}{2}", mathSin: "sqrt3" },
@@ -704,15 +1321,15 @@ function generateAreaProblem() {
   let ang = pick(angles);
   let b = randInt(2, 10); let c = randInt(2, 10);
   if (b % 2 !== 0 && c % 2 !== 0) b++;
-  
+
   let areaVal = "", d1 = "", d2 = "";
   let baseCoef = (b * c) / 2;
-  
+
   if (ang.mathSin === 0.5) {
     let s = baseCoef * 0.5;
     areaVal = s % 1 === 0 ? s.toString() : simplifyFraction(b * c, 4);
     d1 = (s * 2) % 1 === 0 ? (s * 2).toString() : simplifyFraction(b * c, 2);
-    d2 = (s * Math.sqrt(3)) % 1 === 0 ? (s * Math.sqrt(3)).toString() + "\\sqrt{3}" : (s % 1 === 0 ? s + "\\sqrt{3}" : simplifyFraction(b * c, 4) + "\\sqrt{3}");
+    d2 = (s % 1 === 0 ? s + "\\sqrt{3}" : simplifyFraction(b * c, 4) + "\\sqrt{3}");
   } else if (ang.mathSin === "sqrt2") {
     areaVal = baseCoef % 2 === 0 ? (baseCoef / 2) + "\\sqrt{2}" : simplifyFraction(baseCoef, 2) + "\\sqrt{2}";
     d1 = baseCoef % 2 === 0 ? (baseCoef / 2) + "\\sqrt{3}" : simplifyFraction(baseCoef, 2) + "\\sqrt{3}";
@@ -726,240 +1343,167 @@ function generateAreaProblem() {
   d1 = d1.replace(/^1\\sqrt/, "\\sqrt");
   d2 = d2.replace(/^1\\sqrt/, "\\sqrt");
 
-  let options = shuffle([areaVal, d1, d2]);
-  
-  const SVG_W = 240, SVG_H = 190;
+  let options = makeUniqueChoices(areaVal, [d1, d2, `${baseCoef}`]);
+
+  const SVG_W = 230, SVG_H = 165;
   let svg = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg">
-    <path class="svg-line" d="M 120,40 L 40,150 L 200,150 Z" />
-    ${makeArc(120, 40, -80, 110, 80, 110, 18)}
-    <text class="svg-vertex" x="120" y="15">A</text><text class="svg-vertex" x="15" y="165">B</text><text class="svg-vertex" x="225" y="165">C</text>
-    <text class="svg-text" x="175" y="90">${b}</text><text class="svg-text" x="65" y="90">${c}</text><text class="svg-text" x="120" y="70">${ang.A}°</text>
+    <path class="svg-line" d="M 115,32 L 35,136 L 195,136 Z" />
+    ${makeArc(115, 32, -80, 104, 80, 104, 18)}
+    <text class="svg-vertex" x="115" y="14">A</text><text class="svg-vertex" x="14" y="150">B</text><text class="svg-vertex" x="216" y="150">C</text>
+    <text class="svg-text" x="172" y="80">${b}</text><text class="svg-text" x="58" y="80">${c}</text><text class="svg-text" x="115" y="60">${ang.A}°</text>
   </svg>`;
 
   return {
-    type: 'svg', qKey: `area_${ang.A}_${b}_${c}_${Math.random()}`, 
-    prompt: "次の図形の面積 $S を求めよ。", questionTex: `\\triangle \\mathrm{ABC} において、b=${b}, c=${c}, A=${ang.A}^\\circ のとき`, targetTex: "S", svgHtml: svg,
-    options, correctIndex: options.indexOf(areaVal), 
+    type: 'svg', qKey: `area_${ang.A}_${b}_${c}`,
+    prompt: "次の図形の面積 S を求めよ。", questionTex: `\\triangle \\mathrm{ABC} において、b=${b}, c=${c}, A=${ang.A}^\\circ のとき`, targetTex: "S", svgHtml: svg,
+    options, correctIndex: options.indexOf(areaVal),
     steps: [
-      "面積の公式 $S = \\dfrac{1}{2}bc \\sin A$ を用います。",
-      `$S = \\dfrac{1}{2} \\cdot ${b} \\cdot ${c} \\sin ${ang.A}^\\circ$`,
-      `$S = ${baseCoef} \\cdot ${ang.sinVal} = ${areaVal}$`
+      "三角形の面積の公式 $S = \\dfrac{1}{2}bc \\sin A$ を用います。",
+      `$S = \\dfrac{1}{2} \\cdot ${b} \\cdot ${c} \\sin ${ang.A}^\\circ = ${baseCoef} \\cdot ${ang.sinVal} = ${areaVal}$`
     ]
   };
 }
 
+/* ==============================================
+   5. 有名角 & マイナー角 (度数法 / 弧度法対応)
+============================================== */
 function generateAngleProblem(isMinor) {
   let DB_ANGLES = isMinor ? MINOR_ANGLES : FAMOUS_ANGLES;
   let DB_VALS = isMinor ? MINOR_VALS : FAMOUS_VALS;
-  
+
   let a = pick(DB_ANGLES), func = pick(['sin', 'cos', 'tan']);
   if ((a === '90' || a === '270') && func === 'tan') func = 'sin';
-  
-  let targetTex = `\\${func} ${a}^\\circ`;
+
+  const useRad = shouldUseRadian();
+  const angleDisp = formatAngleTex(a, useRad);
+  let targetTex = `\\${func} ${angleDisp}`;
   let correct = DB_VALS[a][func];
-  
-  let distractors = [];
-  if (correct !== '0' && correct !== '\\text{なし}') {
-    let flipped = correct.startsWith('-') ? correct.substring(1) : '-' + correct;
-    distractors.push(flipped);
+
+  let pool = [];
+  for (let k of DB_ANGLES) {
+    for (let f of ['sin', 'cos', 'tan']) {
+      if (DB_VALS[k][f] !== '\\text{なし}') pool.push(DB_VALS[k][f]);
+    }
   }
-  while(distractors.length < 2) {
-    let dVal = DB_VALS[pick(DB_ANGLES)][pick(['sin', 'cos', 'tan'])];
-    if (dVal !== correct && dVal !== '\\text{なし}' && !distractors.includes(dVal)) distractors.push(dVal);
-  }
-  let options = shuffle([correct, distractors[0], distractors[1]]);
-  
+  let options = makeUniqueChoices(correct, [], pool);
+
   let steps = [];
-  let numA = parseInt(a);
-  
+  let numA = parseInt(a, 10);
+  if (useRad) {
+    steps.push(`弧度法の $${angleDisp}$ は度数法に直すと $${numA}^\\circ$ （$\\pi = 180^\\circ$）です。`);
+  }
+
   if (!isMinor && numA > 90 && numA !== 180 && numA !== 270 && numA !== 360) {
-    steps.push("角度を $0^\\circ \\sim 90^\\circ$ の範囲に変換して考えます。");
-    let refA;
-    if (numA <= 180) {
-      refA = 180 - numA;
-      if (func === 'sin') {
-        steps.push(`公式 $\\sin(180^\\circ - \\theta) = \\sin\\theta$ を用います。`);
-        steps.push(`$\\sin ${numA}^\\circ = \\sin(180^\\circ - ${refA}^\\circ) = \\sin ${refA}^\\circ = ${correct}$`);
-      } else if (func === 'cos') {
-        steps.push(`公式 $\\cos(180^\\circ - \\theta) = -\\cos\\theta$ を用います。`);
-        steps.push(`$\\cos ${numA}^\\circ = \\cos(180^\\circ - ${refA}^\\circ) = -\\cos ${refA}^\\circ = ${correct}$`);
-      } else {
-        steps.push(`公式 $\\tan(180^\\circ - \\theta) = -\\tan\\theta$ を用います。`);
-        steps.push(`$\\tan ${numA}^\\circ = \\tan(180^\\circ - ${refA}^\\circ) = -\\tan ${refA}^\\circ = ${correct}$`);
-      }
-    } else if (numA <= 270) {
-      refA = numA - 180;
-      if (func === 'sin') {
-        steps.push(`公式 $\\sin(180^\\circ + \\theta) = -\\sin\\theta$ を用います。`);
-        steps.push(`$\\sin ${numA}^\\circ = \\sin(180^\\circ + ${refA}^\\circ) = -\\sin ${refA}^\\circ = ${correct}$`);
-      } else if (func === 'cos') {
-        steps.push(`公式 $\\cos(180^\\circ + \\theta) = -\\cos\\theta$ を用います。`);
-        steps.push(`$\\cos ${numA}^\\circ = \\cos(180^\\circ + ${refA}^\\circ) = -\\cos ${refA}^\\circ = ${correct}$`);
-      } else {
-        steps.push(`公式 $\\tan(180^\\circ + \\theta) = \\tan\\theta$ を用います。`);
-        steps.push(`$\\tan ${numA}^\\circ = \\tan(180^\\circ + ${refA}^\\circ) = \\tan ${refA}^\\circ = ${correct}$`);
-      }
-    } else {
-      refA = 360 - numA;
-      if (func === 'sin') {
-        steps.push(`公式 $\\sin(360^\\circ - \\theta) = -\\sin\\theta$ を用います。`);
-        steps.push(`$\\sin ${numA}^\\circ = \\sin(360^\\circ - ${refA}^\\circ) = -\\sin ${refA}^\\circ = ${correct}$`);
-      } else if (func === 'cos') {
-        steps.push(`公式 $\\cos(360^\\circ - \\theta) = \\cos\\theta$ を用います。`);
-        steps.push(`$\\cos ${numA}^\\circ = \\cos(360^\\circ - ${refA}^\\circ) = \\cos ${refA}^\\circ = ${correct}$`);
-      } else {
-        steps.push(`公式 $\\tan(360^\\circ - \\theta) = -\\tan\\theta$ を用います。`);
-        steps.push(`$\\tan ${numA}^\\circ = \\tan(360^\\circ - ${refA}^\\circ) = -\\tan ${refA}^\\circ = ${correct}$`);
-      }
-    }
+    steps.push("単位円上で基準となる鋭角（$30^\\circ, 45^\\circ, 60^\\circ$）の直角三角形と符号を確認します。");
+    let refA = numA <= 180 ? 180 - numA : (numA <= 270 ? numA - 180 : 360 - numA);
+    steps.push(`基準角は $${refA}^\\circ$ であり、$\\${func} ${numA}^\\circ = ${correct}$ となります。`);
   } else if (!isMinor) {
-    if (numA === 180 || numA === 270 || numA === 360) {
-        steps.push(`単位円上の座標から直接値を求めます。$\\${func} ${numA}^\\circ = ${correct}$`);
+    steps.push(`単位円上の座標または基本の直角三角形より、$\\${func} ${numA}^\\circ = ${correct}$ です。`);
+  } else {
+    if (a === '15' || a === '75' || a === '105' || a === '165') {
+      const decomp = a === '15' ? '45^\\circ - 30^\\circ' : a === '75' ? '45^\\circ + 30^\\circ' : a === '105' ? '60^\\circ + 45^\\circ' : '120^\\circ + 45^\\circ';
+      steps.push(`$${a}^\\circ = ${decomp}$ として加法定理を用います。`);
+      steps.push(`計算すると $\\${func} ${a}^\\circ = ${correct}$ となります。`);
     } else {
-        steps.push(`$0^\\circ \\sim 90^\\circ$ の角なので、基本の直角三角形や単位円からそのまま値を求めます。$\\${func} ${numA}^\\circ = ${correct}$`);
-    }
-  } else if (isMinor) {
-    if (a === '15') {
-       steps.push(`$15^\\circ = 45^\\circ - 30^\\circ$ として加法定理を用います。`);
-       if (func === 'sin') {
-         steps.push(`$\\sin(45^\\circ - 30^\\circ) = \\sin 45^\\circ \\cos 30^\\circ - \\cos 45^\\circ \\sin 30^\\circ$`);
-         steps.push(`$= \\dfrac{1}{\\sqrt{2}} \\times \\dfrac{\\sqrt{3}}{2} - \\dfrac{1}{\\sqrt{2}} \\times \\dfrac{1}{2} = \\dfrac{\\sqrt{6}-\\sqrt{2}}{4}$`);
-       } else if (func === 'cos') {
-         steps.push(`$\\cos(45^\\circ - 30^\\circ) = \\cos 45^\\circ \\cos 30^\\circ + \\sin 45^\\circ \\sin 30^\\circ$`);
-         steps.push(`$= \\dfrac{1}{\\sqrt{2}} \\times \\dfrac{\\sqrt{3}}{2} + \\dfrac{1}{\\sqrt{2}} \\times \\dfrac{1}{2} = \\dfrac{\\sqrt{6}+\\sqrt{2}}{4}$`);
-       } else {
-         steps.push(`$\\tan(45^\\circ - 30^\\circ) = \\dfrac{\\tan 45^\\circ - \\tan 30^\\circ}{1 + \\tan 45^\\circ \\tan 30^\\circ}$`);
-         steps.push(`$= \\dfrac{1 - \\dfrac{1}{\\sqrt{3}}}{1 + 1 \\times \\dfrac{1}{\\sqrt{3}}} = \\dfrac{\\sqrt{3}-1}{\\sqrt{3}+1} = 2-\\sqrt{3}$`);
-       }
-    } else if (a === '75') {
-       steps.push(`$75^\\circ = 45^\\circ + 30^\\circ$ として加法定理を用います。`);
-       if (func === 'sin') {
-         steps.push(`$\\sin(45^\\circ + 30^\\circ) = \\sin 45^\\circ \\cos 30^\\circ + \\cos 45^\\circ \\sin 30^\\circ$`);
-         steps.push(`$= \\dfrac{1}{\\sqrt{2}} \\times \\dfrac{\\sqrt{3}}{2} + \\dfrac{1}{\\sqrt{2}} \\times \\dfrac{1}{2} = \\dfrac{\\sqrt{6}+\\sqrt{2}}{4}$`);
-       } else if (func === 'cos') {
-         steps.push(`$\\cos(45^\\circ + 30^\\circ) = \\cos 45^\\circ \\cos 30^\\circ - \\sin 45^\\circ \\sin 30^\\circ$`);
-         steps.push(`$= \\dfrac{1}{\\sqrt{2}} \\times \\dfrac{\\sqrt{3}}{2} - \\dfrac{1}{\\sqrt{2}} \\times \\dfrac{1}{2} = \\dfrac{\\sqrt{6}-\\sqrt{2}}{4}$`);
-       } else {
-         steps.push(`$\\tan(45^\\circ + 30^\\circ) = \\dfrac{\\tan 45^\\circ + \\tan 30^\\circ}{1 - \\tan 45^\\circ \\tan 30^\\circ}$`);
-         steps.push(`$= \\dfrac{1 + \\dfrac{1}{\\sqrt{3}}}{1 - 1 \\times \\dfrac{1}{\\sqrt{3}}} = \\dfrac{\\sqrt{3}+1}{\\sqrt{3}-1} = 2+\\sqrt{3}$`);
-       }
-    } else if (a === '18' || a === '72' || a === '108') {
-        let needCos18 = (a !== '18') || (func === 'cos') || (func === 'tan');
-        let needTan18 = (a === '18' && func === 'tan') || (a === '72' && func === 'tan') || (a === '108' && func === 'tan');
-        
-        if (a !== '18') steps.push(`まず、$18^\\circ$ の三角比を求めます。`);
-        steps.push(`$\\theta = 18^\\circ$ とおくと、$5\\theta = 90^\\circ$ となります。`);
-        steps.push(`これを $2\\theta + 3\\theta = 90^\\circ$ と分け、$2\\theta = 90^\\circ - 3\\theta$ と変形します。`);
-        steps.push(`両辺の $\\sin$ をとると、$\\sin 2\\theta = \\sin(90^\\circ - 3\\theta) = \\cos 3\\theta$ となります。`);
-        steps.push(`2倍角・3倍角の公式より、$2\\sin\\theta\\cos\\theta = 4\\cos^3\\theta - 3\\cos\\theta$`);
-        steps.push(`$\\cos 18^\\circ \\neq 0$ なので、両辺を $\\cos\\theta$ で割り整理すると、$2\\sin\\theta = 4(1-\\sin^2\\theta) - 3$`);
-        steps.push(`$4\\sin^2\\theta + 2\\sin\\theta - 1 = 0$ を解き、$\\sin 18^\\circ > 0$ より $\\sin 18^\\circ = \\dfrac{\\sqrt{5}-1}{4}$ となります。`);
-        
-        if (needCos18) {
-            steps.push(`相互関係 $\\cos^2 18^\\circ = 1 - \\sin^2 18^\\circ$ より、$\\cos^2 18^\\circ = 1 - \\left(\\dfrac{\\sqrt{5}-1}{4}\\right)^2 = \\dfrac{10 + 2\\sqrt{5}}{16}$`);
-            steps.push(`$\\cos 18^\\circ > 0$ より、$\\cos 18^\\circ = \\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}$ です。`);
-        }
-        if (needTan18) {
-            steps.push(`$\\tan 18^\\circ = \\dfrac{\\sin 18^\\circ}{\\cos 18^\\circ} = \\dfrac{\\left(\\dfrac{\\sqrt{5}-1}{4}\\right)}{\\left(\\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}\\right)} = \\dfrac{\\sqrt{5}-1}{\\sqrt{10+2\\sqrt{5}}}$`);
-            steps.push(`分母分子に $\\sqrt{10-2\\sqrt{5}}$ を掛けて有理化すると、$\\tan 18^\\circ = \\dfrac{\\sqrt{25-10\\sqrt{5}}}{5}$ となります。`);
-        }
-
-        if (a === '72') {
-            steps.push(`本題の $72^\\circ$ については、$72^\\circ = 90^\\circ - 18^\\circ$ の関係を用います。`);
-            if (func === 'sin') steps.push(`$\\sin 72^\\circ = \\cos 18^\\circ = \\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}$`);
-            if (func === 'cos') steps.push(`$\\cos 72^\\circ = \\sin 18^\\circ = \\dfrac{\\sqrt{5}-1}{4}$`);
-            if (func === 'tan') steps.push(`$\\tan 72^\\circ = \\dfrac{1}{\\tan 18^\\circ} = \\dfrac{5}{\\sqrt{25-10\\sqrt{5}}} = \\sqrt{5+2\\sqrt{5}}$`);
-        } else if (a === '108') {
-            steps.push(`本題の $108^\\circ$ については、$108^\\circ = 90^\\circ + 18^\\circ$ の関係を用います。`);
-            if (func === 'sin') steps.push(`$\\sin 108^\\circ = \\cos 18^\\circ = \\dfrac{\\sqrt{10+2\\sqrt{5}}}{4}$`);
-            if (func === 'cos') steps.push(`$\\cos 108^\\circ = -\\sin 18^\\circ = -\\dfrac{\\sqrt{5}-1}{4}$`);
-            if (func === 'tan') steps.push(`$\\tan 108^\\circ = -\\dfrac{1}{\\tan 18^\\circ} = -\\dfrac{5}{\\sqrt{25-10\\sqrt{5}}} = -\\sqrt{5+2\\sqrt{5}}$`);
-        }
-    } else if (a === '36' || a === '54') {
-        let needSin36 = (a !== '36') || (func === 'sin') || (func === 'tan');
-        let needTan36 = (a === '36' && func === 'tan') || (a === '54' && func === 'tan');
-
-        if (a !== '36') steps.push(`まず、$36^\\circ$ の三角比を求めます。`);
-        steps.push(`$\\theta = 36^\\circ$ とおくと、$5\\theta = 180^\\circ$ となります。`);
-        steps.push(`これを $2\\theta + 3\\theta = 180^\\circ$ と分け、$2\\theta = 180^\\circ - 3\\theta$ と変形します。`);
-        steps.push(`両辺の $\\sin$ をとると、$\\sin 2\\theta = \\sin(180^\\circ - 3\\theta) = \\sin 3\\theta$ となります。`);
-        steps.push(`2倍角・3倍角の公式より、$2\\sin\\theta\\cos\\theta = 3\\sin\\theta - 4\\sin^3\\theta$`);
-        steps.push(`$\\sin 36^\\circ \\neq 0$ なので、両辺を $\\sin\\theta$ で割り整理すると、$2\\cos\\theta = 3 - 4(1-\\cos^2\\theta)$`);
-        steps.push(`$4\\cos^2\\theta - 2\\cos\\theta - 1 = 0$ を解き、$\\cos 36^\\circ > 0$ より $\\cos 36^\\circ = \\dfrac{\\sqrt{5}+1}{4}$ となります。`);
-        
-        if (needSin36) {
-            steps.push(`相互関係 $\\sin^2 36^\\circ = 1 - \\cos^2 36^\\circ$ より、$\\sin^2 36^\\circ = 1 - \\left(\\dfrac{\\sqrt{5}+1}{4}\\right)^2 = \\dfrac{10 - 2\\sqrt{5}}{16}$`);
-            steps.push(`$\\sin 36^\\circ > 0$ より、$\\sin 36^\\circ = \\dfrac{\\sqrt{10-2\\sqrt{5}}}{4}$ です。`);
-        }
-        if (needTan36) {
-            steps.push(`$\\tan 36^\\circ = \\dfrac{\\sin 36^\\circ}{\\cos 36^\\circ} = \\dfrac{\\left(\\dfrac{\\sqrt{10-2\\sqrt{5}}}{4}\\right)}{\\left(\\dfrac{\\sqrt{5}+1}{4}\\right)} = \\dfrac{\\sqrt{10-2\\sqrt{5}}}{\\sqrt{5}+1}$`);
-            steps.push(`分母を有理化して整理すると、$\\tan 36^\\circ = \\sqrt{5-2\\sqrt{5}}$ となります。`);
-        }
-
-        if (a === '54') {
-            steps.push(`本題の $54^\\circ$ については、$54^\\circ = 90^\\circ - 36^\\circ$ の関係を用います。`);
-            if (func === 'sin') steps.push(`$\\sin 54^\\circ = \\cos 36^\\circ = \\dfrac{\\sqrt{5}+1}{4}$`);
-            if (func === 'cos') steps.push(`$\\cos 54^\\circ = \\sin 36^\\circ = \\dfrac{\\sqrt{10-2\\sqrt{5}}}{4}$`);
-            if (func === 'tan') steps.push(`$\\tan 54^\\circ = \\dfrac{1}{\\tan 36^\\circ} = \\dfrac{1}{\\sqrt{5-2\\sqrt{5}}} = \\dfrac{\\sqrt{25+10\\sqrt{5}}}{5}$`);
-        }
+      steps.push(`$\\theta = 18^\\circ$ とおくと $5\\theta = 90^\\circ \\iff 2\\theta = 90^\\circ - 3\\theta$ より $\\sin 2\\theta = \\cos 3\\theta$ が成り立ちます。`);
+      steps.push(`$2\\sin\\theta\\cos\\theta = 4\\cos^3\\theta - 3\\cos\\theta$ から $4\\sin^2\\theta + 2\\sin\\theta - 1 = 0$ を解くと $\\sin 18^\\circ = \\dfrac{\\sqrt{5}-1}{4}$ が得られます。`);
+      steps.push(`これと相互関係・余角の公式を用いることで、$\\${func} ${a}^\\circ = ${correct}$ が導かれます。`);
     }
   }
 
   let stepsHtml = `<ul class="exp-steps">` + steps.map(s => `<li>${parseTeX(s)}</li>`).join('') + `</ul>`;
 
-  let explSvgHtml = '';
-  let r = 70, cx = 90, cy = 90; 
+  let r = 68, cx = 90, cy = 90;
   let rad = numA * Math.PI / 180;
   let px = cx + r * Math.cos(rad);
   let py = cy - r * Math.sin(rad);
-  
-  let pathObj = `<line x1="${cx}" y1="${cy}" x2="${px}" y2="${py}" stroke="#d97736" stroke-width="2" />
-                 <circle cx="${px}" cy="${py}" r="2" fill="#d97736" />`;
+
+  let pathObj = `<line x1="${cx}" y1="${cy}" x2="${px}" y2="${py}" stroke="var(--main-pen)" stroke-width="2.2" />
+                 <circle cx="${px}" cy="${py}" r="3" fill="var(--main-pen)" />`;
   if (numA % 90 !== 0) {
-    pathObj += `<line x1="${px}" y1="${py}" x2="${px}" y2="${cy}" stroke="#d4ae96" stroke-width="1.5" stroke-dasharray="2 2" />
-                <line x1="${cx}" y1="${cy}" x2="${px}" y2="${cy}" stroke="#d4ae96" stroke-width="1.5" stroke-dasharray="2 2" />`;
+    pathObj += `<line x1="${px}" y1="${py}" x2="${px}" y2="${cy}" stroke="var(--line-strong)" stroke-width="1.5" stroke-dasharray="2 2" />
+                <line x1="${cx}" y1="${cy}" x2="${px}" y2="${cy}" stroke="var(--line-strong)" stroke-width="1.5" stroke-dasharray="2 2" />`;
   }
-  
+
   let arcHtml = '';
   if (numA !== 0) {
     arcHtml += makeSweepArc(cx, cy, 20, 0, numA);
     let tRad = rad / 2;
-    if(numA === 360) {
-      arcHtml += `<text x="${cx + 32}" y="${cy - 10}" font-size="10" fill="var(--main-pen)" font-weight="900" text-anchor="middle" dominant-baseline="middle">360°</text>`;
-    } else {
-      let tx = cx + 32 * Math.cos(tRad); let ty = cy - 32 * Math.sin(tRad);
-      arcHtml += `<text x="${tx}" y="${ty}" font-size="10" fill="var(--main-pen)" font-weight="900" text-anchor="middle" dominant-baseline="middle">${numA}°</text>`;
-    }
+    let tx = cx + 32 * Math.cos(tRad); let ty = cy - 32 * Math.sin(tRad);
+    arcHtml += `<text x="${tx}" y="${ty}" font-size="10" fill="var(--main-pen)" font-weight="900" text-anchor="middle" dominant-baseline="middle">${numA}°</text>`;
   }
-  arcHtml += `<text x="${cx + r + 15}" y="${cy}" font-size="10" fill="var(--muted)" font-weight="900" text-anchor="middle" dominant-baseline="middle">0°</text>`;
-  
-  let explText2 = "";
-  if (func === 'sin') explText2 = "$\\sin$ の値は、単位円上の <strong>$y$ 座標</strong> に相当します。";
-  else if (func === 'cos') explText2 = "$\\cos$ の値は、単位円上の <strong>$x$ 座標</strong> に相当します。";
-  else explText2 = "$\\tan$ の値は、単位円上の点と原点を結んだ直線の <strong>傾き</strong> に相当します。";
 
-  explSvgHtml = `<div class="exp-svg-wrap"><svg viewBox="0 0 180 180">
-    <line x1="10" y1="90" x2="170" y2="90" stroke="#d4ae96" />
-    <line x1="90" y1="10" x2="90" y2="170" stroke="#d4ae96" />
-    <circle cx="90" cy="90" r="${r}" fill="none" stroke="#3a2a22" stroke-width="1.5" />
+  let explText2 = func === 'sin' ? "$\\sin$ は単位円上の <strong>$y$ 座標</strong>" : func === 'cos' ? "$\\cos$ は単位円上の <strong>$x$ 座標</strong>" : "$\\tan$ は原点と結んだ直線の <strong>傾き</strong>";
+
+  let explSvgHtml = `<div class="exp-svg-wrap"><svg viewBox="0 0 180 180">
+    <line x1="10" y1="90" x2="170" y2="90" stroke="var(--line-strong)" />
+    <line x1="90" y1="10" x2="90" y2="170" stroke="var(--line-strong)" />
+    <circle cx="90" cy="90" r="${r}" fill="none" stroke="var(--ink)" stroke-width="1.5" />
     ${arcHtml} ${pathObj}
-    <text x="90" y="5" font-size="10" fill="#7d6559" text-anchor="middle">y</text>
-    <text x="175" y="90" font-size="10" fill="#7d6559" dominant-baseline="middle">x</text>
-  </svg><div style="text-align:center; font-size:0.9rem; margin-top:4px; color:var(--muted)">${parseTeX(explText2)}</div></div>`;
+    <text x="90" y="8" font-size="10" fill="var(--muted)" text-anchor="middle">y</text>
+    <text x="174" y="90" font-size="10" fill="var(--muted)" dominant-baseline="middle">x</text>
+  </svg><div style="text-align:center; font-size:0.84rem; margin-top:4px; color:var(--muted)">${parseTeX(explText2)}</div></div>`;
 
-  let expContentHtml = `<div style="display:flex; flex-direction:column; gap:16px;"><div>${stepsHtml}</div>${explSvgHtml}</div>`;
-
-  let tableAngles = isMinor ? MINOR_ANGLES : FAMOUS_ANGLES.filter(a => parseInt(a) <= 180);
-  let tableRows = tableAngles.map(ang => `<tr><th>${ang}°</th><td>${renderTex(DB_VALS[ang].sin)}</td><td>${renderTex(DB_VALS[ang].cos)}</td><td>${renderTex(DB_VALS[ang].tan)}</td></tr>`).join('');
+  let tableAngles = isMinor ? MINOR_ANGLES : FAMOUS_ANGLES.filter(ang => parseInt(ang, 10) <= 180);
+  let tableRows = tableAngles.map(ang => `<tr><th>${ang}° (${renderTex(DB_VALS[ang].rad)})</th><td>${renderTex(DB_VALS[ang].sin)}</td><td>${renderTex(DB_VALS[ang].cos)}</td><td>${renderTex(DB_VALS[ang].tan)}</td></tr>`).join('');
   let tableHtml = `<div class="table-wrapper"><table><tr><th>角度</th><th>${renderTex('\\sin')}</th><th>${renderTex('\\cos')}</th><th>${renderTex('\\tan')}</th></tr>${tableRows}</table></div>`;
 
   return {
-    type: 'text', qKey: targetTex, prompt: "次の三角比の値を求めよ。", targetTex, options, correctIndex: options.indexOf(correct),
-    explHtml: `${expContentHtml}<p style="margin-top:20px;">（参考）角度の三角比一覧</p>${tableHtml}`
+    type: 'text', qKey: `${targetTex}_${useRad}`, prompt: "次の三角比・三角関数の値を求めよ。", targetTex, options, correctIndex: options.indexOf(correct),
+    explHtml: `<div>${stepsHtml}${explSvgHtml}</div><p style="margin:14px 0 6px; font-size:0.86rem; color:var(--muted);">（参考）三角比一覧表</p>${tableHtml}`
   };
 }
 
+/* ==============================================
+   6. 三角方程式・不等式 (弧度法・不等式バリエーション追加)
+============================================== */
 function generateEquationProblem() {
+  const useRad = shouldUseRadian();
+
+  // 25%の確率で基本的な三角不等式を出題
+  if (Math.random() < 0.25) {
+    const ineqs = [
+      {
+        func: 'sin', op: '>', val: '\\dfrac{1}{2}', sv: 0.5, a1: 30, a2: 150,
+        ansDeg: '30^\\circ < \\theta < 150^\\circ',
+        ansRad: '\\dfrac{\\pi}{6} < \\theta < \\dfrac{5}{6}\\pi',
+        dDeg: ['0^\\circ \\le \\theta < 30^\\circ, 150^\\circ < \\theta \\le 180^\\circ', '60^\\circ < \\theta < 120^\\circ'],
+        dRad: ['0 \\le \\theta < \\dfrac{\\pi}{6}, \\dfrac{5}{6}\\pi < \\theta \\le \\pi', '\\dfrac{\\pi}{3} < \\theta < \\dfrac{2}{3}\\pi']
+      },
+      {
+        func: 'cos', op: '>', val: '\\dfrac{1}{2}', sv: 0.5, a1: 0, a2: 60,
+        ansDeg: '0^\\circ \\le \\theta < 60^\\circ',
+        ansRad: '0 \\le \\theta < \\dfrac{\\pi}{3}',
+        dDeg: ['60^\\circ < \\theta \\le 180^\\circ', '30^\\circ < \\theta < 150^\\circ'],
+        dRad: ['\\dfrac{\\pi}{3} < \\theta \\le \\pi', '\\dfrac{\\pi}{6} < \\theta < \\dfrac{5}{6}\\pi']
+      },
+      {
+        func: 'cos', op: '<', val: '-\\dfrac{1}{2}', sv: -0.5, a1: 120, a2: 180,
+        ansDeg: '120^\\circ < \\theta \\le 180^\\circ',
+        ansRad: '\\dfrac{2}{3}\\pi < \\theta \\le \\pi',
+        dDeg: ['0^\\circ \\le \\theta < 120^\\circ', '60^\\circ < \\theta < 120^\\circ'],
+        dRad: ['0 \\le \\theta < \\dfrac{2}{3}\\pi', '\\dfrac{\\pi}{3} < \\theta < \\dfrac{2}{3}\\pi']
+      }
+    ];
+    const iq = pick(ineqs);
+    const rangeTex = useRad ? `0 \\le \\theta \\le \\pi` : `0^\\circ \\le \\theta \\le 180^\\circ`;
+    const ans = useRad ? iq.ansRad : iq.ansDeg;
+    const dList = useRad ? iq.dRad : iq.dDeg;
+    const options = makeUniqueChoices(ans, dList);
+    let p = {
+      q: `${rangeTex}, \\quad \\${iq.func} \\theta ${iq.op} ${iq.val}`,
+      target: "\\theta \\text{ の範囲}",
+      a: ans, d: dList,
+      isFormula: true,
+      steps: [
+        `まず境界となる方程式 $\\${iq.func}\\theta = ${iq.val}$ を解きます。`,
+        `単位円上で条件 $\\${iq.func}\\theta ${iq.op} ${iq.val}$ を満たす範囲を読み取ると、$${ans}$ となります。`
+      ],
+      svgLine: { axis: iq.func === 'sin' ? 'y' : 'x', val: iq.sv, a1: iq.a1, a2: iq.a2 }
+    };
+    return generateFromDB([p]);
+  }
+
   const TARGET_VALS = [
     { val: '\\dfrac{1}{2}',  sin: [30, 150], cos: [60, 300], sv: 0.5 },
     { val: '-\\dfrac{1}{2}', sin: [210, 330], cos: [120, 240], sv: -0.5 },
@@ -974,7 +1518,7 @@ function generateEquationProblem() {
     { val: '\\sqrt{3}', tan: [60, 240], sv: 1.732 },
     { val: '-\\sqrt{3}', tan: [120, 300], sv: -1.732 }
   ];
-  
+
   let func, tv, ansAngles, is180;
   do {
     is180 = Math.random() < 0.5;
@@ -982,385 +1526,397 @@ function generateEquationProblem() {
     tv = pick(TARGET_VALS);
     ansAngles = tv[func] ? tv[func].filter(a => !is180 || a <= 180) : [];
   } while (ansAngles.length === 0);
-  
-  let ansTex = ansAngles.map(a => a + '^\\circ').join(', ');
-  let rangeTex = is180 ? `0^\\circ \\le \\theta \\le 180^\\circ` : `0^\\circ \\le \\theta < 360^\\circ`;
-  
-  let distractors = [];
-  if (ansAngles.length === 1) {
-    let d1 = 180 - ansAngles[0]; if(d1 < 0) d1 += 360;
-    let d2 = ansAngles[0] + 180; if(d2 >= 360) d2 -= 360;
-    let d3 = 360 - ansAngles[0]; if(d3 >= 360) d3 -= 360;
-    distractors = [d1, d2, d3].filter(a => a !== ansAngles[0]).slice(0, 2).map(a => a + '^\\circ');
-  } else {
-    // 確実なダミーペアを作る (ソートして文字列を生成することで正解との構成一致を弾く)
-    let p1 = ansAngles.map(a => (a + 90) % 360).sort((a,b)=>a-b);
-    let p2 = ansAngles.map(a => (a + 180) % 360).sort((a,b)=>a-b);
-    let p3 = ansAngles.map(a => (180 - a + 360) % 360).sort((a,b)=>a-b);
-    let p4 = ansAngles.map(a => (360 - a) % 360).sort((a,b)=>a-b);
 
-    let s1 = p1.map(a => a + '^\\circ').join(', ');
-    let s2 = p2.map(a => a + '^\\circ').join(', ');
-    let s3 = p3.map(a => a + '^\\circ').join(', ');
-    let s4 = p4.map(a => a + '^\\circ').join(', ');
+  const fmtAngles = (arr) => arr.map(a => formatAngleTex(a, useRad)).join(', ');
+  let ansTex = fmtAngles(ansAngles);
+  let rangeTex = is180
+    ? (useRad ? `0 \\le \\theta \\le \\pi` : `0^\\circ \\le \\theta \\le 180^\\circ`)
+    : (useRad ? `0 \\le \\theta < 2\\pi` : `0^\\circ \\le \\theta < 360^\\circ`);
 
-    // 正解と完全一致するものを排除し、ダミー同士の重複もなくす
-    let cand = [s1, s2, s3, s4].filter(s => s !== ansTex);
-    cand = [...new Set(cand)];
+  let candSets = [
+    ansAngles.map(a => (a + 30) % 360).sort((a,b)=>a-b),
+    ansAngles.map(a => (a + 90) % 360).sort((a,b)=>a-b),
+    ansAngles.map(a => (180 - a + 360) % 360).sort((a,b)=>a-b),
+    ansAngles.map(a => (360 - a) % 360).sort((a,b)=>a-b)
+  ].map(fmtAngles);
 
-    // 万が一候補が足りない場合の保険処理
-    if(cand.length < 2) {
-        cand.push(ansAngles.map(a => (a + 45) % 360).sort((a,b)=>a-b).map(a => a + '^\\circ').join(', '));
-        cand.push(ansAngles.map(a => (a + 135) % 360).sort((a,b)=>a-b).map(a => a + '^\\circ').join(', '));
-    }
-    distractors = [cand[0], cand[1]];
-  }
-  
-  let options = shuffle([ansTex, distractors[0], distractors[1]]);
   let axis = func === 'sin' ? 'y' : (func === 'cos' ? 'x' : 'tan');
-  
   let explWord = func === 'sin' ? "$y$ 座標" : (func === 'cos' ? "$x$ 座標" : "原点と結んだ直線の <strong>傾き</strong>");
   let steps = [
     `$\\${func}$ の値は、単位円上の <strong>${explWord}</strong> に相当します。`,
     `単位円上で、${explWord}が $${tv.val}$ となる角度を探します。`,
-    `条件 $${rangeTex}$ の範囲で探すと、$\\theta = ${ansTex}$ となります。`
+    `条件 $${rangeTex}$ の範囲で求めると、$\\theta = ${ansTex}$ となります。`
   ];
-  
+
   let p = {
-    q: `${rangeTex}, \\quad \\${func} \\theta = ${tv.val}`, target: "\\theta", a: ansTex, d: distractors,
+    q: `${rangeTex}, \\quad \\${func} \\theta = ${tv.val}`, target: "\\theta", a: ansTex, d: candSets,
     steps: steps, svgLine: {axis: axis, val: tv.sv, a1: ansAngles[0], a2: ansAngles[1]}
   };
   return generateFromDB([p]);
 }
 
+/* ==============================================
+   7. 加法定理
+============================================== */
 function generateFormulaProblem() {
   const formulas = [
-    { target: "\\sin(\\alpha + \\beta)", ans: "\\sin \\alpha \\cos \\beta + \\cos \\alpha \\sin \\beta", d: ["\\sin \\alpha \\cos \\beta - \\cos \\alpha \\sin \\beta", "\\cos \\alpha \\cos \\beta + \\sin \\alpha \\sin \\beta"] },
-    { target: "\\sin(\\alpha - \\beta)", ans: "\\sin \\alpha \\cos \\beta - \\cos \\alpha \\sin \\beta", d: ["\\sin \\alpha \\cos \\beta + \\cos \\alpha \\sin \\beta", "\\cos \\alpha \\cos \\beta - \\sin \\alpha \\sin \\beta"] },
-    { target: "\\cos(\\alpha + \\beta)", ans: "\\cos \\alpha \\cos \\beta - \\sin \\alpha \\sin \\beta", d: ["\\cos \\alpha \\cos \\beta + \\sin \\alpha \\sin \\beta", "\\sin \\alpha \\cos \\beta - \\cos \\alpha \\sin \\beta"] },
-    { target: "\\cos(\\alpha - \\beta)", ans: "\\cos \\alpha \\cos \\beta + \\sin \\alpha \\sin \\beta", d: ["\\cos \\alpha \\cos \\beta - \\sin \\alpha \\sin \\beta", "\\sin \\alpha \\cos \\beta + \\cos \\alpha \\sin \\beta"] },
+    { target: "\\sin(\\alpha + \\beta)", ans: "\\sin \\alpha \\cos \\beta + \\cos \\alpha \\sin \\beta", d: ["\\sin \\alpha \\cos \\beta - \\cos \\alpha \\sin \\beta", "\\cos \\alpha \\cos \\beta - \\sin \\alpha \\sin \\beta"] },
+    { target: "\\sin(\\alpha - \\beta)", ans: "\\sin \\alpha \\cos \\beta - \\cos \\alpha \\sin \\beta", d: ["\\sin \\alpha \\cos \\beta + \\cos \\alpha \\sin \\beta", "\\cos \\alpha \\cos \\beta + \\sin \\alpha \\sin \\beta"] },
+    { target: "\\cos(\\alpha + \\beta)", ans: "\\cos \\alpha \\cos \\beta - \\sin \\alpha \\sin \\beta", d: ["\\cos \\alpha \\cos \\beta + \\sin \\alpha \\sin \\beta", "\\sin \\alpha \\cos \\beta + \\cos \\alpha \\sin \\beta"] },
+    { target: "\\cos(\\alpha - \\beta)", ans: "\\cos \\alpha \\cos \\beta + \\sin \\alpha \\sin \\beta", d: ["\\cos \\alpha \\cos \\beta - \\sin \\alpha \\sin \\beta", "\\sin \\alpha \\cos \\beta - \\cos \\alpha \\sin \\beta"] },
     { target: "\\tan(\\alpha + \\beta)", ans: "\\dfrac{\\tan \\alpha + \\tan \\beta}{1 - \\tan \\alpha \\tan \\beta}", d: ["\\dfrac{\\tan \\alpha - \\tan \\beta}{1 + \\tan \\alpha \\tan \\beta}", "\\dfrac{\\tan \\alpha + \\tan \\beta}{1 + \\tan \\alpha \\tan \\beta}"] },
     { target: "\\tan(\\alpha - \\beta)", ans: "\\dfrac{\\tan \\alpha - \\tan \\beta}{1 + \\tan \\alpha \\tan \\beta}", d: ["\\dfrac{\\tan \\alpha + \\tan \\beta}{1 - \\tan \\alpha \\tan \\beta}", "\\dfrac{\\tan \\alpha - \\tan \\beta}{1 - \\tan \\alpha \\tan \\beta}"] }
   ];
   let f = pick(formulas);
-  let options = shuffle([f.ans, f.d[0], f.d[1]]);
+  let options = makeUniqueChoices(f.ans, f.d);
   return {
-    type: 'text', isFormula: true, qKey: f.target + Math.random(), prompt: "次の加法定理の公式として正しいものを選べ。", questionTex: "", targetTex: f.target,
+    type: 'text', isFormula: true, qKey: f.target, prompt: "次の加法定理の公式として正しいものを選べ。", questionTex: "", targetTex: f.target,
     options: options, correctIndex: options.indexOf(f.ans),
-    steps: ["正負の符号に気を付けて、覚えておこう。"]
+    steps: [
+      "加法定理の符号の組み合わせ（$\\sin$ は同符号、$\\cos$ は異符号、$\\tan$ は分子が同符号・分母が異符号）をしっかり押さえましょう。",
+      `正解は $${f.target} = ${f.ans}$ です。`
+    ]
   };
 }
 
-
+/* ==============================================
+   8. 2倍角・3倍角 (選択肢重複バグ完全修正版)
+============================================== */
 function generateFormula23Problem() {
-  let is2x = Math.random() < 0.5;
+  let is2x = Math.random() < 0.6;
   let givenFunc = pick(['sin', 'cos', 'tan']);
   let targetFunc = pick(['sin', 'cos', 'tan']);
 
-  let rangeCondition = "0^\\circ < \\theta < 180^\\circ";
-  if (givenFunc === 'sin') {
-      if (is2x && (targetFunc === 'sin' || targetFunc === 'tan')) {
-          rangeCondition = "0^\\circ < \\theta < 90^\\circ";
-      }
-      if (!is2x && (targetFunc === 'cos' || targetFunc === 'tan')) {
-          rangeCondition = "0^\\circ < \\theta < 90^\\circ";
-      }
+  let rangeCondition = "0^\\circ < \\theta < 90^\\circ";
+  if (is2x && targetFunc === 'cos') {
+    rangeCondition = "0^\\circ < \\theta < 180^\\circ";
   }
-  
+
+  let triples = [[3, 4, 5], [5, 12, 13]];
+  let t = is2x ? pick(triples) : triples[0];
+  let denom = t[2];
+  let num = pick([t[0], t[1]]);
+  let otherNum = (num === t[0]) ? t[1] : t[0];
+
+  let givenValTex = givenFunc === 'tan' ? `\\dfrac{${num}}{${otherNum}}` : `\\dfrac{${num}}{${denom}}`;
+  let q = `${rangeCondition}, \\quad \\${givenFunc} \\theta = ${givenValTex} \\,\\text{のとき}`;
+  let sq = num * num, dq = denom * denom, oq = otherNum * otherNum;
+
   if (is2x) {
-    // 2倍角
-    let triples = [[3,4,5]];
-    let t = pick(triples);
-    let denom = t[2];
-    let num = pick([t[0], t[1]]);
-    let otherNum = (num === t[0]) ? t[1] : t[0];
-    
-    let givenValTex = givenFunc === 'tan' ? `\\dfrac{${num}}{${otherNum}}` : `\\dfrac{${num}}{${denom}}`;
-    let q = `${rangeCondition}, \\quad \\${givenFunc} \\theta = ${givenValTex} \\,\\text{のとき}`;
-    
     let target = `\\${targetFunc} 2\\theta`;
-    let ans = "", d1 = "", d2 = "", steps = [];
-    let sq = num*num, dq = denom*denom, oq = otherNum*otherNum;
-    
+    let ans = "", cand = [], steps = [];
+
+    let sinN = givenFunc === 'cos' ? otherNum : num;
+    let cosN = givenFunc === 'cos' ? num : otherNum;
+
     if (targetFunc === 'sin') {
-       if (givenFunc === 'tan') {
-           steps.push(`$0^\\circ < \\theta < 180^\\circ$ かつ $\\tan\\theta > 0$ なので、$0^\\circ < \\theta < 90^\\circ$（第1象限）となります。`);
-           steps.push(`まず、相互関係 $1+\\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ より、$\\cos^2\\theta = \\dfrac{1}{1+\\left(\\dfrac{${num}}{${otherNum}}\\right)^2} = \\dfrac{${oq}}{${oq+sq}}$ です。`);
-           steps.push(`第1象限の角より $\\cos\\theta > 0$ なので、$\\cos\\theta = \\dfrac{${otherNum}}{\\sqrt{${oq+sq}}}$ となります。`);
-           steps.push(`また、$\\sin\\theta = \\tan\\theta \\cos\\theta = \\dfrac{${num}}{\\sqrt{${oq+sq}}}$ です。`);
-           steps.push(`$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$ に代入します。`);
-           steps.push(`$= 2 \\times \\dfrac{${num}}{\\sqrt{${oq+sq}}} \\times \\dfrac{${otherNum}}{\\sqrt{${oq+sq}}} = \\dfrac{${2*num*otherNum}}{${oq+sq}}$`);
-           
-           steps.push(`<strong>【別解】</strong>`);
-           steps.push(`$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta = 2\\left(\\dfrac{\\sin\\theta}{\\cos\\theta}\\right)\\cos^2\\theta = 2\\tan\\theta\\cos^2\\theta$`);
-           steps.push(`$\\cos^2\\theta = \\dfrac{1}{1+\\tan^2\\theta}$ を代入すると、$\\sin 2\\theta = \\dfrac{2\\tan\\theta}{1+\\tan^2\\theta}$ となります。`);
-           steps.push(`これに $\\tan\\theta = \\dfrac{${num}}{${otherNum}}$ を代入して、$\\sin 2\\theta = \\dfrac{2 \\times \\left(\\dfrac{${num}}{${otherNum}}\\right)}{1+\\left(\\dfrac{${num}}{${otherNum}}\\right)^2} = \\dfrac{\\left(\\dfrac{${2*num}}{${otherNum}}\\right)}{\\left(\\dfrac{${oq+sq}}{${oq}}\\right)} = \\dfrac{${2*num*otherNum}}{${oq+sq}}$ と求めることもできます。`);
-
-           ans = simplifyFraction(2*num*otherNum, sq + oq);
-       } else {
-           let otherFunc = givenFunc === 'sin' ? 'cos' : 'sin';
-           let gN = num, gD = denom, oN = otherNum; 
-           let sqVal = num*num, dqVal = denom*denom, oqVal = otherNum*otherNum;
-
-           if (givenFunc === 'cos') {
-               steps.push(`$0^\\circ < \\theta < 180^\\circ$ かつ $\\cos\\theta > 0$ なので、$0^\\circ < \\theta < 90^\\circ$（第1象限）となり、$\\sin\\theta > 0$ です。`);
-           } else {
-               steps.push(`条件より $0^\\circ < \\theta < 90^\\circ$（第1象限）なので、$\\cos\\theta > 0$ です。`);
-           }
-           steps.push(`相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ より、$\\${otherFunc}^2\\theta = 1 - \\left(\\dfrac{${gN}}{${gD}}\\right)^2 = 1 - \\dfrac{${sqVal}}{${dqVal}} = \\dfrac{${oqVal}}{${dqVal}}$`);
-           steps.push(`よって、$\\${otherFunc}\\theta = \\sqrt{\\dfrac{${oqVal}}{${dqVal}}} = \\dfrac{${oN}}{${gD}}$ となります。`);
-           
-           steps.push(`$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$ に代入します。`);
-           steps.push(`$= 2 \\times \\dfrac{${givenFunc==='sin'?num:otherNum}}{${denom}} \\times \\dfrac{${givenFunc==='sin'?otherNum:num}}{${denom}} = \\dfrac{${2*num*otherNum}}{${denom*denom}}$`);
-           ans = simplifyFraction(2*num*otherNum, denom*denom);
-       }
-       d1 = simplifyFraction(denom*denom - 2*num*num, denom*denom);
-       d2 = simplifyFraction(2*num*num - denom*denom, denom*denom);
+      ans = simplifyFraction(2 * sinN * cosN, dq);
+      cand = [
+        simplifyFraction(cosN * cosN - sinN * sinN, dq),
+        simplifyFraction(sinN * sinN - cosN * cosN, dq),
+        simplifyFraction(2 * sinN, denom)
+      ];
+      steps = [
+        `相互関係より $\\sin\\theta = \\dfrac{${sinN}}{${denom}}, \\cos\\theta = \\dfrac{${cosN}}{${denom}}$ を確認します。`,
+        `2倍角の公式 $\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$ に代入します。`,
+        `$\\sin 2\\theta = 2 \\times \\dfrac{${sinN}}{${denom}} \\times \\dfrac{${cosN}}{${denom}} = ${ans}$`
+      ];
     } else if (targetFunc === 'cos') {
-       if (givenFunc === 'tan') {
-           steps.push(`まず、相互関係 $1+\\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ より、$\\cos^2\\theta = \\dfrac{1}{1+\\left(\\dfrac{${num}}{${otherNum}}\\right)^2} = \\dfrac{${oq}}{${oq+sq}}$ です。`);
-           steps.push(`$\\cos 2\\theta = 2\\cos^2\\theta - 1$ に代入します。`);
-           ans = simplifyFraction(oq - sq, oq + sq);
-           steps.push(`$= 2 \\times \\dfrac{${oq}}{${oq+sq}} - 1 = ${ans}$`);
-
-           steps.push(`<strong>【別解】</strong>`);
-           steps.push(`$\\cos 2\\theta = 2\\cos^2\\theta - 1 = 2\\left(\\dfrac{1}{1+\\tan^2\\theta}\\right) - 1 = \\dfrac{1-\\tan^2\\theta}{1+\\tan^2\\theta}$`);
-           steps.push(`これに $\\tan\\theta = \\dfrac{${num}}{${otherNum}}$ を代入して、$\\cos 2\\theta = \\dfrac{1-\\left(\\dfrac{${num}}{${otherNum}}\\right)^2}{1+\\left(\\dfrac{${num}}{${otherNum}}\\right)^2} = \\dfrac{\\left(\\dfrac{${oq-sq}}{${oq}}\\right)}{\\left(\\dfrac{${oq+sq}}{${oq}}\\right)} = ${ans}$ と求めることもできます。`);
-       } else if (givenFunc === 'sin') {
-           ans = simplifyFraction(dq - 2*sq, dq);
-           steps = ["$\\cos 2\\theta = 1 - 2\\sin^2\\theta$ を用います。", `$= 1 - 2 \\times \\left(\\dfrac{${num}}{${denom}}\\right)^2 = 1 - \\dfrac{${2*sq}}{${dq}} = ${ans}$`];
-       } else if (givenFunc === 'cos') {
-           ans = simplifyFraction(2*sq - dq, dq);
-           steps = ["$\\cos 2\\theta = 2\\cos^2\\theta - 1$ を用います。", `$= 2 \\times \\left(\\dfrac{${num}}{${denom}}\\right)^2 - 1 = \\dfrac{${2*sq}}{${dq}} - 1 = ${ans}$`];
-       }
-       d1 = simplifyFraction(2*sq - dq, dq);
-       d2 = simplifyFraction(dq - sq, dq);
-    } else { // tan2θ
-       if (givenFunc === 'tan') {
-           ans = simplifyFraction(2*num*otherNum, oq - sq);
-           steps = ["$\\tan 2\\theta = \\dfrac{2\\tan\\theta}{1-\\tan^2\\theta}$ を用います。", `$= \\dfrac{2 \\times \\left(\\dfrac{${num}}{${otherNum}}\\right)}{1 - \\left(\\dfrac{${num}}{${otherNum}}\\right)^2} = ${ans}$`];
-       } else {
-           steps.push(`$\\tan 2\\theta = \\dfrac{2\\tan\\theta}{1-\\tan^2\\theta}$ を用いるため、まず $\\tan\\theta$ を求めます。`);
-           let sqVal = num*num, dqVal = denom*denom, oqVal = otherNum*otherNum;
-           let otherFunc = givenFunc === 'sin' ? 'cos' : 'sin';
-
-           if (givenFunc === 'cos') {
-               steps.push(`$0^\\circ < \\theta < 180^\\circ$ かつ $\\cos\\theta > 0$ なので、$0^\\circ < \\theta < 90^\\circ$（第1象限）となり、$\\sin\\theta > 0$ です。`);
-           } else {
-               steps.push(`条件より $0^\\circ < \\theta < 90^\\circ$（第1象限）なので、$\\cos\\theta > 0$ です。`);
-           }
-           steps.push(`相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ より、$\\${otherFunc}^2\\theta = 1 - \\left(\\dfrac{${num}}{${denom}}\\right)^2 = 1 - \\dfrac{${sqVal}}{${dqVal}} = \\dfrac{${oqVal}}{${dqVal}}$`);
-           steps.push(`よって、$\\${otherFunc}\\theta = \\sqrt{\\dfrac{${oqVal}}{${dqVal}}} = \\dfrac{${otherNum}}{${denom}}$ となります。`);
-           
-           let tanN = givenFunc === 'sin' ? num : otherNum;
-           let tanD = givenFunc === 'sin' ? otherNum : num;
-           steps.push(`これより、$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta} = \\dfrac{${tanN}}{${tanD}}$ です。`);
-
-           let altSteps = [];
-           if (givenFunc === 'cos') {
-               altSteps.push(`<strong>【別解】</strong>`);
-               altSteps.push(`相互関係 $1+\\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ を用いて直接 $\\tan\\theta$ を求めることもできます。`);
-               altSteps.push(`$\\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta} - 1 = \\dfrac{1}{\\left(\\dfrac{${num}}{${denom}}\\right)^2} - 1 = \\dfrac{${dqVal}}{${sqVal}} - 1 = \\dfrac{${oqVal}}{${sqVal}}$`);
-               altSteps.push(`$0^\\circ < \\theta < 180^\\circ$ かつ $\\cos\\theta = \\dfrac{${num}}{${denom}} > 0$ なので、$\\theta$ は第1象限の角です。`);
-               altSteps.push(`第1象限の角より $\\tan\\theta > 0$ なので、$\\tan\\theta = \\sqrt{\\dfrac{${oqVal}}{${sqVal}}} = \\dfrac{${otherNum}}{${num}}$ となります。`);
-           }
-
-           steps.push(`公式に代入すると、$\\tan 2\\theta = \\dfrac{2 \\times \\left(\\dfrac{${tanN}}{${tanD}}\\right)}{1 - \\left(\\dfrac{${tanN}}{${tanD}}\\right)^2}$`);
-           ans = simplifyFraction(2*tanN*tanD, tanD*tanD - tanN*tanN);
-           steps.push(`$= ${ans}$`);
-           
-           if (altSteps.length > 0) steps = steps.concat(altSteps);
-       }
-       d1 = simplifyFraction(oq - sq, 2*num*otherNum);
-       d2 = simplifyFraction(-2*num*otherNum, oq - sq);
+      ans = simplifyFraction(cosN * cosN - sinN * sinN, dq);
+      cand = [
+        simplifyFraction(sinN * sinN - cosN * cosN, dq),
+        simplifyFraction(2 * sinN * cosN, dq),
+        simplifyFraction(dq - sq, dq)
+      ];
+      steps = [
+        `2倍角の公式 $\\cos 2\\theta = \\cos^2\\theta - \\sin^2\\theta = 2\\cos^2\\theta - 1 = 1 - 2\\sin^2\\theta$ を用います。`,
+        `値を代入して計算すると、$\\cos 2\\theta = ${ans}$ となります。`
+      ];
+    } else {
+      ans = simplifyFraction(2 * sinN * cosN, cosN * cosN - sinN * sinN);
+      cand = [
+        simplifyFraction(2 * sinN * cosN, sinN * sinN - cosN * cosN),
+        simplifyFraction(cosN * cosN - sinN * sinN, 2 * sinN * cosN),
+        simplifyFraction(2 * sinN, cosN)
+      ];
+      steps = [
+        `$\\tan\\theta = \\dfrac{${sinN}}{${cosN}}$ を求め、2倍角の公式 $\\tan 2\\theta = \\dfrac{2\\tan\\theta}{1 - \\tan^2\\theta}$ に代入します。`,
+        `$\\tan 2\\theta = \\dfrac{2 \\times \\dfrac{${sinN}}{${cosN}}}{1 - \\left(\\dfrac{${sinN}}{${cosN}}\\right)^2} = ${ans}$`
+      ];
     }
-    let options = shuffle([ans, d1, d2]);
-    return { type: 'text', qKey: q+target+Math.random(), prompt: "次の条件を満たす値を求めよ。", questionTex: q, targetTex: target, options, correctIndex: options.indexOf(ans), steps };
-  
+
+    let options = makeUniqueChoices(ans, cand);
+    return {
+      type: 'text', qKey: `2x_${q}_${target}`, prompt: "次の条件を満たす値を求めよ。",
+      questionTex: q, targetTex: target, options, correctIndex: options.indexOf(ans), steps
+    };
   } else {
     // 3倍角
     let target = `\\${targetFunc} 3\\theta`;
-    
-    let triples = [[3,4,5]];
-    let t = pick(triples);
-    let pyDenom = t[2]; let pyNum = pick([t[0], t[1]]); let pyOther = (pyNum === t[0]) ? t[1] : t[0];
-    
-    let denom, num, otherNum;
-    if (givenFunc === targetFunc || (givenFunc === 'tan' && targetFunc === 'tan')) {
-        do { denom = randInt(3, 5); num = randInt(1, denom - 1); } while (gcd(num, denom) !== 1);
-        otherNum = null;
-    } else {
-        denom = pyDenom; num = pyNum; otherNum = pyOther;
-    }
-    
-    let givenValTex = "";
-    if (givenFunc === 'tan') {
-        if (otherNum) { givenValTex = `\\dfrac{${num}}{${otherNum}}`; } 
-        else { givenValTex = `\\dfrac{${num}}{${denom}}`; }
-    } else {
-        givenValTex = `\\dfrac{${num}}{${denom}}`;
-    }
-    let q = `${rangeCondition}, \\quad \\${givenFunc} \\theta = ${givenValTex} \\,\\text{のとき}`;
-    
-    let steps = [], ans = "", d1 = "", d2 = "";
-    let reqNum, reqDen;
-    
+    let sinN = givenFunc === 'cos' ? otherNum : num;
+    let cosN = givenFunc === 'cos' ? num : otherNum;
+    let ans = "", cand = [], steps = [];
+    let den3 = Math.pow(denom, 3);
+
     if (targetFunc === 'sin') {
-        if (givenFunc === 'sin') {
-            reqNum = num; reqDen = denom;
-        } else {
-            steps.push(`$\\sin 3\\theta$ の公式は $\\sin$ のみで表せるので、まず $\\sin\\theta$ を求めます。`);
-            if (givenFunc === 'cos') {
-                steps.push(`$0^\\circ < \\theta < 180^\\circ$ より $\\sin\\theta > 0$ です。`);
-                steps.push(`相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ より、$\\sin^2\\theta = 1 - \\left(\\dfrac{${num}}{${denom}}\\right)^2 = 1 - \\dfrac{${num*num}}{${denom*denom}} = \\dfrac{${otherNum*otherNum}}{${denom*denom}}$`);
-                steps.push(`よって、$\\sin\\theta = \\sqrt{\\dfrac{${otherNum*otherNum}}{${denom*denom}}} = \\dfrac{${otherNum}}{${denom}}$ となります。`);
-                reqNum = otherNum; reqDen = denom;
-            } else if (givenFunc === 'tan') {
-                let oq = otherNum*otherNum, sq = num*num, dq = denom*denom;
-                steps.push(`$0^\\circ < \\theta < 180^\\circ$ かつ $\\tan\\theta > 0$ なので第1象限の角です。したがって $\\cos\\theta > 0, \\sin\\theta > 0$ です。`);
-                steps.push(`相互関係 $1+\\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ より、$\\cos^2\\theta = \\dfrac{1}{1+\\left(\\dfrac{${num}}{${otherNum}}\\right)^2} = \\dfrac{${oq}}{${oq+sq}}$ です。`);
-                steps.push(`これより $\\cos\\theta = \\sqrt{\\dfrac{${oq}}{${oq+sq}}} = \\dfrac{${otherNum}}{\\sqrt{${oq+sq}}}$ となります。`);
-                steps.push(`$\\sin\\theta = \\tan\\theta \\cos\\theta = \\dfrac{${num}}{${otherNum}} \\times \\dfrac{${otherNum}}{\\sqrt{${oq+sq}}} = \\dfrac{${num}}{\\sqrt{${oq+sq}}}$ となります。`);
-                reqNum = num; reqDen = denom;
-            }
-        }
-        let num3 = 3 * reqNum * Math.pow(reqDen, 2) - 4 * Math.pow(reqNum, 3);
-        let den3 = Math.pow(reqDen, 3);
-        ans = simplifyFraction(num3, den3);
-        d1 = simplifyFraction(num3 + den3, den3); d2 = simplifyFraction(num3 - den3, den3);
-        
-        steps.push("$\\sin 3\\theta = 3\\sin\\theta - 4\\sin^3\\theta$ に代入します。");
-        steps.push(`$= 3 \\times \\left(\\dfrac{${reqNum}}{${reqDen}}\\right) - 4 \\times \\left(\\dfrac{${reqNum}}{${reqDen}}\\right)^3 = \\dfrac{${3*reqNum*reqDen*reqDen}}{${den3}} - \\dfrac{${4*Math.pow(reqNum,3)}}{${den3}} = ${ans}$`);
-        
+      let num3 = 3 * sinN * dq - 4 * Math.pow(sinN, 3);
+      ans = simplifyFraction(num3, den3);
+      cand = [
+        simplifyFraction(4 * Math.pow(sinN, 3) - 3 * sinN * dq, den3),
+        simplifyFraction(4 * Math.pow(cosN, 3) - 3 * cosN * dq, den3),
+        simplifyFraction(3 * sinN, denom)
+      ];
+      steps = [
+        `3倍角の公式 $\\sin 3\\theta = 3\\sin\\theta - 4\\sin^3\\theta$ を用います。`,
+        `$\\sin\\theta = \\dfrac{${sinN}}{${denom}}$ を代入すると、$\\sin 3\\theta = 3\\left(\\dfrac{${sinN}}{${denom}}\\right) - 4\\left(\\dfrac{${sinN}}{${denom}}\\right)^3 = ${ans}$`
+      ];
     } else if (targetFunc === 'cos') {
-        if (givenFunc === 'cos') {
-            reqNum = num; reqDen = denom;
-        } else {
-            steps.push(`$\\cos 3\\theta$ の公式は $\\cos$ のみで表せるので、まず $\\cos\\theta$ を求めます。`);
-            if (givenFunc === 'sin') {
-                steps.push(`条件より $0^\\circ < \\theta < 90^\\circ$ なので $\\cos\\theta > 0$ です。`);
-                steps.push(`相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ より、$\\cos^2\\theta = 1 - \\left(\\dfrac{${num}}{${denom}}\\right)^2 = 1 - \\dfrac{${num*num}}{${denom*denom}} = \\dfrac{${otherNum*otherNum}}{${denom*denom}}$`);
-                steps.push(`よって、$\\cos\\theta = \\sqrt{\\dfrac{${otherNum*otherNum}}{${denom*denom}}} = \\dfrac{${otherNum}}{${denom}}$ となります。`);
-                reqNum = otherNum; reqDen = denom;
-            } else if (givenFunc === 'tan') {
-                let oq = otherNum*otherNum, sq = num*num, dq = denom*denom;
-                steps.push(`$0^\\circ < \\theta < 180^\\circ$ かつ $\\tan\\theta > 0$ なので第1象限の角です。したがって $\\cos\\theta > 0$ です。`);
-                steps.push(`相互関係 $1+\\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ より、$\\cos^2\\theta = \\dfrac{1}{1+\\left(\\dfrac{${num}}{${otherNum}}\\right)^2} = \\dfrac{${oq}}{${oq+sq}}$ です。`);
-                steps.push(`よって $\\cos\\theta = \\sqrt{\\dfrac{${oq}}{${oq+sq}}} = \\dfrac{${otherNum}}{\\sqrt{${oq+sq}}}$ となります。`);
-                reqNum = otherNum; reqDen = denom;
-            }
-        }
-        let num3 = 4 * Math.pow(reqNum, 3) - 3 * reqNum * Math.pow(reqDen, 2);
-        let den3 = Math.pow(reqDen, 3);
-        ans = simplifyFraction(num3, den3);
-        d1 = simplifyFraction(num3 + den3, den3); d2 = simplifyFraction(num3 - den3, den3);
-        
-        steps.push("$\\cos 3\\theta = 4\\cos^3\\theta - 3\\cos\\theta$ に代入します。");
-        steps.push(`$= 4 \\times \\left(\\dfrac{${reqNum}}{${reqDen}}\\right)^3 - 3 \\times \\left(\\dfrac{${reqNum}}{${reqDen}}\\right) = \\dfrac{${4*Math.pow(reqNum,3)}}{${den3}} - \\dfrac{${3*reqNum*reqDen*reqDen}}{${den3}} = ${ans}$`);
-        
-    } else { // tan 3θ
-        let altSteps = [];
-        if (givenFunc === 'tan') {
-            reqNum = num; reqDen = otherNum ? otherNum : denom;
-        } else {
-            steps.push(`$\\tan 3\\theta$ を求めるため、まず $\\tan\\theta$ を求めます。`);
-            if (givenFunc === 'sin') {
-                steps.push(`条件より $0^\\circ < \\theta < 90^\\circ$ なので $\\cos\\theta > 0$ です。`);
-                steps.push(`相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ より、$\\cos^2\\theta = 1 - \\left(\\dfrac{${num}}{${denom}}\\right)^2 = 1 - \\dfrac{${num*num}}{${denom*denom}} = \\dfrac{${otherNum*otherNum}}{${denom*denom}}$`);
-                steps.push(`よって、$\\cos\\theta = \\sqrt{\\dfrac{${otherNum*otherNum}}{${denom*denom}}} = \\dfrac{${otherNum}}{${denom}}$ となります。`);
-                reqNum = num; reqDen = otherNum;
-                steps.push(`これより、$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta} = \\dfrac{${reqNum}}{${reqDen}}$ となります。`);
-            } else if (givenFunc === 'cos') {
-                steps.push(`$0^\\circ < \\theta < 180^\\circ$ かつ $\\cos\\theta > 0$ なので第1象限の角です。したがって $\\sin\\theta > 0$ です。`);
-                steps.push(`相互関係 $\\sin^2\\theta + \\cos^2\\theta = 1$ より、$\\sin^2\\theta = 1 - \\left(\\dfrac{${num}}{${denom}}\\right)^2 = 1 - \\dfrac{${num*num}}{${denom*denom}} = \\dfrac{${otherNum*otherNum}}{${denom*denom}}$`);
-                steps.push(`よって、$\\sin\\theta = \\sqrt{\\dfrac{${otherNum*otherNum}}{${denom*denom}}} = \\dfrac{${otherNum}}{${denom}}$ となります。`);
-                reqNum = otherNum; reqDen = num;
-                steps.push(`これより、$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta} = \\dfrac{${reqNum}}{${reqDen}}$ となります。`);
-                
-                altSteps.push(`<strong>【別解】</strong>`);
-                altSteps.push(`相互関係 $1+\\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$ を用いて直接 $\\tan\\theta$ を求めることもできます。`);
-                altSteps.push(`$\\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta} - 1 = \\dfrac{1}{\\left(\\dfrac{${num}}{${denom}}\\right)^2} - 1 = \\dfrac{${denom*denom}}{${num*num}} - 1 = \\dfrac{${otherNum*otherNum}}{${num*num}}$`);
-                altSteps.push(`$0^\\circ < \\theta < 180^\\circ$ かつ $\\cos\\theta = \\dfrac{${num}}{${denom}} > 0$ なので、$\\theta$ は第1象限の角です。`);
-                altSteps.push(`第1象限の角より $\\tan\\theta > 0$ なので、$\\tan\\theta = \\sqrt{\\dfrac{${otherNum*otherNum}}{${num*num}}} = \\dfrac{${otherNum}}{${num}}$ となります。`);
-            }
-        }
-        let num3 = 3 * reqNum * Math.pow(reqDen, 2) - Math.pow(reqNum, 3);
-        let den3 = Math.pow(reqDen, 3) - 3 * reqNum * reqNum * reqDen;
-        ans = simplifyFraction(num3, den3);
-        d1 = simplifyFraction(num3 + den3, den3); d2 = simplifyFraction(num3 - den3, den3);
-        
-        steps.push(`$\\tan 3\\theta$ の公式は加法定理から導出できます。`);
-        steps.push(`$\\tan 3\\theta = \\tan(2\\theta + \\theta) = \\dfrac{\\tan 2\\theta + \\tan\\theta}{1 - \\tan 2\\theta \\tan\\theta}$`);
-        steps.push(`ここに $\\tan 2\\theta = \\dfrac{2\\tan\\theta}{1 - \\tan^2\\theta}$ を代入して整理すると、$\\tan 3\\theta = \\dfrac{3\\tan\\theta - \\tan^3\\theta}{1 - 3\\tan^2\\theta}$ となります。`);
-        steps.push(`これに $\\tan\\theta = \\dfrac{${reqNum}}{${reqDen}}$ を代入します。`);
-        steps.push(`$= \\dfrac{3 \\times \\left(\\dfrac{${reqNum}}{${reqDen}}\\right) - \\left(\\dfrac{${reqNum}}{${reqDen}}\\right)^3}{1 - 3 \\times \\left(\\dfrac{${reqNum}}{${reqDen}}\\right)^2} = ${ans}$`);
-        
-        if (altSteps.length > 0) steps = steps.concat(altSteps);
+      let num3 = 4 * Math.pow(cosN, 3) - 3 * cosN * dq;
+      ans = simplifyFraction(num3, den3);
+      cand = [
+        simplifyFraction(3 * cosN * dq - 4 * Math.pow(cosN, 3), den3),
+        simplifyFraction(3 * sinN * dq - 4 * Math.pow(sinN, 3), den3),
+        simplifyFraction(3 * cosN, denom)
+      ];
+      steps = [
+        `3倍角の公式 $\\cos 3\\theta = 4\\cos^3\\theta - 3\\cos\\theta$ を用います。`,
+        `$\\cos\\theta = \\dfrac{${cosN}}{${denom}}$ を代入すると、$\\cos 3\\theta = 4\\left(\\dfrac{${cosN}}{${denom}}\\right)^3 - 3\\left(\\dfrac{${cosN}}{${denom}}\\right) = ${ans}$`
+      ];
+    } else {
+      let num3 = 3 * sinN * cosN * cosN - Math.pow(sinN, 3);
+      let denT = Math.pow(cosN, 3) - 3 * sinN * sinN * cosN;
+      ans = simplifyFraction(num3, denT);
+      cand = [
+        simplifyFraction(-num3, denT),
+        simplifyFraction(denT, num3),
+        simplifyFraction(num3 + denT, denT)
+      ];
+      steps = [
+        `$\\tan\\theta = \\dfrac{${sinN}}{${cosN}}$ を求め、$\\tan 3\\theta = \\dfrac{3\\tan\\theta - \\tan^3\\theta}{1 - 3\\tan^2\\theta}$ に代入します。`,
+        `計算して整理すると、$\\tan 3\\theta = ${ans}$ となります。`
+      ];
     }
-    let options = shuffle([ans, d1, d2]);
-    return { type: 'text', qKey: q+target+Math.random(), prompt: "次の条件を満たす値を求めよ。", questionTex: q, targetTex: target, options, correctIndex: options.indexOf(ans), steps };
+
+    let options = makeUniqueChoices(ans, cand);
+    return {
+      type: 'text', qKey: `3x_${q}_${target}`, prompt: "次の条件を満たす値を求めよ。",
+      questionTex: q, targetTex: target, options, correctIndex: options.indexOf(ans), steps
+    };
   }
 }
 
+/* ==============================================
+   9. 半角の公式 (新規追加テーマ)
+============================================== */
+function generateHalfAngleProblem() {
+  const problems = [
+    {
+      q: "0^\\circ < \\theta < 90^\\circ, \\quad \\cos\\theta = \\dfrac{1}{3} \\,\\text{のとき}",
+      target: "\\sin\\dfrac{\\theta}{2}",
+      ans: "\\dfrac{\\sqrt{3}}{3}",
+      d: ["\\dfrac{\\sqrt{6}}{3}", "\\dfrac{1}{3}", "\\dfrac{2}{3}"],
+      steps: [
+        "半角の公式 $\\sin^2\\dfrac{\\theta}{2} = \\dfrac{1 - \\cos\\theta}{2}$ を用います。",
+        "$\\sin^2\\dfrac{\\theta}{2} = \\dfrac{1 - \\dfrac{1}{3}}{2} = \\dfrac{1}{3}$",
+        "$0^\\circ < \\dfrac{\\theta}{2} < 45^\\circ$ より $\\sin\\dfrac{\\theta}{2} > 0$ なので、$\\sin\\dfrac{\\theta}{2} = \\dfrac{1}{\\sqrt{3}} = \\dfrac{\\sqrt{3}}{3}$"
+      ]
+    },
+    {
+      q: "0^\\circ < \\theta < 90^\\circ, \\quad \\cos\\theta = \\dfrac{1}{3} \\,\\text{のとき}",
+      target: "\\cos\\dfrac{\\theta}{2}",
+      ans: "\\dfrac{\\sqrt{6}}{3}",
+      d: ["\\dfrac{\\sqrt{3}}{3}", "\\dfrac{2}{3}", "\\dfrac{1}{3}"],
+      steps: [
+        "半角の公式 $\\cos^2\\dfrac{\\theta}{2} = \\dfrac{1 + \\cos\\theta}{2}$ を用います。",
+        "$\\cos^2\\dfrac{\\theta}{2} = \\dfrac{1 + \\dfrac{1}{3}}{2} = \\dfrac{2}{3}$",
+        "$0^\\circ < \\dfrac{\\theta}{2} < 45^\\circ$ より $\\cos\\dfrac{\\theta}{2} > 0$ なので、$\\cos\\dfrac{\\theta}{2} = \\sqrt{\\dfrac{2}{3}} = \\dfrac{\\sqrt{6}}{3}$"
+      ]
+    },
+    {
+      q: "90^\\circ < \\theta < 180^\\circ, \\quad \\cos\\theta = -\\dfrac{3}{5} \\,\\text{のとき}",
+      target: "\\sin\\dfrac{\\theta}{2}",
+      ans: "\\dfrac{2\\sqrt{5}}{5}",
+      d: ["\\dfrac{\\sqrt{5}}{5}", "\\dfrac{4}{5}", "\\dfrac{1}{5}"],
+      steps: [
+        "半角の公式 $\\sin^2\\dfrac{\\theta}{2} = \\dfrac{1 - \\cos\\theta}{2}$ を用います。",
+        "$\\sin^2\\dfrac{\\theta}{2} = \\dfrac{1 - \\left(-\\dfrac{3}{5}\\right)}{2} = \\dfrac{4}{5}$",
+        "$45^\\circ < \\dfrac{\\theta}{2} < 90^\\circ$ より $\\sin\\dfrac{\\theta}{2} > 0$ なので、$\\sin\\dfrac{\\theta}{2} = \\dfrac{2}{\\sqrt{5}} = \\dfrac{2\\sqrt{5}}{5}$"
+      ]
+    },
+    {
+      q: "90^\\circ < \\theta < 180^\\circ, \\quad \\cos\\theta = -\\dfrac{3}{5} \\,\\text{のとき}",
+      target: "\\tan\\dfrac{\\theta}{2}",
+      ans: "2",
+      d: ["\\dfrac{1}{2}", "\\sqrt{2}", "4"],
+      steps: [
+        "半角の公式 $\\tan^2\\dfrac{\\theta}{2} = \\dfrac{1 - \\cos\\theta}{1 + \\cos\\theta}$ を用います。",
+        "$\\tan^2\\dfrac{\\theta}{2} = \\dfrac{1 - \\left(-\\dfrac{3}{5}\\right)}{1 + \\left(-\\dfrac{3}{5}\\right)} = \\dfrac{\\dfrac{8}{5}}{\\dfrac{2}{5}} = 4$",
+        "$45^\\circ < \\dfrac{\\theta}{2} < 90^\\circ$ より $\\tan\\dfrac{\\theta}{2} > 0$ なので、$\\tan\\dfrac{\\theta}{2} = 2$"
+      ]
+    },
+    {
+      q: "半角の公式を用いて、次の値を求めよ。",
+      target: "\\sin 22.5^\\circ",
+      ans: "\\dfrac{\\sqrt{2 - \\sqrt{2}}}{2}",
+      d: ["\\dfrac{\\sqrt{2 + \\sqrt{2}}}{2}", "\\dfrac{\\sqrt{6} - \\sqrt{2}}{4}", "\\dfrac{2 - \\sqrt{2}}{4}"],
+      steps: [
+        "$22.5^\\circ = \\dfrac{45^\\circ}{2}$ なので、半角の公式 $\\sin^2 22.5^\\circ = \\dfrac{1 - \\cos 45^\\circ}{2}$ を用います。",
+        "$\\sin^2 22.5^\\circ = \\dfrac{1 - \\dfrac{\\sqrt{2}}{2}}{2} = \\dfrac{2 - \\sqrt{2}}{4}$",
+        "$\\sin 22.5^\\circ > 0$ より、平方根をとって $\\sin 22.5^\\circ = \\dfrac{\\sqrt{2 - \\sqrt{2}}}{2}$"
+      ]
+    },
+    {
+      q: "半角の公式を用いて、次の値を求めよ。",
+      target: "\\cos 22.5^\\circ",
+      ans: "\\dfrac{\\sqrt{2 + \\sqrt{2}}}{2}",
+      d: ["\\dfrac{\\sqrt{2 - \\sqrt{2}}}{2}", "\\dfrac{\\sqrt{6} + \\sqrt{2}}{4}", "\\dfrac{2 + \\sqrt{2}}{4}"],
+      steps: [
+        "$22.5^\\circ = \\dfrac{45^\\circ}{2}$ なので、半角の公式 $\\cos^2 22.5^\\circ = \\dfrac{1 + \\cos 45^\\circ}{2}$ を用います。",
+        "$\\cos^2 22.5^\\circ = \\dfrac{1 + \\dfrac{\\sqrt{2}}{2}}{2} = \\dfrac{2 + \\sqrt{2}}{4}$",
+        "$\\cos 22.5^\\circ > 0$ より、平方根をとって $\\cos 22.5^\\circ = \\dfrac{\\sqrt{2 + \\sqrt{2}}}{2}$"
+      ]
+    }
+  ];
 
+  const p = pick(problems);
+  const options = makeUniqueChoices(p.ans, p.d);
+  return {
+    type: 'text',
+    qKey: `half_${p.q}_${p.target}`,
+    prompt: p.q.includes("半角の公式") ? p.q : "次の条件を満たす値を求めよ。",
+    questionTex: p.q.includes("半角の公式") ? "" : p.q,
+    targetTex: p.target,
+    options,
+    correctIndex: options.indexOf(p.ans),
+    steps: p.steps
+  };
+}
 
+/* ==============================================
+   10. 三角関数の合成 (新規追加テーマ・座標SVG解説付き)
+============================================== */
+function generateSynthesisProblem() {
+  const useRad = shouldUseRadian();
+  const cases = [
+    { aStr: '', bStr: '+ \\sqrt{3}', aNum: 1, bNum: Math.sqrt(3), r: '2', deg: 60, rad: '\\dfrac{\\pi}{3}', ax: '1', by: '\\sqrt{3}' },
+    { aStr: '', bStr: '- \\sqrt{3}', aNum: 1, bNum: -Math.sqrt(3), r: '2', deg: -60, rad: '-\\dfrac{\\pi}{3}', ax: '1', by: '-\\sqrt{3}' },
+    { aStr: '\\sqrt{3}', bStr: '+ ', aNum: Math.sqrt(3), bNum: 1, r: '2', deg: 30, rad: '\\dfrac{\\pi}{6}', ax: '\\sqrt{3}', by: '1' },
+    { aStr: '\\sqrt{3}', bStr: '- ', aNum: Math.sqrt(3), bNum: -1, r: '2', deg: -30, rad: '-\\dfrac{\\pi}{6}', ax: '\\sqrt{3}', by: '-1' },
+    { aStr: '', bStr: '+ ', aNum: 1, bNum: 1, r: '\\sqrt{2}', deg: 45, rad: '\\dfrac{\\pi}{4}', ax: '1', by: '1' },
+    { aStr: '', bStr: '- ', aNum: 1, bNum: -1, r: '\\sqrt{2}', deg: -45, rad: '-\\dfrac{\\pi}{4}', ax: '1', by: '-1' },
+    { aStr: '-\\sqrt{3}', bStr: '+ ', aNum: -Math.sqrt(3), bNum: 1, r: '2', deg: 150, rad: '\\dfrac{5}{6}\\pi', ax: '-\\sqrt{3}', by: '1' }
+  ];
+
+  const c = pick(cases);
+  const expr = `${c.aStr}\\sin\\theta ${c.bStr}\\cos\\theta`;
+  const fmtAlpha = (deg, rad) => {
+    const val = useRad ? rad : `${deg}^\\circ`;
+    return val.startsWith('-') ? val : `+ ${val}`;
+  };
+
+  const correct = `${c.r}\\sin\\left(\\theta ${fmtAlpha(c.deg, c.rad)}\\right)`;
+  const wrongDeg1 = c.deg > 0 ? -c.deg : Math.abs(c.deg);
+  const wrongRad1 = c.rad.startsWith('-') ? c.rad.slice(1) : '-' + c.rad;
+  const wrongDeg2 = Math.abs(c.deg) === 60 ? 30 : 60;
+  const wrongRad2 = Math.abs(c.deg) === 60 ? '\\dfrac{\\pi}{6}' : '\\dfrac{\\pi}{3}';
+
+  const d1 = `${c.r}\\sin\\left(\\theta ${fmtAlpha(wrongDeg1, wrongRad1)}\\right)`;
+  const d2 = `${c.r}\\sin\\left(\\theta + ${useRad ? wrongRad2 : wrongDeg2 + '^\\circ'}\\right)`;
+  const options = makeUniqueChoices(correct, [d1, d2]);
+
+  // 座標平面上の点 P(a, b) のSVG図解
+  const cx = 90, cy = 90, scale = 32;
+  const px = cx + c.aNum * scale;
+  const py = cy - c.bNum * scale;
+  const svgCode = `<div class="exp-svg-wrap"><svg viewBox="0 0 180 180">
+    <line x1="15" y1="90" x2="165" y2="90" stroke="var(--line-strong)" />
+    <line x1="90" y1="15" x2="90" y2="165" stroke="var(--line-strong)" />
+    <line x1="${cx}" y1="${cy}" x2="${px}" y2="${py}" stroke="var(--main-pen)" stroke-width="2.5" />
+    <line x1="${px}" y1="${py}" x2="${px}" y2="${cy}" stroke="var(--teal)" stroke-width="1.5" stroke-dasharray="3 3" />
+    <circle cx="${px}" cy="${py}" r="3.5" fill="var(--main-pen)" />
+    <text x="${px + (c.aNum >= 0 ? 18 : -18)}" y="${py + (c.bNum >= 0 ? -8 : 14)}" font-size="11" font-weight="900" fill="var(--main-pen)" text-anchor="middle">P(${formatSvgText(c.ax)}, ${formatSvgText(c.by)})</text>
+    <text x="90" y="10" font-size="10" fill="var(--muted)" text-anchor="middle">y (cos係数)</text>
+    <text x="165" y="104" font-size="10" fill="var(--muted)" text-anchor="end">x (sin係数)</text>
+  </svg></div>`;
+
+  return {
+    type: 'text',
+    isFormula: true,
+    qKey: `synth_${expr}_${useRad}`,
+    prompt: "次の式を r sin(θ + α) の形に合成せよ。",
+    questionTex: "",
+    targetTex: expr,
+    options,
+    correctIndex: options.indexOf(correct),
+    explSvg: svgCode,
+    steps: [
+      `$a\\sin\\theta + b\\cos\\theta = \\sqrt{a^2+b^2}\\sin(\\theta + \\alpha)$ の公式を用います。`,
+      `$\\sin\\theta$ の係数 $a = ${c.ax}$ を $x$ 座標、$\\cos\\theta$ の係数 $b = ${c.by}$ を $y$ 座標とする点 $\\mathrm{P}(${c.ax}, ${c.by})$ をとります。`,
+      `原点からの距離は $r = \\sqrt{(${c.ax})^2 + (${c.by})^2} = ${c.r}$、なす角は $\\alpha = ${useRad ? c.rad : c.deg + '^\\circ'}$ となります。`,
+      `したがって、$${expr} = ${correct}$`
+    ]
+  };
+}
+
+/* ==============================================
+   DBからの汎用問題生成 (SVG描画含む)
+============================================== */
 function generateFromDB(dbArray) {
   let p = pick(dbArray);
-  let options = shuffle([p.a, p.d[0], p.d[1]]);
+  let options = makeUniqueChoices(p.a, p.d);
   let svgCode = '';
 
   if (p.svgLine) {
     let sl = p.svgLine;
-    let r = 70, cx = 90, cy = 90;
+    let r = 68, cx = 90, cy = 90;
     let lineHtml = "";
     if (sl.axis === 'y') {
-      lineHtml = `<line x1="10" y1="${cy - sl.val*r}" x2="170" y2="${cy - sl.val*r}" stroke="var(--red-pen)" stroke-width="2.5" />`;
+      lineHtml = `<line x1="10" y1="${cy - sl.val*r}" x2="170" y2="${cy - sl.val*r}" stroke="var(--red-pen)" stroke-width="2.2" />`;
     } else if (sl.axis === 'x') {
-      lineHtml = `<line x1="${cx + sl.val*r}" y1="10" x2="${cx + sl.val*r}" y2="170" stroke="var(--red-pen)" stroke-width="2.5" />`;
+      lineHtml = `<line x1="${cx + sl.val*r}" y1="10" x2="${cx + sl.val*r}" y2="170" stroke="var(--red-pen)" stroke-width="2.2" />`;
     } else if (sl.axis === 'tan') {
       lineHtml = `<line x1="${cx + r}" y1="10" x2="${cx + r}" y2="170" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4" />`;
       let py1 = cy - sl.val * r; let py2 = cy + sl.val * r;
-      lineHtml += `<line x1="${cx - r}" y1="${py2}" x2="${cx + r}" y2="${py1}" stroke="var(--red-pen)" stroke-width="2.5" />`;
+      lineHtml += `<line x1="${cx - r}" y1="${py2}" x2="${cx + r}" y2="${py1}" stroke="var(--red-pen)" stroke-width="2.2" />`;
     }
-      
+
     let armColors = ["var(--teal)", "var(--main-pen)"];
     let arms = [sl.a1, sl.a2].filter(x => x !== undefined).map((a, i) => {
       let rad = a * Math.PI / 180;
-      let arcR = 20 + i * 5;
+      let arcR = 18 + i * 5;
       let color = armColors[i % armColors.length];
       let arc = makeSweepArc(cx, cy, arcR, 0, a, color);
-      return arc + `<line x1="${cx}" y1="${cy}" x2="${cx + r*Math.cos(rad)}" y2="${cy - r*Math.sin(rad)}" stroke="${color}" stroke-width="2.5" />`;
+      return arc + `<line x1="${cx}" y1="${cy}" x2="${cx + r*Math.cos(rad)}" y2="${cy - r*Math.sin(rad)}" stroke="${color}" stroke-width="2.2" />`;
     }).join('');
-    
+
     svgCode = `<div class="exp-svg-wrap"><svg viewBox="0 0 180 180">
-      <line x1="10" y1="90" x2="170" y2="90" stroke="#d4ae96" />
-      <line x1="90" y1="10" x2="90" y2="170" stroke="#d4ae96" />
-      <circle cx="90" cy="90" r="${r}" fill="none" stroke="#3a2a22" stroke-width="1.5" />
+      <line x1="10" y1="90" x2="170" y2="90" stroke="var(--line-strong)" />
+      <line x1="90" y1="10" x2="90" y2="170" stroke="var(--line-strong)" />
+      <circle cx="90" cy="90" r="${r}" fill="none" stroke="var(--ink)" stroke-width="1.5" />
       ${lineHtml} ${arms}
-      <text x="90" y="5" font-size="10" fill="#7d6559" text-anchor="middle">y</text>
-      <text x="175" y="90" font-size="10" fill="#7d6559" dominant-baseline="middle">x</text>
+      <text x="90" y="8" font-size="10" fill="var(--muted)" text-anchor="middle">y</text>
+      <text x="174" y="90" font-size="10" fill="var(--muted)" dominant-baseline="middle">x</text>
     </svg></div>`;
-  }
-  else if (p.svgQuadrant) {
+  } else if (p.svgQuadrant) {
     let [startAngle, endAngle] = p.svgQuadrant;
-    let r = 70, cx = 90, cy = 90;
+    let r = 68, cx = 90, cy = 90;
     let radStart = -startAngle * Math.PI / 180; let radEnd = -endAngle * Math.PI / 180;
     let x1 = cx + r * Math.cos(radStart); let y1 = cy + r * Math.sin(radStart);
     let x2 = cx + r * Math.cos(radEnd); let y2 = cy + r * Math.sin(radEnd);
-    let path = `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 0 ${x2} ${y2} Z" fill="rgba(217, 119, 54, 0.25)" stroke="none" />`;
+    let path = `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 0 ${x2} ${y2} Z" fill="var(--main-pen-soft)" stroke="none" />`;
 
     svgCode = `<div class="exp-svg-wrap"><svg viewBox="0 0 180 180">
-      <line x1="10" y1="90" x2="170" y2="90" stroke="#d4ae96" />
-      <line x1="90" y1="10" x2="90" y2="170" stroke="#d4ae96" />
+      <line x1="10" y1="90" x2="170" y2="90" stroke="var(--line-strong)" />
+      <line x1="90" y1="10" x2="90" y2="170" stroke="var(--line-strong)" />
       ${path}
-      <circle cx="90" cy="90" r="${r}" fill="none" stroke="#3a2a22" stroke-width="1.5" />
-      <text x="90" y="5" font-size="10" fill="#7d6559" text-anchor="middle">y</text>
-      <text x="175" y="90" font-size="10" fill="#7d6559" dominant-baseline="middle">x</text>
+      <circle cx="90" cy="90" r="${r}" fill="none" stroke="var(--ink)" stroke-width="1.5" />
+      <text x="90" y="8" font-size="10" fill="var(--muted)" text-anchor="middle">y</text>
+      <text x="174" y="90" font-size="10" fill="var(--muted)" dominant-baseline="middle">x</text>
     </svg></div>`;
   }
 
   return {
-    type: 'text', qKey: p.q+p.target, prompt: "次の条件を満たす値を求めよ。", questionTex: p.q, targetTex: p.target,
+    type: 'text', isFormula: !!p.isFormula, qKey: p.q + p.target, prompt: "次の条件を満たす値を求めよ。", questionTex: p.q, targetTex: p.target,
     options, correctIndex: options.indexOf(p.a), steps: p.steps, explSvg: svgCode
   };
 }
@@ -1368,8 +1924,18 @@ function generateFromDB(dbArray) {
 function generateProblem() {
   let newProb;
   let safeguard = 0;
+  const math1Themes = ['def', 'famous', 'mut', 'eq', 'theorem', 'area'];
+  const math2Themes = ['formula', 'formula23', 'half', 'synth', 'product', 'sum_prod', 'minor'];
+  const allThemes = [...math1Themes, ...math2Themes];
+
   do {
-    const t = state.theme;
+    let t = state.theme;
+    if (t === 'random') {
+      if (state.category === 'math1') t = pick(math1Themes);
+      else if (state.category === 'math2') t = pick(math2Themes);
+      else t = pick(allThemes);
+    }
+
     if (t === 'def') newProb = generateRightTriangleSVG();
     else if (t === 'famous') newProb = generateAngleProblem(false);
     else if (t === 'minor') newProb = generateAngleProblem(true);
@@ -1377,47 +1943,62 @@ function generateProblem() {
     else if (t === 'area') newProb = generateAreaProblem();
     else if (t === 'formula') newProb = generateFormulaProblem();
     else if (t === 'formula23') newProb = generateFormula23Problem();
+    else if (t === 'half') newProb = generateHalfAngleProblem();
+    else if (t === 'synth') newProb = generateSynthesisProblem();
     else if (t === 'eq') newProb = generateEquationProblem();
     else if (t === 'mut') newProb = generateMutProblem();
     else if (t === 'product') newProb = generateProductProblem();
     else if (t === 'sum_prod') newProb = generateSumProdProblem();
     else newProb = generateRightTriangleSVG();
+
+    newProb.subTheme = t;
     safeguard++;
-  } while (state.lastQKey === newProb.qKey && safeguard < 10);
-  
+  } while (state.lastQKey === newProb.qKey && safeguard < 12);
+
   state.lastQKey = newProb.qKey;
   return newProb;
 }
 
 /* ==============================================
-   UI制御
+   UIレンダリング・イベント制御
 ============================================== */
-
 function renderQuestion() {
   state.locked = false;
   UI.explanation.hidden = true;
-  
+  UI.quickNextWrap.hidden = true;
+  UI.stickyNextBar.classList.remove('is-visible');
+
   const p = generateProblem();
   state.currentProblem = p;
-  
+
+  const badgeKey = state.theme === 'random' ? `🎲 ${THEME_LABELS[p.subTheme]}` : THEME_LABELS[state.theme];
+  UI.currentThemeBadge.textContent = badgeKey;
   UI.questionPrompt.textContent = p.prompt;
-  let qHtml = p.questionTex ? renderTex(p.questionTex) + "<br><br>" : "";
-  qHtml += renderTex(p.targetTex + (p.type === 'text' && p.prompt.includes("公式") ? "" : " = ?"));
+
+  let qHtml = p.questionTex ? `<div style="font-size:0.95rem; margin-bottom:6px;">${renderTex(p.questionTex)}</div>` : "";
+  const eqSuffix = (p.type === 'text' && (p.prompt.includes("公式") || p.prompt.includes("合成"))) ? "" : " = ?";
+  qHtml += `<div>${renderTex(p.targetTex + eqSuffix)}</div>`;
   UI.questionTarget.innerHTML = qHtml;
-  
+
   if (p.type === 'svg') {
     UI.svgContainer.innerHTML = p.svgHtml;
     UI.svgContainer.classList.add('is-active');
+    UI.problemStage.classList.add('has-svg');
   } else {
     UI.svgContainer.innerHTML = '';
     UI.svgContainer.classList.remove('is-active');
+    UI.problemStage.classList.remove('has-svg');
   }
-  
+
+  // 長い数式・二重根号・複数角度が含まれる場合はPCでも1列表示にして見切れを完全に防ぐ
+  const hasLongOption = p.isFormula || p.options.some(opt => opt.length > 26 || opt.includes(','));
+  UI.choicesGroup.classList.toggle('is-formula-grid', hasLongOption);
+
   UI.choicesGroup.innerHTML = p.options.map((opt, i) => `
-    <button type="button" class="choice-btn ${p.isFormula ? 'is-formula' : ''}" data-index="${i}">
+    <button type="button" class="choice-btn" data-index="${i}">
       <span class="choice-letter">${String.fromCharCode(65 + i)}</span>
       <span class="choice-content">${renderTex(opt)}</span>
-      <span class="choice-badge"></span>
+      <span class="choice-mark" aria-hidden="true"></span>
     </button>
   `).join('');
 }
@@ -1426,6 +2007,9 @@ function updateScore() {
   UI.correctCount.textContent = state.correct;
   UI.wrongCount.textContent = state.wrong;
   UI.streakCount.textContent = state.streak;
+  const total = state.correct + state.wrong;
+  UI.accuracyRate.textContent = total > 0 ? Math.round((state.correct / total) * 100) + '%' : '-';
+  saveState();
 }
 
 function selectChoice(idx) {
@@ -1439,18 +2023,21 @@ function selectChoice(idx) {
 
   UI.choicesGroup.querySelectorAll('.choice-btn').forEach((btn, i) => {
     btn.disabled = true;
+    const mark = btn.querySelector('.choice-mark');
     if (i === p.correctIndex) {
       btn.classList.add('is-correct');
+      if (mark) mark.textContent = '✓';
     } else if (i === idx && !isCorrect) {
       btn.classList.add('is-wrong');
+      if (mark) mark.textContent = '✕';
     } else {
       btn.classList.add('is-dimmed');
     }
   });
 
-  const titleHtml = isCorrect ? "正解！" : "不正解...";
+  const titleHtml = isCorrect ? "⭕ 正解！よくできました！" : "✖ おしい！解説を確認しよう";
   const boxClass = isCorrect ? "correct" : "wrong";
-  
+
   let expContent = "";
   if (p.explHtml) {
     expContent = p.explHtml;
@@ -1461,25 +2048,100 @@ function selectChoice(idx) {
 
   UI.explanation.innerHTML = `
     <div class="exp-box ${boxClass}">
-      <h3 class="exp-title">${titleHtml}</h3>
+      <div class="exp-header">
+        <h3 class="exp-title">${titleHtml}</h3>
+      </div>
       <div class="exp-body">${expContent}</div>
-      <button type="button" class="btn-next" id="nextBtn">次の問題へ</button>
     </div>
   `;
   UI.explanation.hidden = false;
-  
-  document.getElementById('nextBtn').addEventListener('click', renderQuestion);
+  UI.quickNextWrap.hidden = false;
+
 }
 
+/* ==============================================
+   公式チートシートの生成
+============================================== */
+function buildFormulaCheatSheet() {
+  const sections = [
+    {
+      title: "1. 三角比の相互関係・定義",
+      items: [
+        "$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta}$",
+        "$\\sin^2\\theta + \\cos^2\\theta = 1$",
+        "$1 + \\tan^2\\theta = \\dfrac{1}{\\cos^2\\theta}$"
+      ]
+    },
+    {
+      title: "2. 正弦定理・余弦定理・面積",
+      items: [
+        "【正弦定理】 $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B} = \\dfrac{c}{\\sin C} = 2R$ （$R$ は外接円の半径）",
+        "【余弦定理】 $a^2 = b^2 + c^2 - 2bc\\cos A \\quad \\Longleftrightarrow \\quad \\cos A = \\dfrac{b^2+c^2-a^2}{2bc}$",
+        "【面積公式】 $S = \\dfrac{1}{2}bc\\sin A = \\dfrac{1}{2}r(a+b+c)$ （$r$ は内接円の半径）"
+      ]
+    },
+    {
+      title: "3. 加法定理",
+      items: [
+        "$\\sin(\\alpha \\pm \\beta) = \\sin\\alpha\\cos\\beta \\pm \\cos\\alpha\\sin\\beta$ （複号同順）",
+        "$\\cos(\\alpha \\pm \\beta) = \\cos\\alpha\\cos\\beta \\mp \\sin\\alpha\\sin\\beta$ （複号同順）",
+        "$\\tan(\\alpha \\pm \\beta) = \\dfrac{\\tan\\alpha \\pm \\tan\\beta}{1 \\mp \\tan\\alpha\\tan\\beta}$ （複号同順）"
+      ]
+    },
+    {
+      title: "4. 2倍角・3倍角・半角の公式",
+      items: [
+        "【2倍角】 $\\sin 2\\theta = 2\\sin\\theta\\cos\\theta, \\quad \\cos 2\\theta = \\cos^2\\theta - \\sin^2\\theta = 2\\cos^2\\theta - 1 = 1 - 2\\sin^2\\theta$",
+        "【3倍角】 $\\sin 3\\theta = 3\\sin\\theta - 4\\sin^3\\theta, \\quad \\cos 3\\theta = 4\\cos^3\\theta - 3\\cos\\theta$",
+        "【半角】 $\\sin^2\\dfrac{\\theta}{2} = \\dfrac{1-\\cos\\theta}{2}, \\quad \\cos^2\\dfrac{\\theta}{2} = \\dfrac{1+\\cos\\theta}{2}, \\quad \\tan^2\\dfrac{\\theta}{2} = \\dfrac{1-\\cos\\theta}{1+\\cos\\theta}$"
+      ]
+    },
+    {
+      title: "5. 三角関数の合成・積和・和積",
+      items: [
+        "【合成】 $a\\sin\\theta + b\\cos\\theta = \\sqrt{a^2+b^2}\\sin(\\theta + \\alpha)$ （ただし $\\cos\\alpha = \\dfrac{a}{\\sqrt{a^2+b^2}}, \\sin\\alpha = \\dfrac{b}{\\sqrt{a^2+b^2}}$）",
+        "【積和】 $\\sin\\alpha\\cos\\beta = \\dfrac{1}{2}\\{\\sin(\\alpha+\\beta)+\\sin(\\alpha-\\beta)\\}, \\quad \\sin\\alpha\\sin\\beta = -\\dfrac{1}{2}\\{\\cos(\\alpha+\\beta)-\\cos(\\alpha-\\beta)\\}$",
+        "【和積】 $\\sin A + \\sin B = 2\\sin\\dfrac{A+B}{2}\\cos\\dfrac{A-B}{2}, \\quad \\cos A - \\cos B = -2\\sin\\dfrac{A+B}{2}\\sin\\dfrac{A-B}{2}$"
+      ]
+    }
+  ];
+
+  UI.formulaModalBody.innerHTML = sections.map(sec => `
+    <div class="formula-sec">
+      <h3>${sec.title}</h3>
+      <div class="formula-grid">
+        ${sec.items.map(it => `<div class="formula-item">${parseTeX(it)}</div>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ==============================================
+   イベントリスナー設定
+============================================== */
 UI.choicesGroup.addEventListener('click', e => {
   const btn = e.target.closest('.choice-btn');
   if (btn) selectChoice(parseInt(btn.dataset.index, 10));
 });
 
+UI.inlineNextBtn.addEventListener('click', renderQuestion);
+UI.stickyNextBtn.addEventListener('click', renderQuestion);
+
 document.addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
+  if (!UI.formulaModal.hidden || !UI.resetModal.hidden) {
+    if (e.key === 'Escape') {
+      UI.formulaModal.hidden = true;
+      UI.resetModal.hidden = true;
+    }
+    return;
+  }
+  if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
     renderQuestion();
+  } else if (!state.locked) {
+    if (e.key === '1' || e.key === 'a' || e.key === 'A') selectChoice(0);
+    if (e.key === '2' || e.key === 'b' || e.key === 'B') selectChoice(1);
+    if (e.key === '3' || e.key === 'c' || e.key === 'C') selectChoice(2);
   }
 });
 
@@ -1489,19 +2151,109 @@ UI.themeMenu.addEventListener('click', e => {
     UI.themeMenu.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
     state.theme = btn.dataset.theme;
+    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     renderQuestion();
   }
 });
 
-UI.resetBtn.addEventListener('click', () => {
-  if(confirm("スコアをリセットしますか？")) {
-    state.correct = 0; state.wrong = 0; state.streak = 0;
-    updateScore(); renderQuestion();
+UI.catTabs.addEventListener('click', e => {
+  const tab = e.target.closest('.cat-tab');
+  if (!tab) return;
+  UI.catTabs.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  const cat = tab.dataset.cat;
+  state.category = cat;
+
+  let firstVisibleChip = null;
+  let activeStillVisible = false;
+  UI.themeMenu.querySelectorAll('.chip').forEach(chip => {
+    const chipCat = chip.dataset.cat;
+    const show = (cat === 'all' || chipCat === cat || chipCat === 'all');
+    chip.style.display = show ? '' : 'none';
+    if (show && !firstVisibleChip) firstVisibleChip = chip;
+    if (show && chip.classList.contains('active')) activeStillVisible = true;
+  });
+
+  if (!activeStillVisible && firstVisibleChip) {
+    UI.themeMenu.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    firstVisibleChip.classList.add('active');
+    state.theme = firstVisibleChip.dataset.theme;
   }
+  renderQuestion();
 });
 
-renderQuestion();
+document.querySelectorAll('.unit-btn').forEach(btn => {
+  if (btn.dataset.unit === state.angleUnit) {
+    document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.angleUnit = btn.dataset.unit;
+    saveState();
+    renderQuestion();
+  });
+});
 
+// ライト/ダークモード切替
+function syncThemeIcon() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  UI.themeIcon.textContent = isDark ? '☀️' : '🌙';
+}
+UI.themeToggleBtn.addEventListener('click', () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  syncThemeIcon();
+  saveState();
+});
+
+// 公式モーダル開閉
+UI.formulaModalBtn.addEventListener('click', () => {
+  if (!UI.formulaModalBody.innerHTML) buildFormulaCheatSheet();
+  UI.formulaModal.hidden = false;
+});
+UI.closeFormulaModal.addEventListener('click', () => { UI.formulaModal.hidden = true; });
+UI.formulaModal.addEventListener('click', e => {
+  if (e.target === UI.formulaModal) UI.formulaModal.hidden = true;
+});
+
+// リセットモーダル開閉
+UI.resetBtn.addEventListener('click', () => { UI.resetModal.hidden = false; });
+UI.closeResetModal.addEventListener('click', () => { UI.resetModal.hidden = true; });
+UI.cancelResetBtn.addEventListener('click', () => { UI.resetModal.hidden = true; });
+UI.resetModal.addEventListener('click', e => {
+  if (e.target === UI.resetModal) UI.resetModal.hidden = true;
+});
+UI.confirmResetBtn.addEventListener('click', () => {
+  state.correct = 0; state.wrong = 0; state.streak = 0;
+  updateScore();
+  UI.resetModal.hidden = true;
+  renderQuestion();
+});
+
+// --- ここから追加 ---
+// スクロールに応じたフローティングボタンの表示制御
+const nextBtnObserver = new IntersectionObserver((entries) => {
+  if (!UI.quickNextWrap.hidden) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // インラインのボタンが見えている場合は下部の固定ボタンを隠す
+        UI.stickyNextBar.classList.remove('is-visible');
+      } else {
+        // 画面外にスクロールされたら下部の固定ボタンを表示する
+        UI.stickyNextBar.classList.add('is-visible');
+      }
+    });
+  }
+});
+nextBtnObserver.observe(UI.quickNextWrap);
+// --- ここまで追加 ---
+
+// 初期化
+syncThemeIcon();
+updateScore();
+renderQuestion();
 </script>
 </body>
 </html>
